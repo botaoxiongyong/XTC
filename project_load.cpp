@@ -53,7 +53,7 @@ QString fileNameGet(){
     return fileName;
 }
 
-std::vector<std::vector<mdata>> getMatirx(QString& line, Ui::XTC *ui){
+std::vector<std::vector<mdata>> getMatirx(QString& line, QString&fileName, Ui::XTC *ui){
 
     //QMainWindow *ui = XTC::activateWindow();
 
@@ -128,8 +128,9 @@ std::vector<std::vector<mdata>> getMatirx(QString& line, Ui::XTC *ui){
 
 
     //#-------------------------------------
+    QFileInfo fi(fileName);
 
-    QString dataPath = "/Users/pro/Documents/Qt/QT_practice/PS_XTC/";
+    QString dataPath = fi.canonicalPath()+'/';//"/Users/pro/Documents/Qt/QT_practice/PS_XTC/";
     std::vector<std::vector<mdata>> matrixData(NDS, std::vector<mdata>(NPC+1));
     std::vector<std::vector<QString>>::iterator row;
     std::vector<QString>::iterator col;
@@ -139,7 +140,7 @@ std::vector<std::vector<mdata>> getMatirx(QString& line, Ui::XTC *ui){
 
     //read y aixs settings
     //qDebug() << dataPath+"SEP_DP.xtci"+".yrr";
-    QFile yaxisSet(dataPath+"SEP_DP.xtci"+".yrr");
+    QFile yaxisSet(fileName+".yrr");
     if (!yaxisSet.open(QIODevice::ReadOnly)){
         //qDebug() << yaxisSet.errorString();
     }

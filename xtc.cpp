@@ -32,6 +32,7 @@ XTC::XTC(QWidget *parent) :
     counter = 0;
     colors = rndColors(50);
     //this->window()->size()
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 XTC::~XTC()
@@ -43,6 +44,7 @@ XTC::~XTC()
 void XTC::on_actionOpen_project_file_triggered()
 {
     ui->tab_introduction->hide();
+    ui->tabWidget->setCurrentIndex(1);
     ui->tab_rawdata->show();
 
    //all functions here included in project_load
@@ -53,9 +55,10 @@ void XTC::on_actionOpen_project_file_triggered()
    QString line = readFile(fileName);
 
    //read all data into MatrixData,
-   matrixData = getMatirx(line, ui);
+   matrixData = getMatirx(line, fileName, ui);
 
    ui->tab_rawdata->hide();
+   ui->tabWidget->setCurrentIndex(2);
    ui->tab_matrix->show();
 
    dataPlot();
@@ -129,6 +132,7 @@ void XTC::dataPlot(){
 void XTC::buttonNext_clicked(){
     //ui->tabWidget->hide();
     ui->tab_matrix->hide();
+    ui->tabWidget->setCurrentIndex(3);
     ui->tab_plot->show();
     //ui->chart->show();
     //ui->groupBoxCore->show();
@@ -212,6 +216,19 @@ void XTC::coreItemChecked(){
             delete witem;
         }
     }
+
+    //=========================================================================
+    //add verticalLayoutPlots
+    QVBoxLayout *Plots = new QVBoxLayout();
+    ui->page_2->layout()->addChildLayout(Plots);
+
+
+
+    //=========================================================================
+
+
+
+
 
     QString tiltle = matrixData[0][paramIndex].params[1];
     t->setTitle(tiltle);
@@ -402,6 +419,7 @@ void XTC::on_pBhideOp_clicked()
 void XTC::on_actionEdit_Mode_triggered()
 {
     ui->tab_plot->hide();
+    ui->tabWidget->setCurrentIndex(4);
     ui->tab_edit->show();
     editMode();
 }
@@ -409,6 +427,7 @@ void XTC::on_actionEdit_Mode_triggered()
 void XTC::on_pBshowOp_E_clicked()
 {
     ui->tab_edit->hide();
+    ui->tabWidget->setCurrentIndex(3);
     ui->tab_plot->show();
     ui->pb_back_edit->show();
     //connect(ui->pBhideOp, SIGNAL(cliked(bool)), SLOT(ui->actionEdit_Mode->triggered();));

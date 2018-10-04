@@ -57,7 +57,7 @@
        <string/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -70,7 +70,7 @@
         </sizepolicy>
        </property>
        <attribute name="title">
-        <string/>
+        <string>introduction</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
@@ -143,7 +143,7 @@ font: 75 20pt &quot;Arial&quot;;</string>
         </sizepolicy>
        </property>
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>load_data</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
@@ -204,7 +204,7 @@ font: 75 20pt &quot;Arial&quot;;</string>
         </sizepolicy>
        </property>
        <attribute name="title">
-        <string>Page</string>
+        <string>show_data</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_7">
         <item row="0" column="0">
@@ -238,7 +238,7 @@ font: 75 20pt &quot;Arial&quot;;</string>
         </sizepolicy>
        </property>
        <attribute name="title">
-        <string>Page</string>
+        <string>plots</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="1" rowspan="5">
@@ -331,15 +331,14 @@ font: 75 20pt &quot;Arial&quot;;</string>
               <height>121</height>
              </rect>
             </property>
-            <zorder>paramPrevo</zorder>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>0</x>
               <y>620</y>
               <width>1061</width>
-              <height>32</height>
+              <height>48</height>
              </rect>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -396,10 +395,9 @@ border-color: rgb(0, 0, 0);</string>
              </item>
             </layout>
            </widget>
+           <zorder>layoutWidget</zorder>
            <zorder>chart</zorder>
            <zorder>verticalLayoutWidget</zorder>
-           <zorder>paramPrevo</zorder>
-           <zorder>paramNext</zorder>
           </widget>
          </widget>
         </item>
@@ -508,7 +506,7 @@ background-color: rgba(255, 255, 255, 0);</string>
         <string notr="true">background-color: rgb(51, 51, 51);</string>
        </property>
        <attribute name="title">
-        <string>Page</string>
+        <string>edit</string>
        </attribute>
        <widget class="QPushButton" name="pBshowOp_E">
         <property name="geometry">
@@ -553,7 +551,7 @@ background-color: rgba(255, 255, 255, 0);</string>
           <x>70</x>
           <y>760</y>
           <width>1061</width>
-          <height>32</height>
+          <height>48</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -621,7 +619,7 @@ border-color: rgb(0, 0, 0);</string>
      <x>0</x>
      <y>0</y>
      <width>1197</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_f">
