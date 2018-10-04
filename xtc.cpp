@@ -31,6 +31,7 @@ XTC::XTC(QWidget *parent) :
     ui->pb_back_edit->hide();
     counter = 0;
     colors = rndColors(50);
+    ui->centralWidget->resize(800,800);
     //this->window()->size()
     ui->tabWidget->setCurrentIndex(0);
 }
@@ -219,8 +220,8 @@ void XTC::coreItemChecked(){
 
     //=========================================================================
     //add verticalLayoutPlots
-    QVBoxLayout *Plots = new QVBoxLayout();
-    ui->page_2->layout()->addChildLayout(Plots);
+    //QVBoxLayout *Plots = new QVBoxLayout();
+    //ui->page_2->layout()->addChildLayout(Plots);
 
 
 
@@ -601,24 +602,29 @@ void XTC::editMode(){
 
         siglePlot->legend()->setVisible(false);
         siglePlot->setBackgroundBrush(Qt::transparent);
-        //siglePlot->axisX()->setVisible(false);
+        //siglePlot->axisX()->setVisible(fal;se);
         //siglePlot->axisY()->setVisible(false)
+        siglePlot->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
 
         charview->setChart(siglePlot);
         charview->setBackgroundBrush(Qt::transparent);
         charview->setStyleSheet("background-color: transparent");
         //charview->adjustSize();
-        //charview->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred)
-        ui->verticalLayoutPlots_E->addWidget(charview, Qt::AlignLeft, Qt::AlignBottom);
-
+        charview->setMaximumHeight(100);
+        //charview->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+        ui->verticalLayoutPlots_E->addWidget(charview,Qt::AlignBottom);
+        ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,-10);
 
         }
-
     }
 
+    //ui->verticalLayoutPlots_E->addWidget(charview, Qt::AlignLeft, Qt::AlignBottom);
+    //ui->verticalLayoutPlots_E->sets;
     //ui->verticalLayoutPlots->setAlignment(Qt::AlignBottom);
-    ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,100);
+    ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,-10);
+
+    //also try using grid layout add charview, with specific position
 }
 
 void XTC::on_paramPrevo_E_clicked()
