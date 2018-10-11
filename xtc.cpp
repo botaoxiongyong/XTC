@@ -217,6 +217,13 @@ void XTC::coreItemChecked(){
             delete witem;
         }
     }
+    if (ui->sumPlots->layout() != NULL){
+        QLayoutItem *witem;
+        while ((witem = ui->sumPlots->layout()->takeAt(0)) != NULL){
+            delete witem->widget();
+            delete witem;
+        }
+    }
 
     //=========================================================================
     //add verticalLayoutPlots
@@ -232,7 +239,7 @@ void XTC::coreItemChecked(){
 
 
     QString tiltle = matrixData[0][paramIndex].params[1];
-    t->setTitle(tiltle);
+    //t->setTitle(tiltle);
 
     float xmax = 0;
 
@@ -240,6 +247,9 @@ void XTC::coreItemChecked(){
     int rows = matrixData.size();
 
     //vlayout = new QVBoxLayout;
+    //QChartView *charview = new QChartView();
+
+    QChartView *sumChart = new QChartView();
 
     for (int s=1; s<rows;s++){
         if (std::find(skipCores.begin(),skipCores.end(),s) != skipCores.end()){
@@ -380,16 +390,19 @@ void XTC::coreItemChecked(){
         charview->setRubberBand(QChartView::HorizontalRubberBand);
         //charview->adjustSize();
         //charview->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred)
-        ui->verticalLayoutPlots->addWidget(charview, Qt::AlignLeft, Qt::AlignBottom);
+        ui->verticalLayoutPlots->addWidget(charview, 1,1,s+1,1, Qt::AlignBottom);
 
 
         }
 
     }
 
-    ui->chart->setChart(t);
+    //ui->chart->setChart(t);
+    sumChart->setChart(t);
+    sumChart->setMaximumHeight(10);
+    ui->sumPlots->addWidget(sumChart,0,0,Qt::AlignBottom);
     //ui->verticalLayoutPlots->setAlignment(Qt::AlignBottom);
-    ui->verticalLayoutPlots->setContentsMargins(0,0,0,100);
+    //ui->verticalLayoutPlots->setContentsMargins(0,0,0,100);
 }
 
 void XTC::on_paramNext_clicked()
@@ -611,10 +624,10 @@ void XTC::editMode(){
         charview->setBackgroundBrush(Qt::transparent);
         charview->setStyleSheet("background-color: transparent");
         //charview->adjustSize();
-        charview->setMaximumHeight(100);
+        //charview->setMaximumHeight(10);
         //charview->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
-        ui->verticalLayoutPlots_E->addWidget(charview,Qt::AlignBottom);
-        ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,-10);
+        ui->verticalLayoutPlots_E->addWidget(charview,1,1,s+1,1,Qt::AlignBottom);
+        //ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,-10);
 
         }
     }
@@ -622,7 +635,7 @@ void XTC::editMode(){
     //ui->verticalLayoutPlots_E->addWidget(charview, Qt::AlignLeft, Qt::AlignBottom);
     //ui->verticalLayoutPlots_E->sets;
     //ui->verticalLayoutPlots->setAlignment(Qt::AlignBottom);
-    ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,-10);
+    //ui->verticalLayoutPlots_E->setContentsMargins(0,0,0,-10);
 
     //also try using grid layout add charview, with specific position
 }

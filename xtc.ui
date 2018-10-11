@@ -29,23 +29,8 @@
    <property name="autoFillBackground">
     <bool>true</bool>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_5">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetMaximumSize</enum>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="statusTip">
        <string notr="true"/>
@@ -54,7 +39,7 @@
        <string/>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -238,166 +223,6 @@ font: 75 20pt &quot;Arial&quot;;</string>
         <string>plots</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="1" rowspan="5">
-         <widget class="QStackedWidget" name="stackedWidget">
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="page">
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-           </property>
-           <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>40</x>
-              <y>20</y>
-              <width>451</width>
-              <height>691</height>
-             </rect>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayoutCheckbox">
-             <item>
-              <widget class="QGroupBox" name="groupBoxCore">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Cores</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="groupBox_params">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>params</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-            <zorder>groupBox_params</zorder>
-            <zorder>groupBoxCore</zorder>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="page_2">
-           <widget class="QWidget" name="verticalLayoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>10</y>
-              <width>1061</width>
-              <height>611</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayoutPlots">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-            </layout>
-           </widget>
-           <widget class="QChartView" name="chart" native="true">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>650</y>
-              <width>1061</width>
-              <height>121</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>620</y>
-              <width>1061</width>
-              <height>48</height>
-             </rect>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QPushButton" name="paramPrevo">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: 24pt &quot;.SF NS Text&quot;;
-color: rgb(255, 0, 128);
-background-color: rgba(255, 255, 255, 0);
-border-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>&lt;|-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="paramNext">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: 24pt &quot;.SF NS Text&quot;;
-color: rgb(255, 0, 128);
-background-color: rgba(255, 255, 255, 0);
-border-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>-|&gt;</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <zorder>layoutWidget</zorder>
-           <zorder>chart</zorder>
-           <zorder>verticalLayoutWidget</zorder>
-          </widget>
-         </widget>
-        </item>
         <item row="0" column="0">
          <layout class="QVBoxLayout" name="verticalLayout_button">
           <property name="spacing">
@@ -472,23 +297,152 @@ background-color: rgba(255, 255, 255, 0);</string>
             </property>
            </widget>
           </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </item>
-        <item row="1" column="0" rowspan="4">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="0" column="1" rowspan="5">
+         <widget class="QStackedWidget" name="stackedWidget">
+          <property name="autoFillBackground">
+           <bool>false</bool>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="currentIndex">
+           <number>1</number>
           </property>
-         </spacer>
+          <widget class="QWidget" name="page">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+           </property>
+           <widget class="QWidget" name="layoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>20</y>
+              <width>451</width>
+              <height>691</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayoutCheckbox">
+             <item>
+              <widget class="QGroupBox" name="groupBoxCore">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string>Cores</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_params">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string>params</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+            <zorder>groupBox_params</zorder>
+            <zorder>groupBoxCore</zorder>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="page_2">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetFixedSize</enum>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="paramPrevo">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 24pt &quot;.SF NS Text&quot;;
+color: rgb(255, 0, 128);
+background-color: rgba(255, 255, 255, 0);
+border-color: rgb(0, 0, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>&lt;|-</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="paramNext">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 24pt &quot;.SF NS Text&quot;;
+color: rgb(255, 0, 128);
+background-color: rgba(255, 255, 255, 0);
+border-color: rgb(0, 0, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>-|&gt;</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="verticalLayoutPlots"/>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="sumPlots"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -507,23 +461,40 @@ background-color: rgba(255, 255, 255, 0);</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QPushButton" name="pBshowOp_E">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 24pt &quot;.SF NS Text&quot;;
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="pBshowOp_E">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 24pt &quot;.SF NS Text&quot;;
 color: rgb(255, 0, 128);
 border-color: rgba(255, 255, 255, 0);
 background-color: rgba(255, 255, 255, 0);</string>
-          </property>
-          <property name="text">
-           <string>&gt;</string>
-          </property>
-         </widget>
+            </property>
+            <property name="text">
+             <string>&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -533,17 +504,7 @@ background-color: rgba(255, 255, 255, 0);</string>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayoutPlots_E">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="sizeConstraint">
-               <enum>QLayout::SetNoConstraint</enum>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-             </layout>
+             <layout class="QGridLayout" name="verticalLayoutPlots_E"/>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -568,6 +529,19 @@ border-color: rgb(0, 0, 0);</string>
                  <string>&lt;|</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
               <item>
                <widget class="QPushButton" name="paramNext_E">
@@ -692,14 +666,6 @@ border-color: rgb(0, 0, 0);</string>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QChartView</class>
-   <extends>QWidget</extends>
-   <header location="global">qchartview.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
