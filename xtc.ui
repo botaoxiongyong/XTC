@@ -433,10 +433,10 @@ border-color: rgb(0, 0, 0);</string>
                </layout>
               </item>
               <item>
-               <layout class="QGridLayout" name="verticalLayoutPlots"/>
+               <layout class="QVBoxLayout" name="sumPlots"/>
               </item>
               <item>
-               <layout class="QGridLayout" name="sumPlots"/>
+               <layout class="QGridLayout" name="verticalLayoutPlots"/>
               </item>
              </layout>
             </item>

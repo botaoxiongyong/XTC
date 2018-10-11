@@ -400,7 +400,7 @@ void XTC::coreItemChecked(){
     //ui->chart->setChart(t);
     sumChart->setChart(t);
     sumChart->setMaximumHeight(10);
-    ui->sumPlots->addWidget(sumChart,0,0,Qt::AlignBottom);
+    ui->sumPlots->addWidget(sumChart,Qt::AlignBottom);
     //ui->verticalLayoutPlots->setAlignment(Qt::AlignBottom);
     //ui->verticalLayoutPlots->setContentsMargins(0,0,0,100);
 }
