@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Introduction.qml</file>
+        <file>ErrPage.qml</file>
+        <file>PlotPage.qml</file>
+    </qresource>
+</RCC>
