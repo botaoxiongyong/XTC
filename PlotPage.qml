@@ -12,12 +12,14 @@ Item {
     signal coreI(int cindex)
     signal paraI(int pindex)
     property int pInd: 2
+    property int count: 0
 
     function coreList(corels){
+        count = 0;
         for (var i in corels){
-            coreI(i)
-            paraI(pInd)
-            figmod.insert(i,{coretext:corels[i],coreIdex:i})
+            //coreI(i)
+            //paraI(pInd)
+            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:pInd})
             listc.append({coretext:corels[i],check:true,coreIdex:i})
             //figmod.append({coretext:corels[i],check:true,coreIdex:i})
         }
@@ -97,18 +99,24 @@ Item {
         }
     }
 
-    function nextPara(pInd){
-        pInd += 1;
-        console.log(figmod.count)
+    function nextPara(count){
+        console.log(figmod.count,t)
         //console.log(listc.get(0).)
-        for (var i=0; i<= figmod.count; i++){
+        for (var i=figmod.count-1; i>= 0; i--){
             //coreI(i)
-            console.log(i)
-            //paraI(pInd)
+            //console.log(pInd+count)
+
             //console.log(figmod.get(i).coretext)
-            //figmod.get(i).paraIdex = pInd
-            figmod.remove(i)
-            //figmod.insert(i, {})
+            //figmod.get(i).paraIdex = pInd+count
+            //figmod.setProperty(i,"paraIdex",pInd+count)
+            //var t = figmod.get(i).coretext
+            var c = figmod.get(i).coreIdex
+            //var t = pInd+count
+            //figmod.remove(i)
+            //figmod.insert(i+1,{coretext:figmod.get(i).coretext,coreIdex:figmod.get(i).coreIdex,paraIdex:pInd+count})
+            //console.log(figmod.get(i).paraIdex)
+
+            figmod.insert(i+1, {coreIdex:c,paraIdex:count})
         }
 
     }
@@ -169,13 +177,14 @@ Item {
                             axisY: axisY
                             //XYPoint{x:xvector[0];y:xvector[1]}
                             Component.onCompleted: {
-                                //coreI(coreIdex)
-                                //paraI(pInd)
+                                coreI(coreIdex)
+                                paraI(paraIdex)
                                 for (var i in xvector){
                                     series.append(xvector[i],yvector[i])
                                 }
                                 axisY.max = Math.max.apply(Math,yvector)
                                 axisY.min = Math.min.apply(Math,yvector)
+                                //plotColum.forceLayout()
                             }
                         }
 
@@ -191,8 +200,9 @@ Item {
             text: qsTr("Next")
             anchors.bottom: fig.bottom
             onClicked: {
-                //console.log("test")
-                nextPara(pInd)
+                count++;
+                console.log(count);
+                nextPara(count);
             }
         }
 
