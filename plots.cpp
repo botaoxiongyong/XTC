@@ -77,3 +77,20 @@ QVector<qreal> DataLoad::axRange(){
     return m_axrange;
 }
 
+QLineSeries* DataLoad::xy()
+{
+    return m_xy;
+}
+void DataLoad::setXy(QLineSeries *xy)
+{
+    if(m_xy == xy) return;
+    if(m_xy){
+        for (int i=0; i<m_xvec.count();i++){
+            m_xy->append(m_xvec[i],m_yvec[i]);
+        }
+    }
+        //
+    m_xy = xy;
+    emit xyChanged();
+}
+

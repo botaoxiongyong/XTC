@@ -11,6 +11,8 @@
 #include <QFile>
 #include <QVector>
 #include <QMetaType>
+#include <QLineSeries>
+using namespace QtCharts;
 
 class mdata {
     Q_GADGET
@@ -36,6 +38,7 @@ class DataLoad: public QObject
     Q_PROPERTY(QStringList coreList READ coreList)
     Q_PROPERTY(int coreIndex READ coreIndex WRITE setCoreIndex NOTIFY coreIndexChanged)
     Q_PROPERTY(int paraIndex READ paraIndex WRITE setParaIndex NOTIFY paraIndexChanged)
+    Q_PROPERTY(QLineSeries* xy READ xy WRITE setXy NOTIFY xyChanged)
 
 public:
 
@@ -72,12 +75,16 @@ public:
     int paraIndex();
     void setParaIndex(int &coreIndex);
 
+    QLineSeries* xy();
+    void setXy(QLineSeries *xy);
+
 
 signals:
     void filePrjChanged();
     void error_listChanged();
     void coreIndexChanged(int &coreIndex);
     void paraIndexChanged();
+    void xyChanged();
 
 
 private:
@@ -92,5 +99,6 @@ private:
     QStringList m_coreList;
     int m_coreIn;
     int m_paraIn;
+    QLineSeries* m_xy;
 };
 #endif // DATALOAD_H

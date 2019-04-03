@@ -43,6 +43,7 @@ ApplicationWindow {
     property int paraIndex
     property var xvect
     property var yvect
+    property var xy
 
     onFNameChanged: {   
         //console.log(errList.length)
@@ -56,14 +57,15 @@ ApplicationWindow {
         dataload.paraIndex = paraIndex
         xvect = dataload.xvector
         yvect = dataload.yvector
+        dataload.xy = xy
         //console.log("print xvector")
         ///console.log(dataload.xvector)
     }
     onParaIndexChanged: {
-        dataload.coreIndex = coreIndex
-        dataload.paraIndex = paraIndex
-        xvect = dataload.xvector
-        yvect = dataload.yvector
+        //dataload.coreIndex = coreIndex
+        //dataload.paraIndex = paraIndex
+        //xvect = dataload.xvector
+        //yvect = dataload.yvector
         //dataload.paraIndex = paraIndex
     }
 
@@ -107,7 +109,8 @@ ApplicationWindow {
                      onCoreI: coreIndex = cindex;
                      onParaI: paraIndex = pindex;
                      property var xvector: xvect;
-                     property var yvector: yvect;}
+                     property var yvector: yvect;
+                     onXy: xy = xyArray}
         }
         Component.onCompleted: contentItem.interactive = false
     }

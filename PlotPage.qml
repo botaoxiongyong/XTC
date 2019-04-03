@@ -8,11 +8,13 @@ Item {
     anchors.fill: parent
 
     //property var coreSelected: []
-    property string coretext
+    //property string coretext
     signal coreI(int cindex)
     signal paraI(int pindex)
-    property int pInd: 2
+    signal xy(var xyArray)
+    property int pInd: 1
     property int count: 0
+    property int pi
 
     function coreList(corels){
         count = 0;
@@ -29,8 +31,8 @@ Item {
     function addFigList(chekstate,text,conInt){
         //console.log(chekstate)
         if (chekstate === 2){
-            coreI(conInt)
-            paraI(pInd)
+            //coreI(conInt)
+            //paraI(pInd)
             //figmod.append({coretext:text})
             figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:pInd})
         }
@@ -40,12 +42,6 @@ Item {
 
     }
 
-    function test(figmod){
-        for (var i = 0; i < figmod.count; i++){
-            coreI(i)
-            paraI(pInd)
-        }
-    }
 
     function loopCheckBox(){
         for (var i = 0; i < listc.count; i++){
@@ -100,23 +96,26 @@ Item {
     }
 
     function nextPara(count){
-        console.log(figmod.count,t)
+        //console.log(figmod.count,t)
         //console.log(listc.get(0).)
-        for (var i=figmod.count-1; i>= 0; i--){
+        var fignum = figmod.count
+        for (var i=0; i<fignum; i++){
             //coreI(i)
-            //console.log(pInd+count)
-
+            console.log(count,pInd)
             //console.log(figmod.get(i).coretext)
             //figmod.get(i).paraIdex = pInd+count
             //figmod.setProperty(i,"paraIdex",pInd+count)
-            //var t = figmod.get(i).coretext
+
             var c = figmod.get(i).coreIdex
             //var t = pInd+count
             //figmod.remove(i)
             //figmod.insert(i+1,{coretext:figmod.get(i).coretext,coreIdex:figmod.get(i).coreIdex,paraIdex:pInd+count})
             //console.log(figmod.get(i).paraIdex)
 
-            figmod.insert(i+1, {coreIdex:c,paraIdex:count})
+            figmod.insert(fignum+i, {coretext:"",coreIdex:c,paraIdex:pInd+count})
+        }
+        for (var i=0; i<fignum; i++){
+            figmod.remove(0)
         }
 
     }
@@ -179,12 +178,13 @@ Item {
                             Component.onCompleted: {
                                 coreI(coreIdex)
                                 paraI(paraIdex)
-                                for (var i in xvector){
-                                    series.append(xvector[i],yvector[i])
-                                }
-                                axisY.max = Math.max.apply(Math,yvector)
-                                axisY.min = Math.min.apply(Math,yvector)
-                                //plotColum.forceLayout()
+                                xy(series)
+                                //console.log(xvector.length)
+                                //for (var i=0;i< xvector.count;i++){
+                                //    series.append(xvector[i],yvector[i])
+                                //}
+                                //axisY.max = Math.max.apply(Math,yvector)
+                                //axisY.min = Math.min.apply(Math,yvector)
                             }
                         }
 
