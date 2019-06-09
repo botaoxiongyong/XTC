@@ -10,8 +10,11 @@
 #include <QDebug>
 #include <QFile>
 #include <QVector>
+#include <QPointF>
+#include <QList>
 #include <QMetaType>
 #include <QLineSeries>
+#include <QtCharts/QAbstractSeries>
 using namespace QtCharts;
 
 class mdata {
@@ -24,6 +27,8 @@ public:
     QStringList yaxset;
 };
 Q_DECLARE_METATYPE(mdata);
+Q_DECLARE_METATYPE(QAbstractSeries *);
+Q_DECLARE_METATYPE(QAbstractAxis *);
 
 class DataLoad: public QObject
 {
@@ -38,7 +43,8 @@ class DataLoad: public QObject
     Q_PROPERTY(QStringList coreList READ coreList)
     Q_PROPERTY(int coreIndex READ coreIndex WRITE setCoreIndex NOTIFY coreIndexChanged)
     Q_PROPERTY(int paraIndex READ paraIndex WRITE setParaIndex NOTIFY paraIndexChanged)
-    Q_PROPERTY(QLineSeries* xy READ xy WRITE setXy NOTIFY xyChanged)
+    //Q_PROPERTY(QAbstractSeries xyvect READ xyvect WRITE setXyvect)
+
 
 public:
 
@@ -75,17 +81,17 @@ public:
     int paraIndex();
     void setParaIndex(int &coreIndex);
 
-    QLineSeries* xy();
-    void setXy(QLineSeries *xy);
+    //QAbstractSeries *xyvect();
 
+public slots:
+    void setXyVect(QAbstractSeries *series);
+    void plot_index(int i);
 
 signals:
     void filePrjChanged();
     void error_listChanged();
     void coreIndexChanged(int &coreIndex);
     void paraIndexChanged();
-    void xyChanged();
-
 
 private:
     QString m_filePrj;
@@ -99,6 +105,7 @@ private:
     QStringList m_coreList;
     int m_coreIn;
     int m_paraIn;
-    QLineSeries* m_xy;
+    QList<QVector<QPointF>> m_xy;
+    int m_index;
 };
 #endif // DATALOAD_H

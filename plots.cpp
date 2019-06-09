@@ -1,5 +1,7 @@
 #include "dataload.h"
 
+//Q_DECLARE_METATYPE(QAbstractSeries *)
+//Q_DECLARE_METATYPE(QAbstractAxis *)
 
 std::vector<std::vector<QString>> DataLoad::mCore(){
     return m_matrixCore;
@@ -77,20 +79,29 @@ QVector<qreal> DataLoad::axRange(){
     return m_axrange;
 }
 
-QLineSeries* DataLoad::xy()
-{
-    return m_xy;
-}
-void DataLoad::setXy(QLineSeries *xy)
-{
-    if(m_xy == xy) return;
-    if(m_xy){
-        for (int i=0; i<m_xvec.count();i++){
-            m_xy->append(m_xvec[i],m_yvec[i]);
-        }
-    }
-        //
-    m_xy = xy;
-    emit xyChanged();
+
+void DataLoad::plot_index(int i){
+    m_index = i;
 }
 
+void DataLoad:: setXyVect(QAbstractSeries *series){
+    m_xy.clear();
+    qDebug()<<m_index;
+
+    qDebug() << m_xvec.length();
+    auto max = std::max_element(m_yvec.begin(), m_yvec.end());
+    //qreal ymax = ;
+    QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+
+    QVectorIterator<double> x(m_xvec);
+    QVectorIterator<double> y(m_yvec);
+    while (x.hasNext()) {
+        xySeries->append(x.next(),y.next());
+    }
+
+    /*
+    for (int t=0;t< m_xvec.length();t++){
+        xySeries->append(m_xvec[t],m_yvec[t]);
+    }
+    */
+}

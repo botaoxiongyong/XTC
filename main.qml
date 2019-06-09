@@ -32,65 +32,37 @@ ApplicationWindow {
         }
     }
 
-    DataLoad {
-        id: dataload
+    Loader {
+        id:t1
+        anchors.fill: parent
+        //source: "Introduction.qml"
+        focus: true
     }
 
-    property var errList
-    property var corelist
-    property string fName: ""
-    property int coreIndex
-    property int paraIndex
-    property var xvect
-    property var yvect
-    property var xy
+    Introduction{}
 
-    onFNameChanged: {   
-        //console.log(errList.length)
-        dataload.filePrj = fName
-        errList = dataload.error_list
-        showErr(errList)
-    }
 
-    onCoreIndexChanged: {
-        dataload.coreIndex = coreIndex
-        dataload.paraIndex = paraIndex
-        xvect = dataload.xvector
-        yvect = dataload.yvector
-        dataload.xy = xy
-        //console.log("print xvector")
-        ///console.log(dataload.xvector)
-    }
-    onParaIndexChanged: {
-        //dataload.coreIndex = coreIndex
-        //dataload.paraIndex = paraIndex
-        //xvect = dataload.xvector
-        //yvect = dataload.yvector
-        //dataload.paraIndex = paraIndex
-    }
 
-    function showErr(errList) {
-        if (errList.length > 0){
-            //console.log("bingo")
-            if (fName != "") {
-                view.setCurrentIndex(1)
-            }
-            else{
-                view.setCurrentIndex(0)
-            }
-        }
-        else {
-            corelist = dataload.coreList
-            view.setCurrentIndex(2)
-        }
-    }
 
+    /*
+
+    Page {
+        id: firstPage
+        anchors.fill: parent
+        Introduction {}
+        //PlotPage{}
+    }
 
     SwipeView {
         id: view
 
         currentIndex: 0
         anchors.fill: parent
+
+        function addPage(page) {
+                    addItem(page)
+                    page.visible = true
+                }
 
         Item {
             id: firstPage
@@ -110,10 +82,11 @@ ApplicationWindow {
                      onParaI: paraIndex = pindex;
                      property var xvector: xvect;
                      property var yvector: yvect;
-                     onXy: xy = xyArray}
+            }
         }
         Component.onCompleted: contentItem.interactive = false
     }
+    */
 
 
 /*
