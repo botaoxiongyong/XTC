@@ -22,6 +22,15 @@ Rectangle {
     property int coreIdex
     property int paraIdex
     property var params
+    property int xmax: 100
+    property int xmin: 0
+
+    property int pressX
+    property int pressY
+    property int releaseX
+    property int releaseY
+    property int widthRect
+    property int heightRect
 
 
     DataLoad {
@@ -184,6 +193,7 @@ Rectangle {
 
         ChartView {
             property real scaleFactor: 1
+
             id: chart
             //anchors.fill: parent
             anchors.top: fig.top
@@ -208,19 +218,93 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
+                hoverEnabled: true
+
+                acceptedButtons: Qt.LeftButton
+
+                onPressed: {
+
+                    pressX = mouse.x
+                    pressY = mouse.y
+                    //console.log("Pressed Co-ordinates",pressX,pressY);
+                }
+
+                onReleased: {
+                    releaseX = mouse.x
+                    releaseY = mouse.y
+                    //console.log("Released Co-ordinates",releaseX,releaseY);
+                    widthRect = releaseX - pressX
+                    heightRect = releaseY - pressY
+                    //console.log("width, height:",widthRect,heightRect)
+                }
+
+                /*
+                onMouseXChanged: {
+                    //console.log(mouseX);
+                    //t1  = chart.mapFromGlobal(mouseX,mouseY)
+                    ///console.log(t1)
+                    var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                    var xpos = coords.x
+                }
+                */
+
                 onWheel: {
-                    parent.scaleFactor += 0.02 * wheel.angleDelta.y/2000;
-                    if (parent.scaleFactor < 0)
-                        parent.scaleFactor = 0;
-                    console.log(parent.scaleFactor)
-                    chart.zoom(parent.scaleFactor)
+                    var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                    var xpos = coords.x
+                    parent.scaleFactor += 2 * wheel.angleDelta.y/120;
+                    //if (parent.scaleFactor > 0)
+                    //    parent.scaleFactor = 0;
+
+                    //chart.zoom(parent.scaleFactor)
+
+
+                    xAxis.max = xmax - parent.scaleFactor
+                    xAxis.min = xmin + parent.scaleFactor
                 }
 
                 onDoubleClicked: {
-                    chart.zoomReset()
+                    //chart.zoomReset()
+                    xAxis.min = 0
+                    xAxis.max = 100
                 }
             }
 
+        }
+
+        Rectangle {
+            id:rectRoi
+            opacity: 0.4
+            x: pressX
+            y: pressY
+            width: widthRect
+            height: heightRect
+            color: "grey"
+
+            MouseArea {
+                id:roiarea
+                anchors.fill: parent
+                acceptedButtons: Qt.RightButton
+
+                onClicked: {
+                    //rectRoi.visible = false
+                    //console.log("Right Button Clicked");
+                    var precoords = chart.mapToValue(Qt.point(pressX,pressY))
+                    var xpos1 = precoords.x
+                    var relcoords = chart.mapToValue(Qt.point(releaseX,releaseY))
+                    var xpos2 = relcoords.x
+                    if (xpos1>xpos2){
+                        xAxis.max = xpos1
+                        xAxis.min = xpos2
+                        xmax = xpos1
+                        xmin = xpos2
+                    }else{
+                        xAxis.max = xpos2
+                        xAxis.min = xpos1
+                        xmax = xpos2
+                        xmin = xpos1
+                    }
+                }
+            }
         }
 
         Button {
