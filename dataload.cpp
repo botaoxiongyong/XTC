@@ -97,6 +97,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
     for (QString& i:paramsCore){
         n++;
         coreParam.push_back(i);
+        m_paramList.append(i.replace("CP ",""));
     }
 
     //matrix of file path
@@ -166,12 +167,6 @@ void DataLoad::dataMatrix(const QString &filePrj){
             }
         }
     }
-
-
-
-
-
-    //qDebug() << "test";
 
     //firt row = refernece data
     for (int n=1;n<NPC+1;n++){
