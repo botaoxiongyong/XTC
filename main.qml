@@ -6,11 +6,17 @@ import io.qt.examples.dataload 1.0
 
 ApplicationWindow {
     visible: true
-    width: 740
+    width: 840
     height: 580
     title: qsTr("XTC")
 
     menuBar:MenuBar {
+        id:mbar
+        background: Rectangle{
+            color: "lightgrey"
+            border.color: "grey"
+        }
+
         Menu {
             title: qsTr("&File")
             Action { text: qsTr("&New...") }

@@ -89,9 +89,24 @@ Rectangle {
         //anchors.fill: parent
         id: coreL
         anchors.left: parent.left
-        width: parent.width/5
+        width: parent.width*0.2
         height: parent.height
-        color: "grey"
+        color: "lightgrey"
+
+        Switch {
+            id:modeChange
+            text: qsTr("View Mode")
+
+            onCheckedChanged: {
+                console.log(modeChange.checked)
+                if (modeChange.checked==true){
+                    modeChange.text = qsTr("Edit Mode")
+                }
+                else{
+                    modeChange.text = qsTr("View Mode")
+                }
+            }
+        }
 
         ListModel {
             id: listc
@@ -104,7 +119,25 @@ Rectangle {
             CheckBox{
                 id:cbox
                 text: coretext
-                checked: true
+                checked: true 
+
+                indicator: Rectangle{
+                    anchors.verticalCenter: cbox.verticalCenter
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    radius: 3
+                    border.color: cbox.activeFocus ? "darkblue" : "gray"
+                    border.width: 1
+                    Rectangle {
+                        visible: cbox.checked
+                        color: "green"
+                        border.color: "green"
+                        radius: 2
+                        anchors.margins: 4
+                        anchors.fill: parent
+                    }
+                }
+
                 onCheckStateChanged: {
                     //console.log(cbox.checkState)
                     addFigList(cbox.checkState,coretext,coreIdex)
@@ -116,7 +149,11 @@ Rectangle {
 
         ListView {
             id: listView
-            anchors.fill: coreL
+            height: coreL.height*0.8
+            width: coreL.width*0.9
+            anchors.left: coreL.left
+            //anchors.fill: coreL
+            anchors.bottom: coreL.bottom
             flickableDirection: Flickable.VerticalFlick
             boundsBehavior: Flickable.StopAtBounds
             model: coreList(corels)
@@ -127,6 +164,57 @@ Rectangle {
             //Layout.fillHeight: true
 
             ScrollBar.vertical: ScrollBar {}
+        }
+    }
+
+    Button{
+        id:listHide
+        text: qsTr("<")
+        height: coreL.height
+        width: coreL.width*0.1
+        anchors.right: coreL.right
+
+        background: Rectangle{
+            id:bbg
+            color: "lightgrey"
+            border.color: "grey"
+        }
+
+        onClicked: {
+            //bbg.color = "lightblue"
+            listShow.visible = true
+            //listShow.width = 0.2
+            //coreL.anchors.right = plotpage.left
+            coreL.visible = false
+            listHide.visible = false
+            //listShow.anchors.left = plotpage.left
+            fig.width = plotpage.width*0.98
+
+        }
+    }
+
+    Button{
+        id:listShow
+        text: qsTr(">")
+        height: coreL.height
+        width: coreL.width*0.1
+        anchors.left: plotpage.left
+        visible: false
+
+        background: Rectangle{
+            id:bbg2
+            color: "lightblue"
+            border.color: "blue"
+        }
+
+        onClicked: {
+            //bbg2.color = "grey"
+            listShow.visible = false
+            coreL.visible = true
+            listHide.visible = true
+            fig.width = plotpage.width*0.8
+
+
         }
     }
 
@@ -180,7 +268,7 @@ Rectangle {
     Rectangle {
         id:fig
         //anchors.fill:parent
-        width: parent.width/5*4
+        width: parent.width*0.8
         height: parent.height
         anchors.right: parent.right
         color: "white"
