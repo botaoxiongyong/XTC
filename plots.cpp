@@ -159,26 +159,19 @@ void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,i
         */
 
         QXYSeries *xySeries = static_cast<QXYSeries *>(series);
-        xySeries->setColor("lightgrey");
+        //xySeries->setColor("lightgrey");
 
         if (coreIndex==0){
             for (int t=0;t< matrix.x.size();t++){
                 xySeries->append(matrix.x[t],(matrix.y[t]-min[0])/ymax+m_index);
             }
+            xySeries->setColor("blue");
         }
         else{
             for (int t=0;t< matrix.age.size();t++){
-                xySeries->append(matrix.age[t],(matrix.y[t]-min[0])/ymax+m_index);
+                xySeries->append(QPointF(matrix.age[t],(matrix.y[t]-min[0])/ymax+m_index));
             }
         }
-
-        connect(xySeries,&QXYSeries::doubleClicked,this,&DataLoad::lineChangeColor);
-
-        //qDebug()<<"tt";
-        //xySeries->append(matrix.lineXY);
     }
 }
 
-void DataLoad::lineChangeColor(const QPointF &point){
-    qDebug()<<"test";
-}

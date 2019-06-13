@@ -14,6 +14,7 @@ Rectangle {
     //signal paraI(int pindex)
     property var fileName
     property int pInd: 2
+    property int cInd: 1
     property int count: 0
     property int pi
     property var corels
@@ -52,8 +53,8 @@ Rectangle {
             //coreI(i)
             //paraI(pInd)
             //!!!!!!!!!!!!!paraIdex initial
-            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:2})
-            listc.append({coretext:corels[i],check:true,coreIdex:i})
+            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:pInd})
+            listc.append({coretext:corels[i],check:true,coreIdex:i,fcolor:"black"})
             //figmod.append({coretext:corels[i],check:true,coreIdex:i})
         }
         //console.log(listc.count)
@@ -103,6 +104,8 @@ Rectangle {
                     modeChange.text = qsTr("Edit Mode")
                     chart.removeAllSeries()
                     fig.color = "#13141A"
+                    //coreL.color = "#13141A"
+                    listc.setProperty(cInd,"fcolor","red")
                     chart.theme = ChartView.ChartThemeDark
                     edit()
 
@@ -110,6 +113,7 @@ Rectangle {
                 else{
                     modeChange.text = qsTr("View Mode")
                     fig.color = "#FFFFFF"
+                    //coreL.color = "#FFFFFF"
                     chart.theme = ChartView.ChartThemeLight
                     chart.removeAllSeries()
                     plot()
@@ -127,7 +131,15 @@ Rectangle {
 
             CheckBox{
                 id:cbox
-                text: coretext
+                Text {
+                    anchors.fill:parent
+                    anchors.leftMargin: 25
+                    anchors.topMargin: 8
+                    //anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr(coretext)
+                    color: fcolor
+                }
+
                 checked: true 
 
                 indicator: Rectangle{
@@ -283,12 +295,23 @@ Rectangle {
             xAxis.max = 100
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd]
-            var series =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
+            var series =chart.createSeries(ChartView.SeriesTypeScatter,
+                                           figmod.get(i).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
+            if (i==cInd){
+                series.color = "red"
+            }else{
+                series.color = "lightgrey"
+            }
+            series.markerSize = 4
             dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,figmod.count)
+
+            //var series2 =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
+            //series2.useOpenGL = chart.openGL
+            //series2.width = 0.5
+            //dataload.editXyVect(series2,figmod.get(i).coreIdex,pInd,figmod.count)
         }
         //plot age tie points
-
     }
 
     Rectangle {

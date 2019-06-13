@@ -14,8 +14,8 @@
 #include <QPointF>
 #include <QList>
 #include <QMetaType>
-#include <QLineSeries>
 #include <QtCharts/QAbstractSeries>
+#include <QtCharts/QScatterSeries>
 using namespace QtCharts;
 
 class mdata {
@@ -93,9 +93,6 @@ public slots:
     void setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex);
     void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int coreCount);
     void plot_index(int i);
-
-private Q_SLOTS:
-    void lineChangeColor(const QPointF &point);
 signals:
     void filePrjChanged();
     void error_listChanged();
