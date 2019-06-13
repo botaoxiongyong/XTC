@@ -53,8 +53,8 @@ Rectangle {
             //coreI(i)
             //paraI(pInd)
             //!!!!!!!!!!!!!paraIdex initial
-            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:pInd})
-            listc.append({coretext:corels[i],check:true,coreIdex:i,fcolor:"black"})
+            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:2})
+            listc.append({coretext:corels[i],check:true,coreIdex:i})
             //figmod.append({coretext:corels[i],check:true,coreIdex:i})
         }
         //console.log(listc.count)
@@ -71,7 +71,7 @@ Rectangle {
             //coreI(conInt)
             //paraI(pInd)
             //figmod.append({coretext:text})
-            figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:pInd})
+            figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:2})
         }
         else {
             figmod.remove(conInt)
@@ -105,7 +105,7 @@ Rectangle {
                     chart.removeAllSeries()
                     fig.color = "#13141A"
                     //coreL.color = "#13141A"
-                    listc.setProperty(cInd,"fcolor","red")
+                    //listc.setProperty(cInd,"fcolor","red")
                     chart.theme = ChartView.ChartThemeDark
                     edit()
 
@@ -131,6 +131,7 @@ Rectangle {
 
             CheckBox{
                 id:cbox
+                /*
                 Text {
                     anchors.fill:parent
                     anchors.leftMargin: 25
@@ -139,6 +140,8 @@ Rectangle {
                     text: qsTr(coretext)
                     color: fcolor
                 }
+                */
+                text: qsTr(coretext)
 
                 checked: true 
 
