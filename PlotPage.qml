@@ -101,9 +101,18 @@ Rectangle {
                 console.log(modeChange.checked)
                 if (modeChange.checked==true){
                     modeChange.text = qsTr("Edit Mode")
+                    chart.removeAllSeries()
+                    fig.color = "#13141A"
+                    chart.theme = ChartView.ChartThemeDark
+                    edit()
+
                 }
                 else{
                     modeChange.text = qsTr("View Mode")
+                    fig.color = "#FFFFFF"
+                    chart.theme = ChartView.ChartThemeLight
+                    chart.removeAllSeries()
+                    plot()
                 }
             }
         }
@@ -189,7 +198,6 @@ Rectangle {
             listHide.visible = false
             //listShow.anchors.left = plotpage.left
             fig.width = plotpage.width*0.98
-
         }
     }
 
@@ -258,11 +266,29 @@ Rectangle {
             yAxis.min = 0
             xAxis.max = 100
             //chart.title = params[figmod.get(i).paraIdex]
-            paraLabel.text = params[figmod.get(i).paraIdex]
+            paraLabel.text = params[pInd]
             var series =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
-            dataload.setXyVect(series,figmod.get(i).coreIdex,figmod.get(i).paraIdex)
+            dataload.setXyVect(series,figmod.get(i).coreIdex,pInd)
         }
+    }
+
+    function edit() {
+        for(var i = 0;i <figmod.count;i++){
+            dataload.plot_index(figmod.count-i-1)
+
+            //send lineseries to dataload for update plotting
+            yAxis.max = figmod.count//Math.max.apply(Math,yvect)
+            yAxis.min = 0
+            xAxis.max = 100
+            //chart.title = params[figmod.get(i).paraIdex]
+            paraLabel.text = params[pInd]
+            var series =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
+            series.useOpenGL = chart.openGL
+            dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,figmod.count)
+        }
+        //plot age tie points
+
     }
 
     Rectangle {
@@ -287,8 +313,9 @@ Rectangle {
             anchors.top: fig.top
             anchors.right: fig.right
             width: fig.width
-            height: fig.height/5*4.5
+            height: fig.height*0.95
             antialiasing: true
+            backgroundRoundness: 0
             property bool openGL: true
 
             ValueAxis {
@@ -404,7 +431,12 @@ Rectangle {
                 //console.log(count);
                 nextPara();
                 chart.removeAllSeries()
-                plot()
+                if (chart.theme == ChartView.ChartThemeDark){
+                    edit()
+                }
+                else{
+                    plot()
+                }
             }
         }
 
@@ -415,9 +447,15 @@ Rectangle {
             anchors.left: fig.left
             onClicked: {
                 //console.log(count);
+
                 prevPara();
                 chart.removeAllSeries()
-                plot()
+                if (chart.theme == ChartView.ChartThemeDark){
+                    edit()
+                }
+                else{
+                    plot()
+                }
             }
         }
 

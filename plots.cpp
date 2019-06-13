@@ -122,9 +122,63 @@ void DataLoad:: setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex){
                 xySeries->append(matrix.x[t],(matrix.y[t]-min[0])/ymax+m_index);
             }
         }
-
-        for (int t=0;t< matrix.age.size();t++){
-            xySeries->append(matrix.age[t],(matrix.y[t]-min[0])/ymax+m_index);
+        else{
+            for (int t=0;t< matrix.age.size();t++){
+                xySeries->append(matrix.age[t],(matrix.y[t]-min[0])/ymax+m_index);
+            }
         }
+
+
+
+        //qDebug()<<"tt";
+        //xySeries->append(matrix.lineXY);
     }
+}
+
+void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int coreCount){
+    m_xy.clear();
+    //m_xvec = m_matrixData[m_coreIn][m_paraIn].x;
+    //m_yvec = m_matrixData[m_coreIn][m_paraIn].y;
+    std::vector<float> agepoints;
+    mdata matrix = m_matrixData[coreIndex][paraIndex];
+    agepoints = m_matrixData[coreIndex][0].y;
+
+    if (matrix.y.size()>0){
+        auto max = std::max_element(matrix.y.begin(),matrix.y.end());
+        auto min = std::min_element(matrix.y.begin(),matrix.y.end());
+
+        float ymax=max[0]-min[0];
+
+        /*
+        if (-1*min[0]>max[0]){
+            ymax = -1*min[0];
+            m_index = m_index+1;
+        }else{
+            ymax = max[0];
+        }
+        */
+
+        QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+        xySeries->setColor("lightgrey");
+
+        if (coreIndex==0){
+            for (int t=0;t< matrix.x.size();t++){
+                xySeries->append(matrix.x[t],(matrix.y[t]-min[0])/ymax+m_index);
+            }
+        }
+        else{
+            for (int t=0;t< matrix.age.size();t++){
+                xySeries->append(matrix.age[t],(matrix.y[t]-min[0])/ymax+m_index);
+            }
+        }
+
+        connect(xySeries,&QXYSeries::doubleClicked,this,&DataLoad::lineChangeColor);
+
+        //qDebug()<<"tt";
+        //xySeries->append(matrix.lineXY);
+    }
+}
+
+void DataLoad::lineChangeColor(const QPointF &point){
+    qDebug()<<"test";
 }

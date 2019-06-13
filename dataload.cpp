@@ -181,6 +181,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
        }
 
        QTextStream in(&file);
+       //QList<QPointF> lines;
        while (!in.atEnd()) {
            QString line = in.readLine();
            QStringList lineData = line.replace("\n","").split(QRegExp("(\\s+)"), QString::SkipEmptyParts);
@@ -189,6 +190,8 @@ void DataLoad::dataMatrix(const QString &filePrj){
            if (lineData.size() ==2 ){
              x.push_back(lineData[0].toFloat());
              y.push_back(lineData[1].toFloat());
+             //lines.append(QPointF(lineData[0].toFloat(),
+             //             lineData[1].toFloat()));
            }
        }
 
@@ -199,6 +202,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
        matrixData[0][size_t(n)].x = x;
        matrixData[0][size_t(n)].y = y;
        matrixData[0][size_t(n)].params = params;
+       //matrixData[0][size_t(n)].lineXY = lines;
     }
 
     //qDebug() << "row finished";
@@ -219,7 +223,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
         QTextStream in(&file);
 
         //qDebug() << fileNa;
-
+        //QList<QPointF> lines;
         while (!in.atEnd()) {
             QString line = in.readLine();
             QStringList lineData = line.replace("\n","").split(QRegExp("\\s+"), QString::SkipEmptyParts);
@@ -227,10 +231,13 @@ void DataLoad::dataMatrix(const QString &filePrj){
             //qDebug() << lineData[0];
             depth.push_back(lineData[0].toFloat());
             age.push_back(lineData[1].toFloat());
+            //lines.append(QPointF(lineData[0].toFloat(),
+            //             lineData[1].toFloat()));
         }
 
         matrixData[size_t(m)][0].x = depth;
         matrixData[size_t(m)][0].y = age;
+        //matrixData[size_t(m)][0].lineXY = lines;
     }
 
 
@@ -251,6 +258,8 @@ void DataLoad::dataMatrix(const QString &filePrj){
 
             if (fileNa.contains("NO_DATA", Qt::CaseSensitive)){
             //pass
+                //QList<QPointF> lines;
+                //matrixData[size_t(m)][size_t(n)].lineXY = lines;
             }
             else{
             if (fileNa.contains("FP", Qt::CaseSensitive)){
@@ -265,6 +274,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
                 }
                 QTextStream in(&file);
                 std::vector<float> x,y;
+                //QList<QPointF> lines;
                 while (!in.atEnd()){
                      QString line = in.readLine();
                      QStringList lineData = line.replace("\n","").replace("\\s+",",").split(QRegExp("\\s+"), QString::SkipEmptyParts);
@@ -272,6 +282,8 @@ void DataLoad::dataMatrix(const QString &filePrj){
                         //if two columns is ture
                         x.push_back(lineData[0].toFloat());
                         y.push_back(lineData[1].toFloat());
+                        //lines.append(QPointF(lineData[0].toFloat(),
+                        //             lineData[1].toFloat()));
                     }
                 }
 
@@ -280,6 +292,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
                 matrixData[size_t(m)][size_t(n)].x = x;
                 matrixData[size_t(m)][size_t(n)].y = y;
                 matrixData[size_t(m)][size_t(n)].age = newage;
+                //matrixData[size_t(m)][size_t(n)].lineXY = lines;
 
             }
 
@@ -296,6 +309,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
                 }
                 QTextStream in(&file);
                 std::vector<float> x,y;
+                //QList<QPointF> lines;
                 while (!in.atEnd()){
                 QString line = in.readLine();
                 QStringList lineData = line.replace("\n","").replace("\\s+",",").split(QRegExp("\\s+"), QString::SkipEmptyParts);
@@ -303,12 +317,16 @@ void DataLoad::dataMatrix(const QString &filePrj){
                     //if two columns is ture
                     x.push_back(lineData[xColumn-1].toFloat());
                     y.push_back(lineData[yColumn-1].toFloat());
+                    //lines.append(QPointF(lineData[xColumn-1].toFloat(),
+                    //             lineData[yColumn-1].toFloat()));
                 }
                 }
                 newage = interp1(depth,age,x);
                 matrixData[size_t(m)][size_t(n)].x = x;
                 matrixData[size_t(m)][size_t(n)].y = y;
                 matrixData[size_t(m)][size_t(n)].age = newage;
+                //matrixData[size_t(m)][size_t(n)].lineXY = lines;
+
             }
 
             }

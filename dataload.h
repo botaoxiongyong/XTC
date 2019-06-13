@@ -6,6 +6,7 @@
 #include <QString>
 #include <QVector>
 #include <QStringList>
+#include <QList>
 #include <QtCore>
 #include <QDebug>
 #include <QFile>
@@ -22,6 +23,7 @@ class mdata {
 public:
     std::vector<float> x;
     std::vector<float> y;
+    QList<QPointF> lineXY;
     std::vector<float> age;
     QStringList params;
     QStringList yaxset;
@@ -89,8 +91,11 @@ public:
 
 public slots:
     void setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex);
+    void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int coreCount);
     void plot_index(int i);
 
+private Q_SLOTS:
+    void lineChangeColor(const QPointF &point);
 signals:
     void filePrjChanged();
     void error_listChanged();
