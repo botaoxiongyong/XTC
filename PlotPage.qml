@@ -33,6 +33,8 @@ Rectangle {
     property int widthRect
     property int heightRect
 
+    property var xLine
+
 
     DataLoad {
         id: dataload
@@ -53,7 +55,7 @@ Rectangle {
             //coreI(i)
             //paraI(pInd)
             //!!!!!!!!!!!!!paraIdex initial
-            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:2})
+            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:2,textColor:"white"})
             listc.append({coretext:corels[i],check:true,coreIdex:i})
             //figmod.append({coretext:corels[i],check:true,coreIdex:i})
         }
@@ -71,7 +73,8 @@ Rectangle {
             //coreI(conInt)
             //paraI(pInd)
             //figmod.append({coretext:text})
-            figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:2})
+
+            figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:2,textColor:"white"})
         }
         else {
             figmod.remove(conInt)
@@ -96,24 +99,36 @@ Rectangle {
 
         Switch {
             id:modeChange
-            text: qsTr("View Mode")
+            //text: qsTr("View Mode")
+            Text {
+                id: modeText
+                text: qsTr("View Mode")
+                anchors.left: modeChange.right
+                anchors.verticalCenter: modeChange.verticalCenter
+            }
 
             onCheckedChanged: {
                 console.log(modeChange.checked)
                 if (modeChange.checked==true){
-                    modeChange.text = qsTr("Edit Mode")
+                    modeText.text = qsTr("Edit Mode")
+                    modeText.color = "white"
                     chart.removeAllSeries()
                     fig.color = "#13141A"
-                    //coreL.color = "#13141A"
-                    //listc.setProperty(cInd,"fcolor","red")
+                    coreL.color = "#13141A"
+                    //!!!!listc.setProperty(cInd,"fcolor","red")
+                    listView.visible = false
+                    coreFocus.visible = true
                     chart.theme = ChartView.ChartThemeDark
                     edit()
 
                 }
                 else{
-                    modeChange.text = qsTr("View Mode")
+                    modeText.text = qsTr("View Mode")
+                    modeText.color = "black"
                     fig.color = "#FFFFFF"
-                    //coreL.color = "#FFFFFF"
+                    coreL.color = "#FFFFFF"
+                    listView.visible = true
+                    coreFocus.visible = false
                     chart.theme = ChartView.ChartThemeLight
                     chart.removeAllSeries()
                     plot()
@@ -189,6 +204,65 @@ Rectangle {
 
             ScrollBar.vertical: ScrollBar {}
         }
+
+        ListView {
+            id: coreFocus
+            height: coreL.height*0.8
+            width: coreL.width*0.9
+            anchors.left: coreL.left
+            //anchors.fill: coreL
+            anchors.bottom: coreL.bottom
+            flickableDirection: Flickable.VerticalFlick
+            boundsBehavior: Flickable.StopAtBounds
+            visible: false
+            model: figmod
+            clip: true
+            delegate: Component{
+                id:cButList
+                Button{
+                    id:cBut
+                    width: coreFocus.width
+                    height: 30
+                    Text {
+                        //anchors.bottom: cButBc.bottom
+                        anchors.horizontalCenter: cBut.horizontalCenter
+                        anchors.verticalCenter: cBut.verticalCenter
+                        text: qsTr(coretext)
+                        color: textColor
+                    }
+                    background: Rectangle{
+                        id:cButBc
+                        color: "#13141A"
+                        border.color: "lightblue"
+                    }
+
+                    onClicked: {
+                        console.log(coreIdex)
+                        console.log(coretext)
+                        cInd = coreIdex
+                        for (var i=0;i<figmod.count;i++){
+                            //figmod.setProperty(i,"textColor","red")
+                            if (figmod.get(i).coretext===coretext){
+                                figmod.setProperty(i,"textColor","red")
+                            }
+                            else{
+                                figmod.setProperty(i,"textColor","white")
+                            }
+
+                        }
+                        chart.removeAllSeries()
+                        edit()
+
+                    }
+
+                }
+            }
+
+            //Layout.fillWidth: true
+            //Layout.fillHeight: true
+
+            ScrollBar.vertical: ScrollBar {}
+        }
     }
 
     Button{
@@ -246,11 +320,11 @@ Rectangle {
 
         if (pInd > params.length-1){
             pInd = 0
-            console.log(count)
+            //console.log(count)
         }
 
         pInd = pInd + 1
-        console.log(pInd)
+        //console.log(pInd)
 
         for (var i=0; i<fignum; i++){
             figmod.setProperty(i, "paraIdex", pInd)
@@ -264,7 +338,7 @@ Rectangle {
         }
 
         pInd = pInd - 1
-        console.log(pInd)
+        //console.log(pInd)
 
         for (var i=0; i<fignum; i++){
             figmod.setProperty(i, "paraIdex", pInd)
@@ -282,8 +356,9 @@ Rectangle {
             xAxis.max = 100
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd]
-            var series =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
+            var series =chart.createSeries(ChartView.SeriesTypeScatter, figmod.get(i).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
+            series.markerSize = 4
             dataload.setXyVect(series,figmod.get(i).coreIdex,pInd)
         }
     }
@@ -361,22 +436,25 @@ Rectangle {
                 anchors.fill: parent
                 hoverEnabled: true
 
-                acceptedButtons: Qt.LeftButton
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
 
                 onPressed: {
-
-                    pressX = mouse.x
-                    pressY = mouse.y
-                    //console.log("Pressed Co-ordinates",pressX,pressY);
+                    if (mouse.button & Qt.LeftButton){
+                        pressX = mouse.x
+                        pressY = mouse.y
+                        //console.log("Pressed Co-ordinates",pressX,pressY);
+                    }
                 }
 
                 onReleased: {
-                    releaseX = mouse.x
-                    releaseY = mouse.y
-                    //console.log("Released Co-ordinates",releaseX,releaseY);
-                    widthRect = releaseX - pressX
-                    heightRect = releaseY - pressY
-                    //console.log("width, height:",widthRect,heightRect)
+                    if (mouse.button & Qt.LeftButton){
+                        releaseX = mouse.x
+                        releaseY = mouse.y
+                        //console.log("Released Co-ordinates",releaseX,releaseY);
+                        widthRect = releaseX - pressX
+                        heightRect = releaseY - pressY
+                        //console.log("width, height:",widthRect,heightRect)
+                    }
                 }
 
                 /*
@@ -388,7 +466,6 @@ Rectangle {
                     var xpos = coords.x
                 }
                 */
-
                 onWheel: {
                     var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
                     var xpos = coords.x
@@ -407,6 +484,31 @@ Rectangle {
                     //chart.zoomReset()
                     xAxis.min = 0
                     xAxis.max = 100
+                }
+
+                onClicked: {
+                    if (modeChange.checked==true){
+                        if (mouse.button & Qt.LeftButton){
+                            var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            var xpos = coords.x
+                            //console.log(xpos)
+                            if (xLine){
+                                chart.removeSeries(xLine)
+                            }
+
+                            xLine =chart.createSeries(ChartView.SeriesTypeLine,
+                                                           "", xAxis, yAxis);
+                            xLine.useOpenGL = chart.openGL
+                            xLine.append(xpos,0)
+                            xLine.append(xpos,figmod.count)
+
+                        }
+                        if (mouse.button & Qt.RightButton){
+                            var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            var xpos = coords.x
+                            console.log(xpos)
+                        }
+                    }
                 }
             }
 
