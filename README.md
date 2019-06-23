@@ -1,3 +1,6 @@
+#License
+GPL V3
+
 # XTC
 XTC for manually correlating age models 
 
