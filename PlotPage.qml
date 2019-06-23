@@ -287,6 +287,7 @@ Rectangle {
             listHide.visible = false
             //listShow.anchors.left = plotpage.left
             fig.width = plotpage.width*0.98
+            fig.anchors.left = listShow.right
         }
     }
 
@@ -309,7 +310,8 @@ Rectangle {
             listShow.visible = false
             coreL.visible = true
             listHide.visible = true
-            fig.width = plotpage.width*0.8
+            //fig.width = plotpage.width*0.8
+            fig.anchors.left = listHide.right
 
 
         }
@@ -378,11 +380,17 @@ Rectangle {
             series.useOpenGL = chart.openGL
             if (i==cInd){
                 series.color = "red"
+
+                var ageseries =chart.createSeries(ChartView.SeriesTypeLine,
+                                               "", xAxis, yAxis);
+                ageseries.useOpenGL = chart.openGL
+                ageseries.color = "grey"
+                dataload.ageLines(ageseries,cInd,figmod.count)
             }else{
                 series.color = "lightgrey"
             }
             series.markerSize = 4
-            dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,figmod.count)
+            dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,cInd)
 
             //var series2 =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
             //series2.useOpenGL = chart.openGL
@@ -395,7 +403,8 @@ Rectangle {
     Rectangle {
         id:fig
         //anchors.fill:parent
-        width: parent.width*0.8
+        //width: parent.width-coreL.width
+        anchors.left: coreL.right
         height: parent.height
         anchors.right: parent.right
         color: "white"
@@ -413,6 +422,7 @@ Rectangle {
             //anchors.fill: parent
             anchors.top: fig.top
             anchors.right: fig.right
+            anchors.left: fig.left
             width: fig.width
             height: fig.height*0.95
             antialiasing: true
@@ -504,9 +514,15 @@ Rectangle {
 
                         }
                         if (mouse.button & Qt.RightButton){
-                            var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                            var xpos = coords.x
-                            console.log(xpos)
+                            if (xLine){
+                                chart.removeSeries(xLine)
+
+                                //dataload.setInAgeRange(50)
+                                var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                                var xpos = coords.x
+                                console.log(xpos)
+                            }
+
                         }
                     }
                 }

@@ -135,13 +135,13 @@ void DataLoad:: setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex){
     }
 }
 
-void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int coreCount){
+void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int cInd){
     m_xy.clear();
     //m_xvec = m_matrixData[m_coreIn][m_paraIn].x;
     //m_yvec = m_matrixData[m_coreIn][m_paraIn].y;
-    std::vector<float> agepoints;
+
     mdata matrix = m_matrixData[coreIndex][paraIndex];
-    agepoints = m_matrixData[coreIndex][0].y;
+
 
     if (matrix.y.size()>0){
         auto max = std::max_element(matrix.y.begin(),matrix.y.end());
@@ -166,12 +166,23 @@ void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,i
                 xySeries->append(matrix.x[t],(matrix.y[t]-min[0])/ymax+m_index);
             }
             xySeries->setColor("blue");
-        }
-        else{
+        }else{
             for (int t=0;t< matrix.age.size();t++){
                 xySeries->append(QPointF(matrix.age[t],(matrix.y[t]-min[0])/ymax+m_index));
             }
         }
+    }
+}
+
+void DataLoad::ageLines(QAbstractSeries *series, int cInd, int coreCount){
+    std::vector<float> agepoints;
+    agepoints = m_matrixData[cInd][0].y;
+    QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+
+    for (int t=0;t< agepoints.size();t++){
+        xySeries->append(QPointF(agepoints[t],0));
+        xySeries->append(QPointF(agepoints[t],coreCount));
+        xySeries->append(QPointF(agepoints[t],NULL));
     }
 }
 

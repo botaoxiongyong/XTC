@@ -48,7 +48,6 @@ class DataLoad: public QObject
     //Q_PROPERTY(QAbstractSeries xyvect READ xyvect WRITE setXyvect)
     Q_PROPERTY(QStringList paramList READ paramList)
 
-
 public:
 
     explicit DataLoad(QObject *parent = 0);
@@ -88,10 +87,10 @@ public:
 
     QStringList paramList();
 
-
 public slots:
     void setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex);
-    void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int coreCount);
+    void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int cInd);
+    void ageLines(QAbstractSeries *series, int cInd, int coreCount);
     void plot_index(int i);
 signals:
     void filePrjChanged();
