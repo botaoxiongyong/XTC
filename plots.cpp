@@ -3,91 +3,14 @@
 //Q_DECLARE_METATYPE(QAbstractSeries *)
 //Q_DECLARE_METATYPE(QAbstractAxis *)
 
-std::vector<std::vector<QString>> DataLoad::mCore(){
-    return m_matrixCore;
-}
-
-void DataLoad::setMCore(std::vector<std::vector<QString>> &mCore){
-    return;
-}
-
-std::vector<std::vector<mdata>> DataLoad::mDatam(){
-    return m_matrixData;
-}
-
-void DataLoad::setMDatam(std::vector<std::vector<mdata>> &mDatam){
-
-}
-
 QStringList DataLoad::coreList(){
     return m_coreList;
 }
 
 QStringList DataLoad::paramList(){
-    //qDebug() << m_paramList;
+    //m_paramList was created in dataload.cpp when reading data file
     return m_paramList;
 }
-
-int DataLoad::coreIndex(){
-    return m_coreIn;
-}
-
-void DataLoad::setCoreIndex(int &coreIndex){
-
-    //qDebug() << coreIndex;
-    //connect(this, SIGNAL(coreIndexChanged(int)),this,SLOT(dataByIndex(int)));
-    m_coreIn = coreIndex;
-    emit coreIndexChanged(m_coreIn);
-
-}
-
-int DataLoad::paraIndex(){
-    return m_paraIn;
-}
-
-void DataLoad::setParaIndex(int &paraIndex){
-    m_paraIn = paraIndex;
-    emit paraIndexChanged();
-}
-
-
-std::vector<float> DataLoad::xvector(){
-    //qDebug() << "hello";
-    if (m_matrixData.size() != 0){
-        /*
-        QVector<qreal> xtemp,ytemp;
-        //double temp = ::m_matrixData[m_coreIn][m_paraIn].x.toDouble();
-        std::vector<float> tempx = m_matrixData[m_coreIn][m_paraIn].x;
-        for (auto const &value: tempx){
-            xtemp.push_back(double(value));
-        }
-        */
-        m_xvec = m_matrixData[m_coreIn][m_paraIn].x;
-        return m_xvec;
-    }
-}
-
-
-std::vector<float> DataLoad::yvector(){
-    if (m_matrixData.size() != 0){
-        /*
-        QVector<qreal> ytemp;
-        //qDebug() << m_coreIn,m_paraIn;
-        std::vector<float> tempy = m_matrixData[m_coreIn][m_paraIn].y;
-        for (auto const &value: tempy){
-            ytemp.push_back(double(value));
-        }
-        */
-        m_yvec = m_matrixData[m_coreIn][m_paraIn].y;
-        return m_yvec;
-    }
-}
-
-
-std::vector<float> DataLoad::axRange(){
-    return m_axrange;
-}
-
 
 void DataLoad::plot_index(int i){
     m_index = i;

@@ -36,16 +36,8 @@ class DataLoad: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString filePrj READ filePrj WRITE setFilePrj NOTIFY filePrjChanged)
-    Q_PROPERTY(std::vector<float> xvector READ xvector)
-    Q_PROPERTY(std::vector<float> yvector READ yvector)
-    Q_PROPERTY(std::vector<float> axRange READ axRange)
     Q_PROPERTY(QStringList error_list READ error_list WRITE setError_list NOTIFY error_listChanged)
-    Q_PROPERTY(std::vector<std::vector<QString>> mCore READ mCore WRITE setMCore)
-    Q_PROPERTY(std::vector<std::vector<mdata>> mDatam READ mDatam WRITE setMDatam)
     Q_PROPERTY(QStringList coreList READ coreList)
-    Q_PROPERTY(int coreIndex READ coreIndex WRITE setCoreIndex NOTIFY coreIndexChanged)
-    Q_PROPERTY(int paraIndex READ paraIndex WRITE setParaIndex NOTIFY paraIndexChanged)
-    //Q_PROPERTY(QAbstractSeries xyvect READ xyvect WRITE setXyvect)
     Q_PROPERTY(QStringList paramList READ paramList)
 
 public:
@@ -55,35 +47,14 @@ public:
     QString filePrj();
     void setFilePrj(const QString &filePrj);
 
-    std::vector<float> xvector();
-    std::vector<float> yvector();
-    std::vector<float> axRange();
-
     QStringList error_list();
     void setError_list(const QStringList &errorlist);
 
     QString readFile(const QString &filePrj);
-    //std::vector<float> depth;
-    //std::vector<float> tod;
-    //std::vector<float> age;
 
     void dataMatrix(const QString &filePrj);
 
-    std::vector<std::vector<QString>> mCore();
-    void setMCore(std::vector<std::vector<QString>> &mCore);
-
-    std::vector<std::vector<mdata>> mDatam();
-    void setMDatam(std::vector<std::vector<mdata>> &mDatam);
-
     QStringList coreList();
-
-    int coreIndex();
-    void setCoreIndex(int &coreIndex);
-
-    int paraIndex();
-    void setParaIndex(int &paraIndex);
-
-    //QAbstractSeries *xyvect();
 
     QStringList paramList();
 
@@ -95,22 +66,14 @@ public slots:
 signals:
     void filePrjChanged();
     void error_listChanged();
-    void coreIndexChanged(int &coreIndex);
-    void paraIndexChanged();
 
 private:
     QString m_filePrj;
-    std::vector<float> m_xvec;
-    std::vector<float> m_yvec;
-    std::vector<float> m_axrange;
     QStringList m_error_list;
-    //QVector <float> m_depth;
     std::vector<std::vector<QString>> m_matrixCore;
     std::vector<std::vector<mdata>> m_matrixData;
     QStringList m_coreList;
     QStringList m_paramList;
-    int m_coreIn;
-    int m_paraIn;
     QList<QVector<QPointF>> m_xy;
     int m_index;
 };
