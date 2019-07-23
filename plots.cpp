@@ -1,4 +1,5 @@
 #include "dataload.h"
+//#include "cppli.h"
 
 //Q_DECLARE_METATYPE(QAbstractSeries *)
 //Q_DECLARE_METATYPE(QAbstractAxis *)
@@ -98,14 +99,45 @@ void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,i
 }
 
 void DataLoad::ageLines(QAbstractSeries *series, int cInd, int coreCount){
+    m_coreIndex = cInd;
     std::vector<float> agepoints;
     agepoints = m_matrixData[cInd][0].y;
     QXYSeries *xySeries = static_cast<QXYSeries *>(series);
 
-    for (int t=0;t< agepoints.size();t++){
+    //qDebug()<<cInd;
+
+    for (int t=0;t<=agepoints.size();t++){
         xySeries->append(QPointF(agepoints[t],0));
         xySeries->append(QPointF(agepoints[t],coreCount));
         xySeries->append(QPointF(agepoints[t],NULL));
+    }
+}
+
+void DataLoad::ageChange(float age1, float age2){
+    int c;
+    //float depth;
+    std::vector<float> agepoints,depth;
+    agepoints = m_matrixData[m_coreIndex][0].y;
+    //depth = m_matrixData[m_coreIndex][0].x;
+    //qDebug()<<m_coreIndex;
+
+    for (int t=0;t< agepoints.size();t++){
+        if (age1<=agepoints[t]){
+            //qDebug()<<agepoints[t];
+            c = t;
+            break;
+        }
+    }
+
+    qDebug()<<agepoints;
+    qDebug()<<agepoints[c-1];
+    if ((age2<=agepoints[c]) && (age2>=agepoints[c-1])){
+        qDebug()<<"true";
+        agepoints.insert(agepoints.begin()+c,age2);
+        //depth = interp1(m_matrixData[m_coreIndex][0].y,m_matrixData[m_coreIndex][0].x,agepoints);
+    }
+    else if((age2>=agepoints[c]) or (age2<=agepoints[c-1])){
+        qDebug()<<"false";
     }
 }
 

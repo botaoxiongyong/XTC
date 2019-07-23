@@ -25,13 +25,15 @@ Rectangle {
     property var params
     property int xmax: 100
     property int xmin: 0
+    property int ageonoff: 0
 
-    property int pressX
-    property int pressY
-    property int releaseX
-    property int releaseY
-    property int widthRect
-    property int heightRect
+    property var agepoint
+    property var pressX
+    property var pressY
+    property var releaseX
+    property var releaseY
+    property var widthRect
+    property var heightRect
 
     property var xLine
 
@@ -498,9 +500,10 @@ Rectangle {
 
                 onClicked: {
                     if (modeChange.checked==true){
-                        if (mouse.button & Qt.LeftButton){
+                        if ((mouse.button & Qt.LeftButton) && (ageonoff==0)){
                             var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
                             var xpos = coords.x
+                            agepoint = xpos
                             //console.log(xpos)
                             if (xLine){
                                 chart.removeSeries(xLine)
@@ -511,8 +514,19 @@ Rectangle {
                             xLine.useOpenGL = chart.openGL
                             xLine.append(xpos,0)
                             xLine.append(xpos,figmod.count)
-
+                            ageonoff = 1
                         }
+                        else if ((mouse.button & Qt.LeftButton) && (ageonoff==1)){
+                            var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            var xpos = coords.x
+                            if (xLine){
+                                chart.removeSeries(xLine)
+                            }
+                            console.log(agepoint,xpos)
+                            ageonoff = 0
+                            dataload.ageChange(agepoint,xpos)
+                        }
+
                         if (mouse.button & Qt.RightButton){
                             if (xLine){
                                 chart.removeSeries(xLine)
@@ -527,7 +541,6 @@ Rectangle {
                     }
                 }
             }
-
         }
 
         Rectangle {

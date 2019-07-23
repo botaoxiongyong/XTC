@@ -1,7 +1,6 @@
 #ifndef DATALOAD_H
 #define DATALOAD_H
 
-
 #include <QObject>
 #include <QString>
 #include <QVector>
@@ -63,6 +62,7 @@ public slots:
     void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int cInd);
     void ageLines(QAbstractSeries *series, int cInd, int coreCount);
     void plot_index(int i);
+    void ageChange(float age1, float age2);
 signals:
     void filePrjChanged();
     void error_listChanged();
@@ -76,5 +76,6 @@ private:
     QStringList m_paramList;
     QList<QVector<QPointF>> m_xy;
     int m_index;
+    int m_coreIndex;
 };
 #endif // DATALOAD_H
