@@ -374,7 +374,9 @@ Rectangle {
             //send lineseries to dataload for update plotting
             yAxis.max = figmod.count//Math.max.apply(Math,yvect)
             yAxis.min = 0
+            yAxis.gridVisible=false
             xAxis.max = 100
+            xAxis.gridVisible=false
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd]
             var series =chart.createSeries(ChartView.SeriesTypeScatter,
@@ -525,6 +527,9 @@ Rectangle {
                             console.log(agepoint,xpos)
                             ageonoff = 0
                             dataload.ageChange(agepoint,xpos)
+
+                            chart.removeAllSeries()
+                            edit()
                         }
 
                         if (mouse.button & Qt.RightButton){

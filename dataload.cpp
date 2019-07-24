@@ -1,5 +1,5 @@
 #include "dataload.h"
-#include "cppli.h"
+#include "interp_func.h"
 
 DataLoad::DataLoad(QObject *parent):
     QObject(parent)
@@ -322,9 +322,9 @@ void DataLoad::dataMatrix(const QString &filePrj){
                 }
                 }
                 newage = interp1(depth,age,x);
-                matrixData[size_t(m)][size_t(n)].x = x;
-                matrixData[size_t(m)][size_t(n)].y = y;
-                matrixData[size_t(m)][size_t(n)].age = newage;
+                matrixData[size_t(m)][size_t(n)].x = x;//depth
+                matrixData[size_t(m)][size_t(n)].y = y;//value
+                matrixData[size_t(m)][size_t(n)].age = newage;//age
                 //matrixData[size_t(m)][size_t(n)].lineXY = lines;
 
             }

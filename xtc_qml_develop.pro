@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     dataload.cpp \
-    plots.cpp
+    plots.cpp \
+    interp_func.cpp
 
 RESOURCES += qml.qrc
 
@@ -35,4 +36,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     dataload.h \
-    cppli.h
+    interp_func.h

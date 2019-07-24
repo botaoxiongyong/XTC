@@ -1,10 +1,4 @@
-#ifndef CPPLI_H
-#define CPPLI_H
-
-#endif // CPPLI_H
-#include <vector>
-#include <cfloat>
-#include <math.h>
+#include "interp_func.h"
 
 int findNearestNeighbourIndex( float value, std::vector< float > &x )
 {

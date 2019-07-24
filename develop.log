@@ -1,3 +1,13 @@
+
+#----------------------------------
+#2019-07-25
+interp1 fixed
+!!move age OK
+need delete age fix points
+edit mode can not load XRF data???
+
+#----------------------------------
+#2019-07-24
 interp1 can not be used in plot.cpp
 
 interp age point to depth
