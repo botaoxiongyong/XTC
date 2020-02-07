@@ -1,17 +1,37 @@
-
+!! fixed
 #----------------------------------
 #2019-07-25
 interp1 fixed
 !!move age OK
-need delete age fix points
-edit mode can not load XRF data???
+!!need delete age fix points
+!!edit mode can not load XRF data???
 
 #----------------------------------
 #2019-07-24
-interp1 can not be used in plot.cpp
+!!interp1 can not be used in plot.cpp
 
-interp age point to depth
-interp new age depth model
+!!interp age point to depth
+!!interp new age depth model
 
 write new age into matrix 
 
+#---------------------------------
+#2019-10-20
+!!y axis range, in plots.cpp, line 63-75
+
+!!core sequence, 
+
+#---------------------------------
+#2020-1-31
+yaxis range fixed
+
+need add function
+	to delete age points
+	ctrl + z
+	keyboard control
+
+#--------------------------------
+#2020-2-2
+edit mode not working；
+	figure not update after call 'edit()'
+	m_maxtrixData updated, but plots not update

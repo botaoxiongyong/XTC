@@ -28,8 +28,8 @@ Rectangle {
     property int ageonoff: 0
 
     property var agepoint
-    property var pressX
-    property var pressY
+    property var pressX:0
+    property var pressY:0
     property var releaseX
     property var releaseY
     property var widthRect
@@ -121,6 +121,12 @@ Rectangle {
                     listView.visible = false
                     coreFocus.visible = true
                     chart.theme = ChartView.ChartThemeDark
+                    prevP.background.color = "#084594"
+                    prevP.contentItem.color = "white"
+                    nextP.background.color = "#084594"
+                    nextP.contentItem.color = "white"
+                    paraLabel.color = "#c6dbef"
+
                     edit()
 
                 }
@@ -131,6 +137,13 @@ Rectangle {
                     coreL.color = "#FFFFFF"
                     listView.visible = true
                     coreFocus.visible = false
+                    prevP.background.color = "#f0f0f0"
+                    prevP.contentItem.color = "black"
+                    nextP.background.color = "#f0f0f0"
+                    nextP.contentItem.color = "black"
+                    paraLabel.color = "#084594"
+
+
                     chart.theme = ChartView.ChartThemeLight
                     chart.removeAllSeries()
                     plot()
@@ -352,11 +365,9 @@ Rectangle {
 
     function plot() {
         for(var i = 0;i <figmod.count;i++){
-            dataload.plot_index(figmod.count-i-1)
-
             //send lineseries to dataload for update plotting
-            yAxis.max = figmod.count//Math.max.apply(Math,yvect)
-            yAxis.min = 0
+            yAxis.max = 1
+            yAxis.min = -1*figmod.count//Math.max.apply(Math,yvect)
             xAxis.max = 100
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd]
@@ -372,29 +383,34 @@ Rectangle {
             dataload.plot_index(figmod.count-i-1)
 
             //send lineseries to dataload for update plotting
-            yAxis.max = figmod.count//Math.max.apply(Math,yvect)
-            yAxis.min = 0
+            yAxis.max = 1
+            yAxis.min = -1*figmod.count//Math.max.apply(Math,yvect)
             yAxis.gridVisible=false
-            xAxis.max = 100
+            //xAxis.max = 100
             xAxis.gridVisible=false
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd]
             var series =chart.createSeries(ChartView.SeriesTypeScatter,
                                            figmod.get(i).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
-            if (i==cInd){
+            if (i===cInd){
                 series.color = "red"
 
                 var ageseries =chart.createSeries(ChartView.SeriesTypeLine,
                                                "", xAxis, yAxis);
                 ageseries.useOpenGL = chart.openGL
-                ageseries.color = "grey"
-                dataload.ageLines(ageseries,cInd,figmod.count)
+                ageseries.color = "#6baed6"
+                ageseries.width = 0.5
+                if (i !==0){
+                    //=================reference core has no age model
+                    dataload.ageLines(ageseries,cInd,figmod.count)
+                }
             }else{
                 series.color = "lightgrey"
             }
             series.markerSize = 4
-            dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,cInd)
+            //dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,cInd)
+            dataload.setXyVect(series,figmod.get(i).coreIdex,pInd)
 
             //var series2 =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
             //series2.useOpenGL = chart.openGL
@@ -431,6 +447,7 @@ Rectangle {
             height: fig.height*0.95
             antialiasing: true
             backgroundRoundness: 0
+            legend.visible: false
             property bool openGL: true
 
             ValueAxis {
@@ -480,22 +497,26 @@ Rectangle {
                     var xpos = coords.x
                 }
                 */
+
                 onWheel: {
                     var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
                     var xpos = coords.x
-                    parent.scaleFactor += 2 * wheel.angleDelta.y/120;
-                    //if (parent.scaleFactor > 0)
-                    //    parent.scaleFactor = 0;
+                    var p1,p2
+                    parent.scaleFactor = 1 * wheel.angleDelta.y/(xAxis.max - xAxis.min);
+                    p1 = (xpos - xAxis.min)/(xAxis.max - xAxis.min)
+                    p2 = (xAxis.max - xpos)/(xAxis.max - xAxis.min)
+                    console.log(p1,p2,parent.scaleFactor)
 
-                    //chart.zoom(parent.scaleFactor)
+                    if (xAxis.max + p2*parent.scaleFactor > xAxis.min - p1*parent.scaleFactor){
+                        xAxis.max = xAxis.max + p2*parent.scaleFactor
+                        xAxis.min = xAxis.min - p1*parent.scaleFactor
 
-
-                    xAxis.max = xmax - parent.scaleFactor
-                    xAxis.min = xmin + parent.scaleFactor
+                    }
                 }
 
                 onDoubleClicked: {
                     //chart.zoomReset()
+                    parent.scaleFactor = 0
                     xAxis.min = 0
                     xAxis.max = 100
                 }
@@ -514,8 +535,8 @@ Rectangle {
                             xLine =chart.createSeries(ChartView.SeriesTypeLine,
                                                            "", xAxis, yAxis);
                             xLine.useOpenGL = chart.openGL
-                            xLine.append(xpos,0)
-                            xLine.append(xpos,figmod.count)
+                            xLine.append(xpos,1)
+                            xLine.append(xpos,-1*figmod.count)
                             ageonoff = 1
                         }
                         else if ((mouse.button & Qt.LeftButton) && (ageonoff==1)){
@@ -541,7 +562,6 @@ Rectangle {
                                 var xpos = coords.x
                                 console.log(xpos)
                             }
-
                         }
                     }
                 }
@@ -586,9 +606,17 @@ Rectangle {
 
         Button {
             id: nextP
-            text: qsTr("Next")
+            //text: qsTr("Next")
+            contentItem: Text {
+                text: qsTr("---> Next")
+                color: "black"
+            }
             anchors.bottom: fig.bottom
             anchors.right: fig.right
+            background: Rectangle{
+                border.color: "#f0f0f0"
+                color: "#f0f0f0"
+            }
             onClicked: {
                 //console.log(count);
                 nextPara();
@@ -604,9 +632,17 @@ Rectangle {
 
         Button {
             id: prevP
-            text: qsTr("Prev")
+            contentItem: Text {
+                text: qsTr("Prev <---")
+                color: "black"
+            }
             anchors.bottom: fig.bottom
             anchors.left: fig.left
+            background: Rectangle{
+                border.color: "#f0f0f0"
+                color: "#f0f0f0"
+            }
+
             onClicked: {
                 //console.log(count);
 
@@ -624,6 +660,7 @@ Rectangle {
         Label {
             id:paraLabel
             text: qsTr("Param")
+            color: "#084594"
             font.pixelSize: 22
             anchors.bottom: fig.bottom
             anchors.horizontalCenter: fig.horizontalCenter

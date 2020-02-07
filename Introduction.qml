@@ -47,10 +47,10 @@ Rectangle {
             id: title
             //anchors.fill: parent
             anchors.top: parent.top
-            anchors.topMargin: 0
+            anchors.topMargin: 40
             anchors.horizontalCenter: parent.horizontalCenter
             text: "XTC"
-            font.family: "Starburst"
+            //font.family: "Starburst"
             color: "navy"
             //font.bold: true
             font.pointSize: 50
@@ -58,10 +58,19 @@ Rectangle {
 
         Text {
             id: introText
-            //anchors.horizontalCenter: intro.horizontalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 120
+            font.pointSize: 15
+            color: "navy"
+            text: qsTr("Time Series Correlating")
+        }
+
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 200
-            text: qsTr("Introduction")
+            anchors.bottomMargin: 20
+            text: qsTr("developed by Jiabo Liu & Norbert R. Nowaczyk")
         }
 
         Button {
@@ -70,7 +79,7 @@ Rectangle {
             width: 170
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            anchors.topMargin: 150
+            anchors.topMargin: 200
 
             background: Rectangle {
                 implicitHeight: 40
@@ -87,7 +96,7 @@ Rectangle {
             text: "creat  new  project"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            anchors.topMargin: 200
+            anchors.topMargin: 260
 
             background: Rectangle {
                 implicitHeight: 40
@@ -102,7 +111,8 @@ Rectangle {
         FileDialog {
             id: fileDialog
             title: "Please choose a file"
-            folder: shortcuts.home
+            //folder: shortcuts.home
+            folder:"file:///archive/oceans/antarctic/_XTC"
             sidebarVisible: false
             nameFilters: [ "XTC project (*.xtci)", "All files (*)" ]
             onAccepted: {

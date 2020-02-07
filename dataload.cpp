@@ -142,7 +142,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
     std::vector<std::vector<QString>>::iterator row;
     std::vector<QString>::iterator col;
 
-    //read y aixs settings
+    //==================================read y aixs settings
     //qDebug() << fileName;
     QFile yaxisSet(dataPath+projName+".yrr");
     if (yaxisSet.exists()==false or !yaxisSet.open(QIODevice::ReadOnly)){
@@ -158,12 +158,14 @@ void DataLoad::dataMatrix(const QString &filePrj){
             yaxsettings.append(line);
             //qDebug() << line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
         }
-
+        //==================================read yaxis into data matrix
         for (int n=1;n<NPC+1;n++){
             for (int m=0;m<NDS;m++){
                 //yaxis file list yaxis settings from column to column
-                int index = (n-1)*NDS + m;
+                int index = (n-1)*NDS + m + 1;
                 matrixData[size_t(m)][size_t(n)].yaxset = yaxsettings[index].split(QRegExp("(\\s+)"), QString::SkipEmptyParts);
+                //qDebug() << matrixCore[size_t(m)][size_t(n)];
+                //qDebug() <<matrixData[size_t(m)][size_t(n)].yaxset;
             }
         }
     }

@@ -59,7 +59,7 @@ public:
 
 public slots:
     void setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex);
-    void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int cInd);
+    //void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int cInd);
     void ageLines(QAbstractSeries *series, int cInd, int coreCount);
     void plot_index(int i);
     void ageChange(float age1, float age2);
