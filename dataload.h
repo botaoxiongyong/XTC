@@ -58,11 +58,13 @@ public:
     QStringList paramList();
 
 public slots:
-    void setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex);
-    //void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int cInd);
+    void setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int plotseq);
+    void editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int plotseq);
     void ageLines(QAbstractSeries *series, int cInd, int coreCount);
     void plot_index(int i);
     void ageChange(float age1, float age2);
+    float searchLine(float age);
+    void ageDel(float age);
 signals:
     void filePrjChanged();
     void error_listChanged();

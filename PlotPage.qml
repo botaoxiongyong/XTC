@@ -13,7 +13,7 @@ Rectangle {
     //signal coreI(int cindex)
     //signal paraI(int pindex)
     property var fileName
-    property int pInd: 2
+    property int pInd: 1
     property int cInd: 1
     property int count: 0
     property int pi
@@ -36,6 +36,9 @@ Rectangle {
     property var heightRect
 
     property var xLine
+    property var delxPos
+
+    property var colorList: ['#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b','#e6f598','#66c2a5','#3288bd','#5e4fa2','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a']
 
 
     DataLoad {
@@ -57,7 +60,7 @@ Rectangle {
             //coreI(i)
             //paraI(pInd)
             //!!!!!!!!!!!!!paraIdex initial
-            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:2,textColor:"white"})
+            figmod.insert(i,{coretext:corels[i],coreIdex:i,paraIdex:2,plot:true,textColor:"white"})
             listc.append({coretext:corels[i],check:true,coreIdex:i})
             //figmod.append({coretext:corels[i],check:true,coreIdex:i})
         }
@@ -74,22 +77,49 @@ Rectangle {
         if (chekstate === 2){
             //coreI(conInt)
             //paraI(pInd)
-            //figmod.append({coretext:text})
+            //figmod.append({coretext:techeckstatext})
 
-            figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:2,textColor:"white"})
+            //figmod.insert(conInt, {coretext:text,coreIdex:conInt,paraIdex:2,textColor:"white"})
+            figmod.setProperty(conInt,"plot",true)
         }
         else {
-            figmod.remove(conInt)
+            //figmod.remove(conInt)
+            figmod.setProperty(conInt,"plot",false)
         }
     }
 
-
-    function loopCheckBox(){
-        for (var i = 0; i < listc.count; i++){
-            console.log(listc.get(i).listObj)
+    function editCoreList(){
+        coreTextList.clear()
+        var t = 0
+        for (var i = 0; i<figmod.count; i++){
+            if (figmod.get(i).plot == true){
+                coreTextList.insert(t,figmod.get(i))
+                t = t+1
+            }
         }
+        return coreTextList
     }
 
+    function getcolor(index){
+        var linecolor
+
+        if (index == 0){
+            linecolor = '#1f78b4'
+        }
+        else{
+            if ((index > 0) && (index <= 16)){
+                linecolor = colorList[index-1]
+            }
+            else{
+                linecolor = colorList[index-17]
+            }
+        }
+        return linecolor
+    }
+
+    ListModel{
+        id:coreTextList
+    }
 
     Rectangle {
         //anchors.fill: parent
@@ -128,7 +158,6 @@ Rectangle {
                     paraLabel.color = "#c6dbef"
 
                     edit()
-
                 }
                 else{
                     modeText.text = qsTr("View Mode")
@@ -142,7 +171,6 @@ Rectangle {
                     nextP.background.color = "#f0f0f0"
                     nextP.contentItem.color = "black"
                     paraLabel.color = "#084594"
-
 
                     chart.theme = ChartView.ChartThemeLight
                     chart.removeAllSeries()
@@ -158,20 +186,16 @@ Rectangle {
 
         Component {
             id: listObj
-
             CheckBox{
                 id:cbox
-                /*
                 Text {
-                    anchors.fill:parent
-                    anchors.leftMargin: 25
-                    anchors.topMargin: 8
-                    //anchors.verticalCenter: parent.verticalCenter
+                    id:corename
+                    anchors.verticalCenter: cbox.verticalCenter
+                    anchors.left: cbox.left
+                    anchors.leftMargin: 30
                     text: qsTr(coretext)
-                    color: fcolor
+                    color: getcolor(coreIdex)
                 }
-                */
-                text: qsTr(coretext)
 
                 checked: true 
 
@@ -194,6 +218,11 @@ Rectangle {
 
                 onCheckStateChanged: {
                     //console.log(cbox.checkState)
+                    if (cbox.checkState === 2){
+                        corename.color = getcolor(coreIdex)
+                    }else{
+                        corename.color = "grey"
+                    }
                     addFigList(cbox.checkState,coretext,coreIdex)
                     chart.removeAllSeries()
                     plot()
@@ -202,35 +231,38 @@ Rectangle {
         }
 
         ListView {
+            //#============================core list of plot()
             id: listView
             height: coreL.height*0.8
             width: coreL.width*0.9
             anchors.left: coreL.left
             //anchors.fill: coreL
-            anchors.bottom: coreL.bottom
+            //anchors.bottom: coreL.bottom
+            anchors.top: coreL.top
+            anchors.topMargin: 50
+            anchors.leftMargin: 10
             flickableDirection: Flickable.VerticalFlick
             boundsBehavior: Flickable.StopAtBounds
             model: coreList(corels)
             clip: true
             delegate: listObj
 
-            //Layout.fillWidth: true
-            //Layout.fillHeight: true
-
             ScrollBar.vertical: ScrollBar {}
         }
 
         ListView {
+            //#============================core list of edit()
             id: coreFocus
             height: coreL.height*0.8
             width: coreL.width*0.9
             anchors.left: coreL.left
-            //anchors.fill: coreL
-            anchors.bottom: coreL.bottom
+            anchors.top: coreL.top
+            anchors.topMargin: 50
+            anchors.leftMargin: 10
             flickableDirection: Flickable.VerticalFlick
             boundsBehavior: Flickable.StopAtBounds
             visible: false
-            model: figmod
+            model: editCoreList()
             clip: true
             delegate: Component{
                 id:cButList
@@ -252,30 +284,23 @@ Rectangle {
                     }
 
                     onClicked: {
-                        console.log(coreIdex)
-                        console.log(coretext)
+                        //console.log(coreIdex)
+                        //console.log(coretext)
                         cInd = coreIdex
-                        for (var i=0;i<figmod.count;i++){
-                            //figmod.setProperty(i,"textColor","red")
-                            if (figmod.get(i).coretext===coretext){
-                                figmod.setProperty(i,"textColor","red")
+                        for (var i=0;i<coreTextList.count;i++){
+                            //console.log(coreTextList.get(i).coretext)
+                            if (coreTextList.get(i).coretext == coretext){
+                                coreTextList.setProperty(i,"textColor","red")
                             }
                             else{
-                                figmod.setProperty(i,"textColor","white")
+                                coreTextList.setProperty(i,"textColor","white")
                             }
-
                         }
                         chart.removeAllSeries()
                         edit()
-
                     }
-
                 }
             }
-
-            //Layout.fillWidth: true
-            //Layout.fillHeight: true
-
             ScrollBar.vertical: ScrollBar {}
         }
     }
@@ -364,60 +389,81 @@ Rectangle {
     }
 
     function plot() {
+        //console.log(figmod.count)
+        var plotsIndex = []
         for(var i = 0;i <figmod.count;i++){
+            if (figmod.get(i).plot == true){
+                plotsIndex.push(figmod.get(i).coreIdex)
+            }
+        }
+        //console.log(plotsIndex.length)
+
+        for(var i = 0;i <plotsIndex.length;i++){
+            var plotseq = i
             //send lineseries to dataload for update plotting
+            yAxis.gridVisible=false
+            xAxis.gridVisible=false
             yAxis.max = 1
-            yAxis.min = -1*figmod.count//Math.max.apply(Math,yvect)
+            yAxis.min = -1*plotsIndex.length//Math.max.apply(Math,yvect)
             xAxis.max = 100
             //chart.title = params[figmod.get(i).paraIdex]
-            paraLabel.text = params[pInd]
-            var series =chart.createSeries(ChartView.SeriesTypeScatter, figmod.get(i).coretext, xAxis, yAxis);
+            paraLabel.text = params[pInd-1]
+            //var series =chart.createSeries(ChartView.SeriesTypeScatter, figmod.get(plotsIndex[i]).coretext, xAxis, yAxis);
+            var series =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(plotsIndex[i]).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
             series.markerSize = 4
-            dataload.setXyVect(series,figmod.get(i).coreIdex,pInd)
+            series.color = getcolor(plotsIndex[i])
+            dataload.setXyVect(series,plotsIndex[i],pInd,plotseq)
+            //dataload.setXyVect(series,i,pInd)
         }
     }
 
     function edit() {
+        var plotsIndex = []
         for(var i = 0;i <figmod.count;i++){
-            dataload.plot_index(figmod.count-i-1)
-
+            if (figmod.get(i).plot == true){
+                plotsIndex.push(figmod.get(i).coreIdex)
+            }
+        }
+        for(var i = 0;i <plotsIndex.length;i++){
+            var plotseq = i
+            dataload.plot_index(figmod.count-plotsIndex[i]-1)
             //send lineseries to dataload for update plotting
             yAxis.max = 1
-            yAxis.min = -1*figmod.count//Math.max.apply(Math,yvect)
+            yAxis.min = -1*plotsIndex.length//Math.max.apply(Math,yvect)
             yAxis.gridVisible=false
             //xAxis.max = 100
             xAxis.gridVisible=false
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd]
             var series =chart.createSeries(ChartView.SeriesTypeScatter,
-                                           figmod.get(i).coretext, xAxis, yAxis);
+                                           figmod.get(plotsIndex[i]).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
-            if (i===cInd){
-                series.color = "red"
-
-                var ageseries =chart.createSeries(ChartView.SeriesTypeLine,
+            //console.log(plotsIndex[i],cInd)
+            if (plotsIndex[i] == 0){
+                series.color = "blue"
+            }
+            else{
+                if (plotsIndex[i] == cInd){
+                    series.color = "red"
+                    var ageseries =chart.createSeries(ChartView.SeriesTypeLine,
                                                "", xAxis, yAxis);
-                ageseries.useOpenGL = chart.openGL
-                ageseries.color = "#6baed6"
-                ageseries.width = 0.5
-                if (i !==0){
+                    ageseries.useOpenGL = chart.openGL
+                    ageseries.color = "#6baed6"
+                    ageseries.width = 0.5
                     //=================reference core has no age model
                     dataload.ageLines(ageseries,cInd,figmod.count)
+                }else{
+                    series.color = "lightgrey"
                 }
-            }else{
-                series.color = "lightgrey"
             }
             series.markerSize = 4
-            //dataload.editXyVect(series,figmod.get(i).coreIdex,pInd,cInd)
-            dataload.setXyVect(series,figmod.get(i).coreIdex,pInd)
-
-            //var series2 =chart.createSeries(ChartView.SeriesTypeLine, figmod.get(i).coretext, xAxis, yAxis);
-            //series2.useOpenGL = chart.openGL
-            //series2.width = 0.5
-            //dataload.editXyVect(series2,figmod.get(i).coreIdex,pInd,figmod.count)
+            dataload.editXyVect(series,plotsIndex[i],pInd,plotseq)
         }
-        //plot age tie points
+    }
+
+    function delLine(){
+
     }
 
     Rectangle {
@@ -431,8 +477,6 @@ Rectangle {
 
         ListModel {
             id:figmod
-            //ListElement {name:"ni"}
-            //ListElement {name:"hao"}
         }
 
         ChartView {
@@ -461,6 +505,53 @@ Rectangle {
                 id: yAxis
                 //min: 0
                 //max: figmod.count
+            }
+
+            Menu {
+                id: delem //delete menue
+                width: 83
+                height: 50
+                //title: "delete"
+                contentItem: ColumnLayout{
+                    id:lmenu
+                    Label {
+                        text: "delte"
+                        //anchors.centerIn: parent
+                        Layout.alignment: Qt.AlignHCenter
+                        //anchors.horizontalCenter: lmenu.horizontalCenter
+                    }
+                    RowLayout {
+                        //Layout.preferredWidth: 10
+                        spacing: 2
+                        Button {
+                            Layout.preferredWidth: 40
+                            Layout.preferredHeight: 22
+                            text: "yes"
+                            onClicked: {
+                                delem.close()
+                                ageonoff = 0
+                                dataload.ageDel(delxPos)
+
+                                chart.removeAllSeries()
+                                edit()
+                            }
+                        }
+                        Button {
+                            Layout.preferredWidth: 40
+                            Layout.preferredHeight: 22
+                            text: "no"
+                            onClicked: {
+                                delem.close()
+                                chart.removeSeries(xLine)
+                                ageonoff = 0
+                                chart.removeAllSeries()
+                                edit()
+                            }
+                        }
+                    }
+                }
+
+
             }
 
             MouseArea {
@@ -502,20 +593,20 @@ Rectangle {
                     var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
                     var xpos = coords.x
                     var p1,p2
-                    parent.scaleFactor = 1 * wheel.angleDelta.y/(xAxis.max - xAxis.min);
+                    parent.scaleFactor = wheel.angleDelta.y/(xAxis.max - xAxis.min);
                     p1 = (xpos - xAxis.min)/(xAxis.max - xAxis.min)
                     p2 = (xAxis.max - xpos)/(xAxis.max - xAxis.min)
-                    console.log(p1,p2,parent.scaleFactor)
+                    //console.log(p1,p2,parent.scaleFactor)
 
                     if (xAxis.max + p2*parent.scaleFactor > xAxis.min - p1*parent.scaleFactor){
                         xAxis.max = xAxis.max + p2*parent.scaleFactor
                         xAxis.min = xAxis.min - p1*parent.scaleFactor
-
                     }
                 }
 
                 onDoubleClicked: {
                     //chart.zoomReset()
+                    //===============================set reference axis
                     parent.scaleFactor = 0
                     xAxis.min = 0
                     xAxis.max = 100
@@ -523,45 +614,51 @@ Rectangle {
 
                 onClicked: {
                     if (modeChange.checked==true){
+                        var coords;
+                        var xpos;
                         if ((mouse.button & Qt.LeftButton) && (ageonoff==0)){
-                            var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                            var xpos = coords.x
-                            agepoint = xpos
-                            //console.log(xpos)
-                            if (xLine){
-                                chart.removeSeries(xLine)
-                            }
+                        coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                        xpos = coords.x
+                        agepoint = xpos
+                        //console.log(xpos)
 
-                            xLine =chart.createSeries(ChartView.SeriesTypeLine,
-                                                           "", xAxis, yAxis);
-                            xLine.useOpenGL = chart.openGL
-                            xLine.append(xpos,1)
-                            xLine.append(xpos,-1*figmod.count)
-                            ageonoff = 1
+                        xLine =chart.createSeries(ChartView.SeriesTypeLine,
+                                   "", xAxis, yAxis);
+                        xLine.useOpenGL = chart.openGL
+                        xLine.append(xpos,1)
+                        xLine.append(xpos,-1*figmod.count)
+                        ageonoff = 1
                         }
                         else if ((mouse.button & Qt.LeftButton) && (ageonoff==1)){
-                            var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                            var xpos = coords.x
-                            if (xLine){
-                                chart.removeSeries(xLine)
-                            }
-                            console.log(agepoint,xpos)
-                            ageonoff = 0
-                            dataload.ageChange(agepoint,xpos)
+                        chart.removeSeries(xLine)
+                        coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                        xpos = coords.x
+                        ageonoff = 0
+                        dataload.ageChange(agepoint,xpos)
 
-                            chart.removeAllSeries()
-                            edit()
+                        chart.removeAllSeries()
+                        edit()
                         }
+                        else if((mouse.button & Qt.RightButton) && (ageonoff==1)){
+                        chart.removeSeries(xLine)
+                        ageonoff = 0
+                        chart.removeAllSeries()
+                        edit()
+                        }
+                        else if ((mouse.button & Qt.RightButton) && (ageonoff==0)){
+                        //#==var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                        coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                        xpos = coords.x
+                        delxPos = dataload.searchLine(xpos)
 
-                        if (mouse.button & Qt.RightButton){
-                            if (xLine){
-                                chart.removeSeries(xLine)
+                        xLine =chart.createSeries(ChartView.SeriesTypeLine,
+                                   "", xAxis, yAxis);
+                        xLine.useOpenGL = chart.openGL
+                        xLine.color = "orange"
+                        xLine.append(delxPos,1)
+                        xLine.append(delxPos,-1*figmod.count)
 
-                                //dataload.setInAgeRange(50)
-                                var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                                var xpos = coords.x
-                                console.log(xpos)
-                            }
+                        delem.popup()
                         }
                     }
                 }
@@ -577,6 +674,7 @@ Rectangle {
             height: heightRect
             color: "grey"
 
+            /*
             MouseArea {
                 id:roiarea
                 anchors.fill: parent
@@ -602,6 +700,7 @@ Rectangle {
                     }
                 }
             }
+            */
         }
 
         Button {

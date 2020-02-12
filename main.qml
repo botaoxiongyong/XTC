@@ -6,8 +6,8 @@ import io.qt.examples.dataload 1.0
 
 ApplicationWindow {
     visible: true
-    width: 840
-    height: 580
+    width: 1400
+    height: 900
     title: qsTr("XTC")
 
     menuBar:MenuBar {

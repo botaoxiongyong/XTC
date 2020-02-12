@@ -112,7 +112,8 @@ Rectangle {
             id: fileDialog
             title: "Please choose a file"
             //folder: shortcuts.home
-            folder:"file:///archive/oceans/antarctic/_XTC"
+            //folder:"file:///archive/oceans/antarctic/_XTC"
+            folder:"file:///archive/oceans/black_sea/_XTC_BS"
             sidebarVisible: false
             nameFilters: [ "XTC project (*.xtci)", "All files (*)" ]
             onAccepted: {

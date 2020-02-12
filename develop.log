@@ -34,4 +34,23 @@ need add function
 #2020-2-2
 edit mode not working；
 	figure not update after call 'edit()'
+		--fixed 2020.2.7
 	m_maxtrixData updated, but plots not update
+		--fixed 2020.2.7
+
+
+#--------------------------------
+#2020-2-7
+dataload collaps without error message
+	fixed 2020.2.7
+black sea records sequences issue
+	fixed 2020.2.7
+checked, unchecked has different yaxis, loop figmod...
+	fixed 2020.2.9
+
+#========================================
+#2020-2-9
+edit() mode syn with plot() mode
+
+
+

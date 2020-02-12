@@ -66,10 +66,10 @@ QString DataLoad::readFile(const QString &filePrj){
 void DataLoad::dataMatrix(const QString &filePrj){
     QString line = readFile(m_filePrj);
 
-    QStringList lines = line.split("#####################################");
+    QStringList lines = line.split(QRegExp("#################*"));
 
     QString header = lines[0].replace("\\\n","\n");
-    QStringList headers = header.split("####---------------");
+    QStringList headers = header.split(QRegExp("####---------*"));
     QStringList head = headers[0].split(QRegExp("(\\s+|\n)"), QString::SkipEmptyParts);
 
     //NDS = number of cores, including reference core
@@ -83,12 +83,14 @@ void DataLoad::dataMatrix(const QString &filePrj){
     std::vector<QString> refParam;
     int n = 0;
     QStringList params = headers[1].split("\n", QString::SkipEmptyParts).filter("CR");
+    //qDebug() << params;
     for (QString& i :params){
         n++;
         refParam.push_back(i);
     }
     params.clear();
 
+    //qDebug() << refParam;
 
     //core param names
     std::vector<QString> coreParam;
@@ -100,17 +102,27 @@ void DataLoad::dataMatrix(const QString &filePrj){
         m_paramList.append(i.replace("CP ",""));
     }
 
+    //qDebug() << coreParam;
+
     //matrix of file path
     std::vector<std::vector<QString>> matrixCore(size_t(NDS), std::vector<QString>(size_t(NPC+1)));
     //reference data file path
     matrixCore[0][0] = "Refer Data";
     m_coreList.append(matrixCore[0][0]);
-    QStringList referFilePath = lines.filter(QRegExp("(FR|GR)"))[0].split("\n", QString::SkipEmptyParts).filter(QRegExp("(FR|GR)"));
+    //qDebug() << "test";
+    //qDebug() << lines[1];
+
+    //qDebug() << "debug=============================";
+    //QStringList referFilePath = lines.filter(QRegExp("(FR|GR)"))[0].split("\n", QString::SkipEmptyParts).filter(QRegExp("(FR|GR)"));
+    QStringList referFilePath = lines[1].split("\n", QString::SkipEmptyParts).filter(QRegExp("(FR|GR)"));
+
     for (int m=1;m<NPC+1;m++){
         //qDebug() << referFilePath[m-1].split(QRegExp("(\\s+)"))[1];
         //QStringList referFile = referFilePath[m-1].split("\n");
         matrixCore[0][size_t(m)] = referFilePath[m-1].split(QRegExp("(\\s+)"))[1];
     }
+
+    //qDebug() << "reach";
 
 
     //every core are sperated by their age model file
@@ -121,7 +133,9 @@ void DataLoad::dataMatrix(const QString &filePrj){
         QStringList ageFile = coreLines.split("\n").filter(".ages");
         QStringList dataFile = coreLines.split("\n").filter(QRegExp("(GP|FP)"));
         matrixCore[size_t(n)][0] = ageFile[0];
-        m_coreList.append(ageFile[0].replace(".ages",""));
+        m_coreList.append(ageFile[0].replace(".ages","").replace("GC",""));
+
+        //qDebug() << ageFile[0];
 
         for (int m=1; m<=NPC; m++){
             //matrixCore[0][m] = coreParam[m-1].replace("CP ","");
