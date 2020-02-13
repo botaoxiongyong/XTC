@@ -17,7 +17,7 @@ void DataLoad::plot_index(int i){
     m_index = i;
 }
 
-void DataLoad:: setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int plotseq){
+void DataLoad:: setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,float plotseq){
     //qDebug()<<m_matrixData[1][0].x.size();
     //qDebug() << paraIndex;
     m_xy.clear();
@@ -53,7 +53,7 @@ void DataLoad:: setXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,in
     }
 }
 
-void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,int plotseq){
+void DataLoad:: editXyVect(QAbstractSeries *series,int coreIndex,int paraIndex,float plotseq){
     m_xy.clear();
     double minn,maxx,yinterv;
     mdata matrix = m_matrixData[size_t(coreIndex)][size_t(paraIndex)];

@@ -26,6 +26,7 @@ Rectangle {
     property int xmax: 100
     property int xmin: 0
     property int ageonoff: 0
+    property var yscale: 1
 
     property var agepoint
     property var pressX:0
@@ -404,7 +405,7 @@ Rectangle {
             yAxis.gridVisible=false
             xAxis.gridVisible=false
             yAxis.max = 1
-            yAxis.min = -1*plotsIndex.length//Math.max.apply(Math,yvect)
+            yAxis.min = -1-1*plotsIndex.length*yscale//Math.max.apply(Math,yvect)
             xAxis.max = 100
             //chart.title = params[figmod.get(i).paraIdex]
             paraLabel.text = params[pInd-1]
@@ -413,7 +414,8 @@ Rectangle {
             series.useOpenGL = chart.openGL
             series.markerSize = 4
             series.color = getcolor(plotsIndex[i])
-            dataload.setXyVect(series,plotsIndex[i],pInd,plotseq)
+            //console.log(i,yscale,plotseq*yscale)
+            dataload.setXyVect(series,plotsIndex[i],pInd,plotseq*yscale)
             //dataload.setXyVect(series,i,pInd)
         }
     }
@@ -430,13 +432,13 @@ Rectangle {
             dataload.plot_index(figmod.count-plotsIndex[i]-1)
             //send lineseries to dataload for update plotting
             yAxis.max = 1
-            yAxis.min = -1*plotsIndex.length//Math.max.apply(Math,yvect)
+            yAxis.min = -1-1*plotsIndex.length*yscale//Math.max.apply(Math,yvect)
             yAxis.gridVisible=false
             //xAxis.max = 100
             xAxis.gridVisible=false
             //chart.title = params[figmod.get(i).paraIdex]
-            paraLabel.text = params[pInd]
-            var series =chart.createSeries(ChartView.SeriesTypeScatter,
+            paraLabel.text = params[pInd-1]
+            var series =chart.createSeries(ChartView.SeriesTypeLine,
                                            figmod.get(plotsIndex[i]).coretext, xAxis, yAxis);
             series.useOpenGL = chart.openGL
             //console.log(plotsIndex[i],cInd)
@@ -458,7 +460,7 @@ Rectangle {
                 }
             }
             series.markerSize = 4
-            dataload.editXyVect(series,plotsIndex[i],pInd,plotseq)
+            dataload.editXyVect(series,plotsIndex[i],pInd,plotseq*yscale)
         }
     }
 
@@ -590,17 +592,42 @@ Rectangle {
                 */
 
                 onWheel: {
-                    var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                    var xpos = coords.x
-                    var p1,p2
-                    parent.scaleFactor = wheel.angleDelta.y/(xAxis.max - xAxis.min);
-                    p1 = (xpos - xAxis.min)/(xAxis.max - xAxis.min)
-                    p2 = (xAxis.max - xpos)/(xAxis.max - xAxis.min)
-                    //console.log(p1,p2,parent.scaleFactor)
+                    if (wheel.modifiers & Qt.ControlModifier){
+                        //console.log(wheel.angleDelta)
+                        if ((wheel.angleDelta.y >= 0) && (yscale -0.01 >= 0)){
+                            yscale = yscale - 0.01
+                            //console.log(yscale)
 
-                    if (xAxis.max + p2*parent.scaleFactor > xAxis.min - p1*parent.scaleFactor){
-                        xAxis.max = xAxis.max + p2*parent.scaleFactor
-                        xAxis.min = xAxis.min - p1*parent.scaleFactor
+                            chart.removeAllSeries()
+                            //plot()
+                        }
+                        else if ((wheel.angleDelta.y < 0) && (yscale +0.01 <=1)){
+                                    yscale = yscale + 0.01
+                                    //console.log(yscale)
+
+                                    chart.removeAllSeries()
+                                    //plot()
+                                 }
+                        if(modeChange.checked == true){
+                            edit()
+                        }
+                        else{
+                            plot()
+                        }
+                    }
+                    else{
+                        var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                        var xpos = coords.x
+                        var p1,p2
+                        parent.scaleFactor = wheel.angleDelta.y/(xAxis.max - xAxis.min);
+                        p1 = (xpos - xAxis.min)/(xAxis.max - xAxis.min)
+                        p2 = (xAxis.max - xpos)/(xAxis.max - xAxis.min)
+                        //console.log(p1,p2,parent.scaleFactor)
+
+                        if (xAxis.max + p2*parent.scaleFactor > xAxis.min - p1*parent.scaleFactor){
+                            xAxis.max = xAxis.max + p2*parent.scaleFactor
+                            xAxis.min = xAxis.min - p1*parent.scaleFactor
+                        }
                     }
                 }
 
@@ -617,48 +644,48 @@ Rectangle {
                         var coords;
                         var xpos;
                         if ((mouse.button & Qt.LeftButton) && (ageonoff==0)){
-                        coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                        xpos = coords.x
-                        agepoint = xpos
-                        //console.log(xpos)
+                            coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            xpos = coords.x
+                            agepoint = xpos
+                            //console.log(xpos)
 
-                        xLine =chart.createSeries(ChartView.SeriesTypeLine,
+                            xLine =chart.createSeries(ChartView.SeriesTypeLine,
                                    "", xAxis, yAxis);
-                        xLine.useOpenGL = chart.openGL
-                        xLine.append(xpos,1)
-                        xLine.append(xpos,-1*figmod.count)
-                        ageonoff = 1
+                            xLine.useOpenGL = chart.openGL
+                            xLine.append(xpos,1)
+                            xLine.append(xpos,-1*figmod.count)
+                            ageonoff = 1
                         }
                         else if ((mouse.button & Qt.LeftButton) && (ageonoff==1)){
-                        chart.removeSeries(xLine)
-                        coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                        xpos = coords.x
-                        ageonoff = 0
-                        dataload.ageChange(agepoint,xpos)
+                            chart.removeSeries(xLine)
+                            coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            xpos = coords.x
+                            ageonoff = 0
+                            dataload.ageChange(agepoint,xpos)
 
-                        chart.removeAllSeries()
-                        edit()
+                            chart.removeAllSeries()
+                            edit()
                         }
                         else if((mouse.button & Qt.RightButton) && (ageonoff==1)){
-                        chart.removeSeries(xLine)
-                        ageonoff = 0
-                        chart.removeAllSeries()
-                        edit()
+                            chart.removeSeries(xLine)
+                            ageonoff = 0
+                            chart.removeAllSeries()
+                            edit()
                         }
                         else if ((mouse.button & Qt.RightButton) && (ageonoff==0)){
-                        //#==var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                        coords = chart.mapToValue(Qt.point(mouseX,mouseY))
-                        xpos = coords.x
-                        delxPos = dataload.searchLine(xpos)
+                            //#==var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            coords = chart.mapToValue(Qt.point(mouseX,mouseY))
+                            xpos = coords.x
+                            delxPos = dataload.searchLine(xpos)
 
-                        xLine =chart.createSeries(ChartView.SeriesTypeLine,
-                                   "", xAxis, yAxis);
-                        xLine.useOpenGL = chart.openGL
-                        xLine.color = "orange"
-                        xLine.append(delxPos,1)
-                        xLine.append(delxPos,-1*figmod.count)
+                            xLine =chart.createSeries(ChartView.SeriesTypeLine,
+                                    "", xAxis, yAxis);
+                            xLine.useOpenGL = chart.openGL
+                            xLine.color = "orange"
+                            xLine.append(delxPos,1)
+                            xLine.append(delxPos,-1*figmod.count)
 
-                        delem.popup()
+                            delem.popup()
                         }
                     }
                 }

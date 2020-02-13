@@ -10,6 +10,10 @@ ApplicationWindow {
     height: 900
     title: qsTr("XTC")
 
+    DataLoad {
+        id: dataload
+    }
+
     menuBar:MenuBar {
         id:mbar
         background: Rectangle{
@@ -19,22 +23,27 @@ ApplicationWindow {
 
         Menu {
             title: qsTr("&File")
-            Action { text: qsTr("&New...") }
-            Action { text: qsTr("&Open...") }
-            Action { text: qsTr("&Save") }
-            Action { text: qsTr("Save &As...") }
+            MenuItem { text: qsTr("&New...") }
+            MenuItem { text: qsTr("&Open...") }
+            MenuItem {
+                text: qsTr("&Save")
+                onClicked: {
+                    console.log("save")
+                }
+            }
+            MenuItem { text: qsTr("Save &As...") }
             MenuSeparator { }
-            Action { text: qsTr("&Quit") }
+            MenuItem { text: qsTr("&Quit") }
         }
         Menu {
             title: qsTr("&Edit")
-            Action { text: qsTr("Cu&t") }
-            Action { text: qsTr("&Copy") }
-            Action { text: qsTr("&Paste") }
+            MenuItem { text: qsTr("Cu&t") }
+            MenuItem { text: qsTr("&Copy") }
+            MenuItem { text: qsTr("&Paste") }
         }
         Menu {
             title: qsTr("&Help")
-            Action { text: qsTr("&About") }
+            MenuItem { text: qsTr("&About") }
         }
     }
 

@@ -51,6 +51,20 @@ checked, unchecked has different yaxis, loop figmod...
 #========================================
 #2020-2-9
 edit() mode syn with plot() mode
+	fixed 2020.2.12
+!!!!!plots getting fast !!!!!!
+	fixed 2020.2.12
+
+#---------------------------------------
+#2020-2-13
+yscale crtl+whell
+	fixed 2020-2-13
+frefernce label
+	??????????????
+loading progressbar
+	?????????????
+save function
+	?????????????
 
 
 

@@ -4,6 +4,9 @@ import QtQuick.Dialogs 1.1
 import io.qt.examples.dataload 1.0
 
 Rectangle {
+
+    property string filePath
+
     id: intro
     width: parent.width
     height: parent.height
@@ -38,6 +41,11 @@ Rectangle {
             //plotpage1.source = "PlotPage.qml"
             introt.visible = false
         }
+    }
+
+    function passFileName(fileName){
+        dataload.filePrj = fileName
+        showErr(dataload.error_list)
     }
 
     Rectangle{
@@ -87,7 +95,11 @@ Rectangle {
                 border.color: "black"
             }
 
-            onClicked: fileDialog.visible = true
+            onClicked: {
+                fileDialog.visible = true
+                //console.log(filePath)
+                //passFileName(filePath)
+            }
         }
 
         Button {
@@ -108,6 +120,8 @@ Rectangle {
             //onClicked: test("pass")
         }
 
+
+
         FileDialog {
             id: fileDialog
             title: "Please choose a file"
@@ -117,15 +131,81 @@ Rectangle {
             sidebarVisible: false
             nameFilters: [ "XTC project (*.xtci)", "All files (*)" ]
             onAccepted: {
-                dataload.filePrj = fileDialog.fileUrls[0]
+                fileDialog.close()
+                //cProgress.onStart()
+                //dataload.filePrj = fileDialog.fileUrls[0]
+                passFileName(fileDialog.fileUrls[0])
+                //filePath = fileDialog.fileUrls[0]
                 //console.log(dataload.error_list)
-                showErr(dataload.error_list)
+
+                //showErr(dataload.error_list)
                 //errorList(dataload.error_list)
                 //prjName(fileDialog.fileUrls[0])
             }
             onRejected: {
                 console.log("Canceled")
                 //Qt.quit()
+            }
+        }
+
+
+        ProgressBar {
+            property color proColor: "#148014"
+            property color proBackgroundColor: "#AAAAAA"
+            property int proWidth: 2
+            property real progress: 0
+            property real proRadius: 3
+            property alias interval: timer.interval
+
+            function isRunning(){
+                return(timer.running)
+            }
+
+            function onStart(){
+                cProgress.progress = 0;
+                timer.running = true;
+            }
+
+            function onStop(){
+                timer.running = false;
+            }
+
+            id: cProgress
+            anchors.centerIn: parent
+            value: (progress/100)
+            padding: 2
+
+            background: Rectangle {
+                implicitWidth: 200
+                implicitHeight: 16
+                color: cProgress.proBackgroundColor
+                radius: cProgress.proRadius
+            }
+
+            contentItem: Item {
+                implicitWidth: 200
+                implicitHeight: 10
+
+                Rectangle {
+                    width: cProgress.visualPosition * parent.width
+                    height: parent.height
+                    radius: 2
+                    color: cProgress.proColor
+                }
+            }
+
+            Timer{
+                id: timer
+                running: false
+                repeat: true
+                interval: 50
+                onTriggered:{
+                    cProgress.progress++;
+                    if (cProgress.progress > 100){
+                        cProgress.onStop();
+                        return;
+                    }
+                }
             }
         }
 
