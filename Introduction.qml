@@ -127,7 +127,8 @@ Rectangle {
             title: "Please choose a file"
             //folder: shortcuts.home
             //folder:"file:///archive/oceans/antarctic/_XTC"
-            folder:"file:///archive/oceans/black_sea/_XTC_BS"
+            //folder:"file:///archive/oceans/black_sea/_XTC_BS"
+            folder:"file:///home/jiabo/Documents/ps_XTC_practice"
             sidebarVisible: false
             nameFilters: [ "XTC project (*.xtci)", "All files (*)" ]
             onAccepted: {

@@ -65,6 +65,7 @@ public slots:
     void ageChange(float age1, float age2);
     float searchLine(float age);
     void ageDel(float age);
+    void save();
 signals:
     void filePrjChanged();
     void error_listChanged();

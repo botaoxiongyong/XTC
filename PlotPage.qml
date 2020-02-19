@@ -41,7 +41,6 @@ Rectangle {
 
     property var colorList: ['#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b','#e6f598','#66c2a5','#3288bd','#5e4fa2','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a']
 
-
     DataLoad {
         id: dataload
         Component.onCompleted: {
@@ -52,6 +51,11 @@ Rectangle {
             //console.log(corels)
             //console.log(params)
         }
+    }
+
+    function save(){
+        console.log("plotsPage save")
+        dataload.save()
     }
 
     function coreList(corels){
@@ -123,12 +127,96 @@ Rectangle {
     }
 
     Rectangle {
-        //anchors.fill: parent
-        id: coreL
+        id:menuList
         anchors.left: parent.left
         width: parent.width*0.2
         height: parent.height
-        color: "lightgrey"
+        color: "#deebf7"
+
+        Rectangle{
+                id: optinButton
+                anchors.top: parent.top
+                anchors.left: parent.left
+                Button{
+                    text: "save"
+                    onClicked: {
+                        dataload.save()
+                    }
+                }
+            }
+
+        Button{
+            id:menuHide
+            //text: qsTr("menu")
+            height: coreL.height
+            width: plotpage.width*0.2*0.1
+            anchors.left: parent.left
+            visible: false
+
+            contentItem: Text {
+                text: qsTr("menu")
+                rotation: 270
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle{
+                color: "#deebf7"
+                border.color: "#deebf7"
+            }
+
+            onClicked: {
+                menuShow.visible = true
+                menuHide.visible = false
+                menuList.width = plotpage.width*0.2
+            }
+        }
+
+        Button{
+            id:menuShow
+            //text: qsTr("hide")
+            height: coreL.height
+            width: plotpage.width*0.2*0.1
+            anchors.left: parent.left
+            visible: true
+
+            contentItem: Text {
+                text: qsTr("hide")
+                rotation: 270
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle{
+                color: "lightgrey"
+                border.color: "lightgrey"
+            }
+
+            onClicked: {
+                menuShow.visible = false
+                menuHide.visible = true
+                menuList.width = plotpage.width*0.2*0.1
+                //menuList.width = parent.width*0.1
+                //bbg2.color = "grey"
+                //listShow.visible = false
+                //coreL.visible = true
+                //listHide.visible = true
+                //fig.width = plotpage.width*0.8
+                //fig.anchors.left = listHide.right
+
+
+            }
+        }
+    }
+
+    Rectangle {
+        //anchors.fill: parent
+        id: coreL
+        //anchors.left: parent.left
+        anchors.left: menuList.right
+        width: parent.width*0.2
+        height: parent.height
+        color: "#f7fbff"
 
         Switch {
             id:modeChange
@@ -178,6 +266,7 @@ Rectangle {
                     plot()
                 }
             }
+
         }
 
         ListModel {
@@ -308,15 +397,22 @@ Rectangle {
 
     Button{
         id:listHide
-        text: qsTr("<")
+        //text: qsTr("<")
         height: coreL.height
         width: coreL.width*0.1
         anchors.right: coreL.right
 
+        contentItem: Text {
+                text: qsTr("hide")
+                rotation: 270
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
         background: Rectangle{
             id:bbg
             color: "lightgrey"
-            border.color: "grey"
+            border.color: "lightgrey"
         }
 
         onClicked: {
@@ -327,23 +423,31 @@ Rectangle {
             coreL.visible = false
             listHide.visible = false
             //listShow.anchors.left = plotpage.left
-            fig.width = plotpage.width*0.98
+            //fig.width = plotpage.width*0.98
+            coreL.width = parent.width*0.2*0.1
             fig.anchors.left = listShow.right
         }
     }
 
     Button{
         id:listShow
-        text: qsTr(">")
+        //text: qsTr("core list")
         height: coreL.height
-        width: coreL.width*0.1
-        anchors.left: plotpage.left
+        width: parent.width*0.2*0.1
+        anchors.left: coreL.left
         visible: false
+
+        contentItem: Text {
+                text: qsTr("core list")
+                rotation: 270
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
 
         background: Rectangle{
             id:bbg2
-            color: "lightblue"
-            border.color: "blue"
+            color: "#f7fbff"
+            border.color: "#f7fbff"
         }
 
         onClicked: {
@@ -351,12 +455,15 @@ Rectangle {
             listShow.visible = false
             coreL.visible = true
             listHide.visible = true
+            coreL.width = parent.width*0.2
             //fig.width = plotpage.width*0.8
             fig.anchors.left = listHide.right
 
 
         }
     }
+
+
 
     function nextPara(){
         var fignum = figmod.count
@@ -690,6 +797,8 @@ Rectangle {
                     }
                 }
             }
+
+
         }
 
         Rectangle {

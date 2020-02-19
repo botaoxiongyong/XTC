@@ -2,7 +2,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.9
 import QtQuick.Dialogs 1.1
-import io.qt.examples.dataload 1.0
+//import io.qt.examples.dataload 1.0
 
 ApplicationWindow {
     visible: true
@@ -10,17 +10,13 @@ ApplicationWindow {
     height: 900
     title: qsTr("XTC")
 
-    DataLoad {
-        id: dataload
-    }
-
     menuBar:MenuBar {
         id:mbar
         background: Rectangle{
             color: "lightgrey"
             border.color: "grey"
         }
-
+        /*
         Menu {
             title: qsTr("&File")
             MenuItem { text: qsTr("&New...") }
@@ -28,7 +24,9 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("&Save")
                 onClicked: {
-                    console.log("save")
+                    PlotPage.save
+                    //dataload.save()
+                    //console.log(PlotPage.save)
                 }
             }
             MenuItem { text: qsTr("Save &As...") }
@@ -45,6 +43,7 @@ ApplicationWindow {
             title: qsTr("&Help")
             MenuItem { text: qsTr("&About") }
         }
+        */
     }
 
     Loader {
@@ -55,9 +54,6 @@ ApplicationWindow {
     }
 
     Introduction{}
-
-
-
 
     /*
 
