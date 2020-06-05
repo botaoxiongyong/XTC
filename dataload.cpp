@@ -130,7 +130,7 @@ void DataLoad::dataMatrix(const QString &filePrj){
     //GC: age model
     n=1;
     for (QString &coreLines: coreFileList){
-        QStringList ageFile = coreLines.split("\n").filter(".ages");
+        QStringList ageFile = coreLines.split("\n").filter("GC");
         QStringList dataFile = coreLines.split("\n").filter(QRegExp("(GP|FP)"));
         matrixCore[size_t(n)][0] = ageFile[0];
         m_coreList.append(ageFile[0].replace(".ages","").replace("GC",""));

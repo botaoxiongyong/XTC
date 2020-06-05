@@ -8,11 +8,14 @@ Rectangle {
     id: plotpage
     anchors.fill: parent
 
+    //signal loadComplete(string completebool)
+
     //property var coreSelected: []
     //property string coretext
     //signal coreI(int cindex)
     //signal paraI(int pindex)
-    property var fileName
+    //property var dataload
+    property var fileName:""
     property int pInd: 1
     property int cInd: 1
     property int count: 0
@@ -44,12 +47,33 @@ Rectangle {
     DataLoad {
         id: dataload
         Component.onCompleted: {
-            dataload.filePrj = fileName
-            corels = dataload.coreList
-            params = dataload.paramList
-            plot()
-            //console.log(corels)
-            //console.log(params)
+            console.log(fileName)
+            if (fileName !== ""){
+                //fig.visible = false
+                //err_page.visible = true
+
+                dataload.filePrj = fileName
+
+                console.log(dataload.error_list)
+
+                corels = dataload.coreList
+                params = dataload.paramList
+                plot()
+                //loadComplete("True")
+                //console.log(corels)
+                //console.log(params)
+            }
+        }
+    }
+
+    Rectangle {
+        id: err_page
+        anchors.fill: parent
+        visible: false
+        //color: "green"
+        z: 1
+        ErrPage {
+
         }
     }
 
@@ -666,6 +690,54 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
+                onEntered: {
+                    forceActiveFocus();
+                }
+
+                Keys.onPressed: {
+                    var xmin,xmax;
+                    xmin = xAxis.min;
+                    xmax = xAxis.max;
+                    var movedist = (xmax - xmin)*0.2;
+                    if (event.key === Qt.Key_Left){
+                        xAxis.min = xAxis.min + movedist;
+                        xAxis.max = xAxis.max + movedist;
+                    }
+                    if (event.key === Qt.Key_Right){
+                        xAxis.min = xAxis.min - movedist;
+                        xAxis.max = xAxis.max - movedist;
+                    }
+                    if (event.key === Qt.Key_Plus){
+                        if (yscale +0.01 <=1){
+                            yscale = yscale + 0.1
+                            chart.removeAllSeries()
+
+                            if(modeChange.checked == true){
+                                edit()
+                            }
+                            else{
+                                plot()
+                            }
+                            xAxis.min = xmin;
+                            xAxis.max = xmax;
+                        }
+                    }
+                    if (event.key === Qt.Key_Minus){
+                        if (yscale -0.01 >= 0){
+                            yscale = yscale - 0.1
+                            chart.removeAllSeries()
+
+                            if(modeChange.checked == true){
+                                edit()
+                            }
+                            else{
+                                plot()
+                            }
+                            xAxis.min = xmin;
+                            xAxis.max = xmax;
+                        }
+                    }
+                }
 
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
 
@@ -699,6 +771,9 @@ Rectangle {
                 */
 
                 onWheel: {
+                    var xmin,xmax;
+                    xmin = xAxis.min;
+                    xmax = xAxis.max;
                     if (wheel.modifiers & Qt.ControlModifier){
                         //console.log(wheel.angleDelta)
                         if ((wheel.angleDelta.y >= 0) && (yscale -0.01 >= 0)){
@@ -721,12 +796,15 @@ Rectangle {
                         else{
                             plot()
                         }
+                        xAxis.min = xmin;
+                        xAxis.max = xmax;
                     }
                     else{
                         var coords = chart.mapToValue(Qt.point(mouseX,mouseY))
                         var xpos = coords.x
                         var p1,p2
-                        parent.scaleFactor = wheel.angleDelta.y/(xAxis.max - xAxis.min);
+                        //parent.scaleFactor = wheel.angleDelta.y/(xAxis.max - xAxis.min);
+                        parent.scaleFactor = wheel.angleDelta.y/(xAxis.max/10);
                         p1 = (xpos - xAxis.min)/(xAxis.max - xAxis.min)
                         p2 = (xAxis.max - xpos)/(xAxis.max - xAxis.min)
                         //console.log(p1,p2,parent.scaleFactor)

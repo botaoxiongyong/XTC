@@ -17,7 +17,8 @@ SOURCES += \
         main.cpp \
     dataload.cpp \
     plots.cpp \
-    interp_func.cpp
+    interp_func.cpp \
+    tablemodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,4 +38,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     dataload.h \
-    interp_func.h
+    interp_func.h \
+    tablemodel.h

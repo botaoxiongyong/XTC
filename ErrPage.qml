@@ -5,92 +5,77 @@ import QtQuick.Dialogs 1.1
 
 
 Rectangle{
-    id:page
+    id:load_page
     //anchors.right: parent.right
     width: parent.width
     height: parent.height
     anchors.fill: parent
     //color: "lightgrey"
 
-    function test(err){
-        if (err === undefined){
-            return listerr
-        }
-        else{
-            //return "correct"
-            for (var i in err){
-                if (i % 2 == 0){
-                    listerr.append({errtext: err[i]+"\n"})
-                    //listerr.setProperty(color.red)
-                }
-                else {
-                    listerr.append({errtext: err[i]})
-                }
+    Label {
+        id:info
 
+    }
+
+
+    ProgressBar {
+        property color proColor: "#148014"
+        property color proBackgroundColor: "#AAAAAA"
+        property int proWidth: 2
+        property real progress: 0
+        property real proRadius: 3
+        property alias interval: timer.interval
+
+        function isRunning(){
+            return(timer.running)
+        }
+
+        function onStart(){
+            cProgress.progress = 0;
+            timer.running = true;
+        }
+
+        function onStop(){
+            timer.running = false;
+        }
+
+        id: cProgress
+        anchors.centerIn: parent
+        value: (progress/100)
+        padding: 2
+
+        background: Rectangle {
+            implicitWidth: 200
+            implicitHeight: 16
+            color: cProgress.proBackgroundColor
+            radius: cProgress.proRadius
+        }
+
+        contentItem: Item {
+            implicitWidth: 200
+            implicitHeight: 10
+
+            Rectangle {
+                width: cProgress.visualPosition * parent.width
+                height: parent.height
+                radius: 2
+                color: cProgress.proColor
             }
-            return listerr
-        }
-    }
-
-
-    Rectangle{
-        width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        color: "red"
-
-        Text {
-            text: qsTr("Errors Message:\n")
-            anchors.horizontalCenter: parent.Center
-        }
-    }
-
-
-    ListModel {
-        id: listerr
-        ListElement {errtext: "\n\n"}
-    }
-
-    Component {
-        id: listtext
-        Text {
-            text: errtext
-            font.pixelSize: 12
-            anchors.left: parent.left
-            anchors.leftMargin: 2
-            //color: "red"
-        }
-    }
-
-    ListView {
-        id: listView
-        anchors.fill: parent
-        flickableDirection: Flickable.VerticalFlick
-        boundsBehavior: Flickable.StopAtBounds
-        model: test(err)
-        clip: true
-        delegate: listtext
-
-        //Layout.fillWidth: true
-        //Layout.fillHeight: true
-
-        ScrollBar.vertical: ScrollBar {}
-    }
-
-    Button {
-        id:back
-        //anchors.fill: page
-        width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        text: "Back to Start"
-        background: Rectangle{color: "lightblue"}
-
-        onClicked:{
-            viewObj.setCurrentIndex(0)
         }
 
-        //onClicked: console.log(viewObj)
+        Timer{
+            id: timer
+            running: false
+            repeat: true
+            interval: 50
+            onTriggered:{
+                cProgress.progress++;
+                if (cProgress.progress > 100){
+                    cProgress.onStop();
+                    return;
+                }
+            }
+        }
     }
 }
 

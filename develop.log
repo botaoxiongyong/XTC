@@ -65,6 +65,24 @@ loading progressbar
 	?????????????
 save function
 	works 2020.2.19
+	
+#-------------------------------------
+#2020-06-4
+new function
+    keyboard moving works
+#------------------------------------
+#====================================
+#2020-06-4
+start working on creat new project
+    table works
+    how to adjust rows and columns
+        solved 2020.06.05!!!
+#-----------------------------------
+#2020-06-05
+function requires:
+    table click to open file diaglog
+    save file path to xtc file
+
 
 
 

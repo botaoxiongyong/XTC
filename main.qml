@@ -47,13 +47,27 @@ ApplicationWindow {
     }
 
     Loader {
-        id:t1
+        id:loader
         anchors.fill: parent
         //source: "Introduction.qml"
         focus: true
     }
 
-    Introduction{}
+    Rectangle {
+        id:intro
+        anchors.fill: parent
+        Introduction{
+            onFileNameGet: {
+                //plot_Page.recieveFileName(fileName)
+                loader.setSource("PlotPage.qml",{"fileName":fileName})
+                //console.log(fileName)
+                intro.visible = false
+                //plot.contains(PlotPage)
+                //PlotPage.loadCompelte("true")
+            }
+        }
+    }
+
 
     /*
 

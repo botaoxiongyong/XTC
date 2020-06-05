@@ -4,5 +4,6 @@
         <file>Introduction.qml</file>
         <file>ErrPage.qml</file>
         <file>PlotPage.qml</file>
+        <file>Creatprj.qml</file>
     </qresource>
 </RCC>
