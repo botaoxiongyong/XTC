@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<QAbstractSeries*>();
     qRegisterMetaType<QAbstractAxis*>();
 
+
     QQmlApplicationEngine engine;
     TableModel model;
     engine.rootContext()->setContextProperty("table_model", &model);

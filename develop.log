@@ -82,7 +82,11 @@ start working on creat new project
 function requires:
     table click to open file diaglog
     save file path to xtc file
-
+#------------------------------------
+#====================================
+#2020-06-06
+create project can not use taleview
+    list model maybe better han tableview
 
 
 

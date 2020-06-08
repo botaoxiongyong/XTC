@@ -18,6 +18,7 @@ SOURCES += \
     dataload.cpp \
     plots.cpp \
     interp_func.cpp \
+    prjsave.cpp \
     tablemodel.cpp
 
 RESOURCES += qml.qrc

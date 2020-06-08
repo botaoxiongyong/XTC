@@ -66,6 +66,10 @@ public slots:
     float searchLine(float age);
     void ageDel(float age);
     void save();
+
+    //creat prj
+    void creatMatrix();
+    void coreMaxtrix(int row, int col, QString filePath);
 signals:
     void filePrjChanged();
     void error_listChanged();

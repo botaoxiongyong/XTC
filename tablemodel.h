@@ -4,10 +4,16 @@
 #include <QAbstractTableModel>
 #include <QDebug>
 #include <QModelIndex>
+#include <QList>
+#include <QPushButton>
+#include <QQmlComponent>
+#include <QQmlApplicationEngine>
 /*
  * the table is copy from github, author eyllanesc
  * https://github.com/eyllanesc/stackoverflow/tree/master/questions/55610163
  */
+Q_DECLARE_METATYPE(QPushButton*)
+
 class TableModel : public QAbstractTableModel
 {
     Q_OBJECT
@@ -20,9 +26,18 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 public slots:
     void rowNumb(int n);
+    void colNumb(int n);
+    void coreList(QStringList corelist);
+    void paramList(QStringList paramlist);
+    void index_row_col(int row, int col);
 
 private:
     int m_rows = 1;
+    int m_cols = 1;
+    int m_row_index = 0;
+    int m_col_index = 0;
+    QStringList m_corelist;
+    QStringList m_paramlist;
 };
 
 #endif // TABLEMODEL_H

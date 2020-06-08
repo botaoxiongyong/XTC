@@ -142,6 +142,7 @@ Rectangle {
             //folder:"file:///archive/oceans/black_sea/_XTC_BS"
             folder:"file:///home/jiabo/Documents/ps_XTC_practice"
             sidebarVisible: false
+            visible: false
             nameFilters: [ "XTC project (*.xtci)", "All files (*)" ]
             onAccepted: {
                 fileDialog.close()
@@ -161,6 +162,7 @@ Rectangle {
                 //prjName(fileDialog.fileUrls[0])
             }
             onRejected: {
+                fileDialog.close()
                 console.log("Canceled")
                 //Qt.quit()
             }
