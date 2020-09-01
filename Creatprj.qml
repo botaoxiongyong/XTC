@@ -11,17 +11,58 @@ ApplicationWindow{
     height: 800
     title: qsTr("new XTC project")
 
-    property int rows: 1
-    property int cols: 1
-    property var coreList:["refer"]
-    property var paramList:["age model"]
+    property int rows: 0
+    property int cols: 0
+    //property var coreList:["refer"]
+    //property var paramList:["age model"]
     property var fileName: "No Data"
     property var filePath
+    property var rowModles: []
+    property var colModles: []
+    property int temp_row: 0
 
     DataLoad {
         id: dataload
         Component.onCompleted: {
             dataload.creatMatrix()
+        }
+    }
+
+    function coreList(core){
+        coreListModel.append({name:core})
+        return coreListModel
+    }
+    function paramList(param){
+        paramListModel.append({name:param})
+        return paramListModel
+    }
+    function collist(col,row){
+        //console.log(row,col)
+        fileListModle.append({name:String(col)+String(row),col:col,row:row})
+    }
+
+    function rowllist(col,row){
+        //corePModel.append({name:'add',row:row})
+        //console.log(fileListModle.count)
+        //fileListModle.append({name:'add',col:col})
+        rowModles.push()
+    }
+
+    function row_add(row){
+        console.log(row)
+        for (var i=0;i<cols;i++){
+            fileListModle.setProperty(i,"row",row)
+            fileListModle.setProperty(i,"name",String(row))
+        }
+        return fileListModle
+    }
+
+    function update_table(row,col){
+        for (var r=0;r<row;r++){
+            for (var c=0;c<col;c++){
+                colModles.push(c,"table_button")
+            }
+            rowModles.push(r,colModles)
         }
     }
 
@@ -70,26 +111,29 @@ ApplicationWindow{
 
                         Keys.onReturnPressed: {
                             if (addnote.text === "core Name"){
-                                coreList.push(inputtext.text)
+                                //coreList.push(inputtext.text)
+                                coreList(inputtext.text)
+                                rowllist(cols,rows)
                             }
                             else if (addnote.text === "parameter Name"){
-                                paramList.push(inputtext.text)
+                                paramList(inputtext.text)
+                                collist(cols,rows)
                             }
-                            console.log(rows,cols)
-                            loader.sourceComponent = undefined
-                            table_model.rowNumb(rows)
-                            table_model.colNumb(cols)
-                            table_model.coreList(coreList)
-                            table_model.paramList(paramList)
+                            //console.log(rows,cols)
+                            update_table(rows,cols)
+                            //loader.sourceComponent = undefined
+                            //table_model.rowNumb(rows)
+                            //table_model.colNumb(cols)
+                            //table_model.coreList(coreList)
+                            //table_model.paramList(paramList)
                             cpinput.close()
                         }
                     }
                 }
             }
-            onClosed: {
-
-                loader.sourceComponent = mycomp
-            }
+            //onClosed: {
+            //    loader.sourceComponent = mycomp
+            //}
         }
 
         Rectangle{
@@ -128,10 +172,148 @@ ApplicationWindow{
                 }
             }
         }
+
+    }
+
+    Rectangle{
+        id:coreNameList
+        width: 100
+        anchors.left: parent.left
+        anchors.top: paraNameList.bottom
+        anchors.bottom: parent.bottom
+        color: "lightblue"
+
+        ListView{
+            id:cNameLview
+            anchors.fill: coreNameList
+            model: coreListModel
+            delegate: cNameComponent
+        }
+
+        ListModel{
+            id:coreListModel
+            ListElement{name:"refer"}
+            //ListElement{name:"refer"}
+        }
+
+        Component{
+            id:cNameComponent
+            Rectangle{
+                height: 50
+                width: 100
+                border.color: "grey"
+                //color: "red"
+                Text {
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: name
+                }
+            }
+        }
+    }
+
+    Rectangle{
+        id:paraNameList
+        height: 50
+        anchors.left: coreNameList.right
+        anchors.top: npc.bottom
+        anchors.right: parent.right
+        //anchors.bottom: parent.bottom
+        color: "lightblue"
+
+        ListView{
+            id:pNameLview
+            orientation: Qt.Horizontal
+            anchors.fill: paraNameList
+            model: paramListModel
+            delegate: pNameComponent
+        }
+
+        ListModel{
+            id:paramListModel
+            ListElement{name:"Age Model"}
+            //ListElement{name:"refer"}
+        }
+
+        Component{
+            id:pNameComponent
+            Rectangle{
+                height: 50
+                width: 100
+                border.color: "grey"
+                //color: "red"
+                Text {
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: name
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id:tableArea
+        width: parent.width-100
+        anchors.left: coreNameList.right
+        anchors.right: parent.right
+        height: parent.height/10*8
+        anchors.top: paraNameList.bottom
+        anchors.bottom: parent.bottom
+        color: "lightgrey"
+
+        ListView{
+            orientation: Qt.Vertical
+            anchors.fill: parent
+            model: rowModles
+            //delegate: filePathObj
+            //delegate: test
+            delegate: ListView{
+                property int indexofrow: index
+                width: parent.width
+                height: 50
+                orientation: Qt.Horizontal
+                //width: parent.width
+                //model: fileListModle
+                model: colModles
+                //delegate: filePathObj
+                delegate: filePathObj
+            }
+
+        }
+
+        ListModel{
+            id:corePModel
+            ListElement{disp:"row";col:0;row:0}
+            //ListElement{name:"1-1"}
+            //ListElement{name:"1-1"}
+        }
+
+        ListModel{
+            id:fileListModle
+            ListElement{name:"col";col:0;row:0}
+            //ListElement{name:"1-1"}
+            //ListElement{name:"1-1"}
+        }
+
+        Component{
+            id:filePathObj
+            Button{
+                id:table_button
+                width: 100
+                height: 50
+                text: name
+
+                onClicked: {
+                    console.log(row,col,name)
+                }
+            }
+        }
     }
 
 
-
+/*---
     Rectangle{
         id:ftable
         width: parent.width
@@ -233,7 +415,7 @@ ApplicationWindow{
                             }
                         }
                     }
-                    /*Button {
+                    Button {
                         //id: cpbuton
                         text: String(rows)+"&"+String(cols)
                         anchors.fill: parent
@@ -249,7 +431,7 @@ ApplicationWindow{
                             console.log(parent.text)
 
                         }
-                    }*/
+                    }
 
                 }
                 Rectangle { // mask the headers
@@ -305,5 +487,5 @@ ApplicationWindow{
         }
 
     }
-
+*/
 }
