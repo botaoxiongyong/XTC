@@ -87,6 +87,13 @@ function requires:
 #2020-06-06
 create project can not use taleview
     list model maybe better han tableview
+#====================================
+#2020-09-02
+create project changed to listview!!
+    index works!!
+    datamatrix need introduced to index the name and path of cores!
+
+
 
 
 

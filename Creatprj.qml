@@ -1,9 +1,12 @@
-import QtQuick 2.12
+import QtQuick 2.9
 import QtQuick.Controls 2.5
+//import QtQuick.Controls 1.4
 import Qt.labs.qmlmodels 1.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.3
 import io.qt.examples.dataload 1.0
+import QtQml.Models 2.3
+import QtQml 2.3
 
 ApplicationWindow{
     id:newprj
@@ -11,8 +14,8 @@ ApplicationWindow{
     height: 800
     title: qsTr("new XTC project")
 
-    property int rows: 0
-    property int cols: 0
+    property int rows: 2
+    property int cols: 3
     //property var coreList:["refer"]
     //property var paramList:["age model"]
     property var fileName: "No Data"
@@ -28,317 +31,101 @@ ApplicationWindow{
         }
     }
 
-    function coreList(core){
-        coreListModel.append({name:core})
-        return coreListModel
-    }
-    function paramList(param){
-        paramListModel.append({name:param})
-        return paramListModel
-    }
-    function collist(col,row){
-        //console.log(row,col)
-        fileListModle.append({name:String(col)+String(row),col:col,row:row})
+
+    function addrow(){
+        libraryModel.append({name:'tbuton',anaimal:'dog'})
     }
 
-    function rowllist(col,row){
-        //corePModel.append({name:'add',row:row})
-        //console.log(fileListModle.count)
-        //fileListModle.append({name:'add',col:col})
-        rowModles.push()
+    function addcols(){
+        at.append({para:'t'})
     }
 
-    function row_add(row){
-        console.log(row)
-        for (var i=0;i<cols;i++){
-            fileListModle.setProperty(i,"row",row)
-            fileListModle.setProperty(i,"name",String(row))
-        }
-        return fileListModle
-    }
-
-    function update_table(row,col){
-        for (var r=0;r<row;r++){
-            for (var c=0;c<col;c++){
-                colModles.push(c,"table_button")
-            }
-            rowModles.push(r,colModles)
-        }
-    }
-
-    Rectangle{
-        id:npc
-        width: newprj.width
-        height: newprj.height/20
-        anchors.top: newprj.top
-
-        Popup {
-            id:cpinput
-            x: 100
-            y: 100
-            width: 200
-            height: 70
-            modal: true
-            focus: true
-            //closePolicy: Popup.close | Popup.closePolicy
-            Rectangle{
-                id:cpwindow
-                anchors.fill: parent
-                color: "grey"
-                Rectangle{
-                    anchors.top: cpwindow.top
-                    //anchors.horizontalCenter: parent.horizontalCenter
-                    width: cpwindow.width
-                    height: cpwindow.height/2
-                    color: "lightgrey"
-                    Text {
-                        anchors.horizontalCenter: parent.verhorizontalCenter
-                        id: addnote
-                    }
-                }
-
-                Rectangle{
-                    anchors.bottom: cpwindow.bottom
-                    height: cpwindow.height/2
-                    width: cpwindow.width
-                    border.color: "green"
-                    TextInput{
-                        id: inputtext
-                        text: "name"
-                        color: "lightgrey"
-                        selectByMouse: true
-                        selectionColor: "black"
-
-                        Keys.onReturnPressed: {
-                            if (addnote.text === "core Name"){
-                                //coreList.push(inputtext.text)
-                                coreList(inputtext.text)
-                                rowllist(cols,rows)
-                            }
-                            else if (addnote.text === "parameter Name"){
-                                paramList(inputtext.text)
-                                collist(cols,rows)
-                            }
-                            //console.log(rows,cols)
-                            update_table(rows,cols)
-                            //loader.sourceComponent = undefined
-                            //table_model.rowNumb(rows)
-                            //table_model.colNumb(cols)
-                            //table_model.coreList(coreList)
-                            //table_model.paramList(paramList)
-                            cpinput.close()
-                        }
-                    }
-                }
-            }
-            //onClosed: {
-            //    loader.sourceComponent = mycomp
-            //}
-        }
-
-        Rectangle{
-            width: npc.width/2
-            height: npc.height
-            anchors.left: npc.left
-            Button {
-                //anchors.fill: parent
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("add core")
-
-                onClicked: {
-                    addnote.text = qsTr("core Name")
-                    cpinput.open()
-                    //loader.sourceComponent = undefined
-                    rows = rows + 1
-                }
-            }
-        }
-        Rectangle{
-            width: npc.width/2
-            height: npc.height
-            anchors.right: npc.right
-            Button {
-                //anchors.fill: parent
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("add parameter")
-
-                onClicked: {
-                    addnote.text = qsTr("parameter Name")
-                    cpinput.open()
-                    //loader.sourceComponent = undefined
-                    cols = cols+1
-                }
-            }
-        }
-
-    }
-
-    Rectangle{
-        id:coreNameList
-        width: 100
-        anchors.left: parent.left
-        anchors.top: paraNameList.bottom
-        anchors.bottom: parent.bottom
-        color: "lightblue"
-
-        ListView{
-            id:cNameLview
-            anchors.fill: coreNameList
-            model: coreListModel
-            delegate: cNameComponent
-        }
-
-        ListModel{
-            id:coreListModel
-            ListElement{name:"refer"}
-            //ListElement{name:"refer"}
-        }
-
-        Component{
-            id:cNameComponent
-            Rectangle{
-                height: 50
-                width: 100
-                border.color: "grey"
-                //color: "red"
-                Text {
-                    anchors.fill: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: name
-                }
-            }
-        }
-    }
-
-    Rectangle{
-        id:paraNameList
-        height: 50
-        anchors.left: coreNameList.right
-        anchors.top: npc.bottom
-        anchors.right: parent.right
-        //anchors.bottom: parent.bottom
-        color: "lightblue"
-
-        ListView{
-            id:pNameLview
-            orientation: Qt.Horizontal
-            anchors.fill: paraNameList
-            model: paramListModel
-            delegate: pNameComponent
-        }
-
-        ListModel{
-            id:paramListModel
-            ListElement{name:"Age Model"}
-            //ListElement{name:"refer"}
-        }
-
-        Component{
-            id:pNameComponent
-            Rectangle{
-                height: 50
-                width: 100
-                border.color: "grey"
-                //color: "red"
-                Text {
-                    anchors.fill: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: name
-                }
-            }
-        }
-    }
-
-    Rectangle {
-        id:tableArea
-        width: parent.width-100
-        anchors.left: coreNameList.right
-        anchors.right: parent.right
-        height: parent.height/10*8
-        anchors.top: paraNameList.bottom
-        anchors.bottom: parent.bottom
-        color: "lightgrey"
-
-        ListView{
-            orientation: Qt.Vertical
-            anchors.fill: parent
-            model: rowModles
-            //delegate: filePathObj
-            //delegate: test
-            delegate: ListView{
-                property int indexofrow: index
-                width: parent.width
-                height: 50
-                orientation: Qt.Horizontal
-                //width: parent.width
-                //model: fileListModle
-                model: colModles
-                //delegate: filePathObj
-                delegate: filePathObj
-            }
-
-        }
-
-        ListModel{
-            id:corePModel
-            ListElement{disp:"row";col:0;row:0}
-            //ListElement{name:"1-1"}
-            //ListElement{name:"1-1"}
-        }
-
-        ListModel{
-            id:fileListModle
-            ListElement{name:"col";col:0;row:0}
-            //ListElement{name:"1-1"}
-            //ListElement{name:"1-1"}
-        }
-
-        Component{
-            id:filePathObj
-            Button{
-                id:table_button
-                width: 100
-                height: 50
-                text: name
-
-                onClicked: {
-                    console.log(row,col,name)
-                }
-            }
-        }
-    }
-
-
-/*---
     Rectangle{
         id:ftable
         width: parent.width
         height: parent.height/10*8
-        anchors.top: npc.bottom
+        //anchors.top: npc.bottom
 
-        Button {
-            anchors.top: ftable.top
-            anchors.left: ftable.left
-            anchors.leftMargin: 100
-            text: qsTr("cores")
-            onClicked: {
-                fileDia.visible = true
-            }
-        }
 
-        Text {
+        Rectangle{
+            id: butArea1
             anchors.top: ftable.top
             anchors.left: ftable.left
             anchors.topMargin: 20
-            anchors.leftMargin: 20
+            anchors.leftMargin: 10
 
-            text: qsTr("parameters")
+            Button {
+                id: sp
+                anchors.left: butArea1.left
+                text: qsTr("Set Path")
+                onClicked: {
+                    fileDia.visible = true
+                }
+            }
+
+            TextField{
+                anchors.left: sp.right
+                width: 160
+                text: 'path'
+            }
         }
 
+
+        Rectangle{
+            id:butArea2
+            anchors.top: ftable.top
+            anchors.left: ftable.left
+            anchors.topMargin: 20
+            anchors.leftMargin: 500
+
+            Button {
+                id:spn
+                anchors.left: butArea2.left
+                text: qsTr("Add parameter")
+
+                onClicked: {
+                    cols +=1
+                    addcols()
+                }
+            }
+
+            TextField{
+                id:spnt
+                anchors.left: spn.right
+                width: 50
+                text: cols
+            }
+        }
+
+        Rectangle{
+            id:butArea3
+            anchors.top: ftable.top
+            anchors.left: ftable.left
+            anchors.topMargin: 20
+            anchors.leftMargin: 300
+
+            Button {
+                id:scn
+                anchors.left: butArea3.left
+                text: qsTr("Add core")
+
+                onClicked: {
+                    rows+=1
+                    addrow()
+                }
+            }
+
+            TextField{
+                id: scnt
+                anchors.left: scn.right
+                width: 50
+                text: rows
+            }
+        }
+
+
+
+        /*
         Rectangle{
             anchors.fill:parent
             anchors.topMargin: 100
@@ -349,6 +136,7 @@ ApplicationWindow{
                 //sourceComponent: mycomp
             }
         }
+        */
 
         FileDialog {
             id: fileDia
@@ -373,119 +161,71 @@ ApplicationWindow{
             }
         }
 
-        Component.onCompleted: {
-            table_model.rowNumb(rows)
-            table_model.colNumb(cols)
-            table_model.coreList(coreList)
-            table_model.paramList(paramList)
-            loader.sourceComponent = mycomp
-        }
+        Rectangle{
+            id:tablearea
+            anchors.fill: ftable
+            //anchors.top: ftable.top
+            //anchors.left: ftable.left
+            anchors.topMargin: 100
+            //color: "grey"
 
-        Component{
-            id:mycomp
-            TableView {
-                id: tableView
-
-                columnWidthProvider: function (column) { return 100; }
-                rowHeightProvider: function (column) { return 60; }
-                //anchors.fill: parent
-                //anchors.topMargin: 100
-                leftMargin: rowsHeader.implicitWidth
-                topMargin: columnsHeader.implicitHeight
-                model: table_model
-                ScrollBar.horizontal: ScrollBar{}
-                ScrollBar.vertical: ScrollBar{}
-                clip: true
-
-                delegate: Rectangle {
-
-                    Text {
-                        text: display
-                        anchors.fill: parent
-                        anchors.margins: 10
-                        color: 'black'
-                        font.pixelSize: 15
-                        verticalAlignment: Text.AlignVCenter
-
-                        MouseArea{
-                            anchors.fill: parent
-                            onClicked: {
-                                console.log(display)
-                                //fileDia.open()
-                            }
-                        }
-                    }
-                    Button {
-                        //id: cpbuton
-                        text: String(rows)+"&"+String(cols)
-                        anchors.fill: parent
-                        //anchors.margins: 10
-
-                        background: Rectangle {
-                            implicitHeight: 20
-                            implicitWidth: 100
-                            border.color: "black"
-                        }
-                        onClicked: {
-                            //fileDia.open()
-                            console.log(parent.text)
-
-                        }
-                    }
-
-                }
-                Rectangle { // mask the headers
-                    z: 3
-                    color: "#222222"
-                    y: tableView.contentY
-                    x: tableView.contentX
-                    width: tableView.leftMargin
-                    height: tableView.topMargin
-                }
-
-                Row {
-                    id: columnsHeader
-                    y: tableView.contentY
-                    z: 2
-                    Repeater {
-                        model: tableView.columns > 0 ? tableView.columns : 1
-                        Label {
-                            width: tableView.columnWidthProvider(modelData)
-                            height: 35
-                            text: table_model.headerData(modelData, Qt.Horizontal)
-                            color: '#aaaaaa'
-                            font.pixelSize: 15
-                            padding: 10
-                            verticalAlignment: Text.AlignVCenter
-
-                            background: Rectangle { color: "#333333" }
-                        }
-                    }
-                }
-                Column {
-                    id: rowsHeader
-                    x: tableView.contentX
-                    z: 2
-                    Repeater {
-                        model: tableView.rows > 0 ? tableView.rows : 1
-                        Label {
-                            width: 60
-                            height: tableView.rowHeightProvider(modelData)
-                            text: table_model.headerData(modelData, Qt.Vertical)
-                            color: '#aaaaaa'
-                            font.pixelSize: 15
-                            padding: 10
-                            verticalAlignment: Text.AlignVCenter
-                            background: Rectangle { color: "#333333" }
-                        }
-                    }
-                }
-
-                ScrollIndicator.horizontal: ScrollIndicator { }
-                ScrollIndicator.vertical: ScrollIndicator { }
+            ListModel {
+                id: libraryModel
             }
+
+            ListModel {
+                id: at
+            }
+
+            ListView {
+                id:tableView
+                orientation: ListView.Vertical
+                anchors.fill: tablearea
+                //anchors.left: parent.left
+                //anchors.right: parent.right
+                width: 1000
+                anchors.topMargin: 50
+                anchors.leftMargin: 50
+                clip: true
+                model: libraryModel
+                delegate: ItemDelegate {
+                    property int rowindex: index
+                    ListView{
+                        width: 1000
+                        //anchors.fill: parent
+                        orientation: ListView.Horizontal
+                        model: at
+                        delegate: Button {
+                            property int colindex: index
+                            //width: 50
+                            text: String(rowindex)+String(colindex)
+                            background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 40
+                            border.color: "grey"
+                            color: "lightgrey"
+                           }
+                           onClicked: console.log(String(rowindex)+String(colindex))
+                        }
+                    }
+                }
+            }
+
+
+
+            Component.onCompleted: {
+                //aDeleRow.add(tbuton)
+                at.append({para:'param'})
+                at.append({para:'refer data'})
+                libraryModel.append({name:'param',anaimal:'dog'})
+                libraryModel.append({name:'refer',anaimal:'dog2'})
+                libraryModel.append({name:'name3',anaimal:'dog2'})
+
+            }
+
         }
 
     }
-*/
+
+
 }
