@@ -92,6 +92,11 @@ create project can not use taleview
 create project changed to listview!!
     index works!!
     datamatrix need introduced to index the name and path of cores!
+    fixed
+#===================================
+#2020-11-10
+button in table not change text after click, in getMatrixValue!!
+    table works!!
 
 
 

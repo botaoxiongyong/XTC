@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include "dataload.h"
-#include "tablemodel.h"
+//#include "tablemodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
 
 
     QQmlApplicationEngine engine;
-    TableModel model;
-    engine.rootContext()->setContextProperty("table_model", &model);
+    //TableModel model;
+    //engine.rootContext()->setContextProperty("table_model", &model);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

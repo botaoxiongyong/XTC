@@ -68,8 +68,11 @@ public slots:
     void save();
 
     //creat prj
+    void fileExist(QString filePath);
     void creatMatrix();
     void coreMaxtrix(int row, int col, QString filePath);
+    QString getMaxtrixValue(int row, int col);
+    QString filePreview(QString filePath);
 signals:
     void filePrjChanged();
     void error_listChanged();
