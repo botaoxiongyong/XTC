@@ -15,8 +15,8 @@ ApplicationWindow{
     height: 800
     title: qsTr("new XTC project")
 
-    property int rows: 1
-    property int cols: 1
+    property int rows: 0
+    property int cols: 0
     property int rowi
     property int coli
     //property var coreList:["refer"]
@@ -27,6 +27,11 @@ ApplicationWindow{
     property var rowModles: []
     property var colModles: []
     property int temp_row: 0
+    property var titleName: ""
+    property var tableName: ""
+    property var tname: ""
+    //property var colArray: []
+    property var modelArray: []
 
     DataLoad {
         id: dataload
@@ -38,11 +43,11 @@ ApplicationWindow{
 
 
     function addrow(){
-        libraryModel.append({name:'tbuton',anaimal:'dog'})
+        rowModel.append({name:'tbuton',anaimal:'dog'})
     }
 
     function addcols(){
-        at.append({para:'t'})
+        colModel.append({name:'tbuton',para:'t'})
     }
     function tableColor(row,col){
         if (row===0 | row===2 | col===0){
@@ -51,6 +56,63 @@ ApplicationWindow{
         else{
             return "lightblue"
         }
+    }
+    function tableChangeName(row,col){
+        if (col===0 && titleName==="core"){
+
+        }
+    }
+    function popOpenSwitch(row,col){
+        console.log(tname)
+        if (row !== 0 & row !==2 && col !==0){
+            popup.open()
+            if (popup.closed()){
+                tname = "tes1"
+            }
+            else {
+                tname = "test4"
+            }
+
+        }
+        else{
+            popChangeName.open()
+            if (popChangeName.closed()){
+                tname = "tes2"
+            }
+            else{
+                tname = "tes3"
+            }
+
+        }
+        return tname
+
+    }
+
+    function modelDel(rows,cols){
+        colModel.clear()
+        rowModel.clear()
+        for (var r=0;r<rows;r++){
+            rowModel.append({})
+            //colModel.clear()
+            //rowModel.remove(r)
+        }
+
+        for (var i=0;i<cols;i++){
+            colModel.append({})
+
+        }
+    }
+
+    function getText(rowi,coli){
+        //console.log(rowi,coli)
+        //console.log(dataload.getMaxtrixValue(rowi+1,coli+1))
+        if (rowi>=0 && coli>=0){
+            return dataload.getMaxtrixValue(rowi,coli)
+        }else{
+            return ""
+        }
+
+
     }
 
     Rectangle{
@@ -99,6 +161,8 @@ ApplicationWindow{
                 onClicked: {
                     cols +=1
                     addcols()
+                    //colModleDelegate(rows,cols)
+
                 }
             }
 
@@ -125,6 +189,9 @@ ApplicationWindow{
                 onClicked: {
                     rows+=1
                     addrow()
+                    //rowModleDelegate(rows)
+                    //colModleDelegate(rowi,cols)
+
                 }
             }
 
@@ -135,7 +202,6 @@ ApplicationWindow{
                 text: rows
             }
         }
-
 
 
         /*
@@ -212,52 +278,53 @@ ApplicationWindow{
             //color: "grey"
 
             ListModel {
-                id: libraryModel
+                id: rowModel
             }
 
             ListModel {
-                id: at
+                id: colModel
             }
 
             ListView {
                 id:tableView
                 orientation: ListView.Vertical
                 anchors.fill: tablearea
+                visible: true
                 //anchors.left: parent.left
                 //anchors.right: parent.right
                 width: 1000
                 anchors.topMargin: 50
                 anchors.leftMargin: 50
                 clip: true
-                model: libraryModel
+                model: rowModel//rowModleDelegate(rows)
                 delegate: ItemDelegate {
                     property int rowindex: index
                     ListView{
                         width: 1000
                         //anchors.fill: parent
                         orientation: ListView.Horizontal
-                        model: at
+                        model: colModel//colModleDelegate(rowindex,cols)
                         delegate: Button {
                             property int colindex: index
                             //width: 50
                             //text://dataload.getMaxtrixValue(rowindex,colindex)//String(rowindex)+String(colindex)
                             background: Rectangle {
-                            implicitWidth: 100
-                            implicitHeight: 40
-                            border.color: "grey"
-                            color: tableColor(rowindex,colindex)
-                            Text {
-                                id: bText
-                                text: dataload.getMaxtrixValue(rowindex,colindex)
-                            }
+                                implicitWidth: 100
+                                implicitHeight: 40
+                                border.color: "grey"
+                                color: tableColor(rowindex,colindex)
+                                Text {
+                                    id: bText
+                                    text:getText(rowindex,colindex)//dataload.getMaxtrixValue(rowindex,colindex)//colModel.get(colindex).name//modelArray[rowindex].get(colindex).name////
+                                }
                            }
                            onClicked: {
                                rowi = rowindex
                                coli = colindex
-                               //bText.text = "change"
-                               console.log(String(rowi)+String(coli))
-                               popup.open()
-                               //fileDia2.visible = true
+                               //console.log(modelArray[rowindex].get(colindex).name)
+                               //popup.open()
+                               popOpenSwitch(rowi,coli)
+
                            }
                         }
                     }
@@ -265,17 +332,15 @@ ApplicationWindow{
             }
 
             Component.onCompleted: {
-                //aDeleRow.add(tbuton)
-                at.append({})
-                at.append({})
-                at.append({})
-                libraryModel.append({})
-                libraryModel.append({})
-                libraryModel.append({})
-                libraryModel.append({})
+                //colModel.append({para:"test1"})
+                //colModel.append({para:"test2"})
+                //colModel.append({para:"test3"})
+                //rowModel.append({})
+                //rowModel.append({})
+                //rowModel.append({})
+                //rowModel.append({})
 
             }
-
         }
 
         Popup {
@@ -374,6 +439,12 @@ ApplicationWindow{
                     width: popup.width
                     Button{
                         text: "yes"
+                        onClicked: {
+                            //console.log(dataload.getMaxtrixValue(rowi,coli))
+                            //tableView.
+                            modelDel(rows,cols)
+                            popup.close()
+                        }
                     }
                     Button{
                         text: "cancel"
@@ -400,7 +471,46 @@ ApplicationWindow{
             }
         }
 
+        Popup{
+            id:popChangeName
+            parent: Overlay.overlay
+            x: Math.round((parent.width - width) / 2)
+            y: Math.round((parent.height - height) / 2)
+            width: 230
+            height: 100
+            focus: true
+            closePolicy: Popup.CloseOnEscape
+
+            ColumnLayout{
+                anchors.fill: popChangeName
+                TextField {
+                    id:popChangeNameText
+                    height: 100
+                    width: popChangeName.width-20
+                    selectByMouse: true
+                    text: "new name"
+                }
+
+                RowLayout{
+                    height: 100
+                    width: popChangeName.width-20
+                    Button{
+                        text: "yes"
+                        onClicked: {
+                            //console.log(rowi,coli)
+                            dataload.coreMaxtrix(rowi,coli,popChangeNameText.text)
+                            modelDel(rows,cols)
+                            popChangeName.close()
+                        }
+                    }
+                    Button{
+                        text: "cancel"
+                        onClicked: {
+                            popChangeName.close()
+                        }
+                    }
+                }
+            }
+        }
     }
-
-
 }
