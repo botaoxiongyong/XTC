@@ -9,14 +9,14 @@ import QtQml.Models 2.3
 import QtQml 2.3
 import QtQuick.Layouts 1.3
 
-ApplicationWindow{
+Rectangle{
     id:newprj
     width: 1000
     height: 800
-    title: qsTr("new XTC project")
+    //title: qsTr("new XTC project")
 
-    property int rows: 0
-    property int cols: 0
+    property int rows: 4
+    property int cols: 3
     property int rowi
     property int coli
     //property var coreList:["refer"]
@@ -29,9 +29,10 @@ ApplicationWindow{
     property int temp_row: 0
     property var titleName: ""
     property var tableName: ""
-    property var tname: ""
+    property var fullText: ""
     //property var colArray: []
     property var modelArray: []
+    signal fileName2Get(string fileName2)
 
     DataLoad {
         id: dataload
@@ -39,6 +40,13 @@ ApplicationWindow{
             dataload.creatMatrix()
             //initMatrix()
         }
+    }
+
+    Loader {
+        id:plotpage1
+        anchors.fill: parent
+        //source: "Introduction.qml"
+        focus: true
     }
 
 
@@ -50,11 +58,16 @@ ApplicationWindow{
         colModel.append({name:'tbuton',para:'t'})
     }
     function tableColor(row,col){
-        if (row===0 | row===2 | col===0){
-            return "white"
+        if (row >0 && col>0){
+            if (row===0 | row===2 | col===0){
+                return "white"
+            }
+            else{
+                return "lightblue"
+            }
         }
         else{
-            return "lightblue"
+            return "white"
         }
     }
     function tableChangeName(row,col){
@@ -63,49 +76,40 @@ ApplicationWindow{
         }
     }
     function popOpenSwitch(row,col){
-        console.log(tname)
         if (row !== 0 & row !==2 && col !==0){
-            popup.open()
-            if (popup.closed()){
-                tname = "tes1"
-            }
-            else {
-                tname = "test4"
-            }
-
+            popupWindow.open()
         }
         else{
             popChangeName.open()
-            if (popChangeName.closed()){
-                tname = "tes2"
-            }
-            else{
-                tname = "tes3"
-            }
-
         }
-        return tname
-
     }
 
     function modelDel(rows,cols){
         colModel.clear()
         rowModel.clear()
+        //var rms = rowModel.count
+        //var cms = colModel.count
+        //console.log(rms,cms)
+/*
+        for (var r=0;r<rows-3;r++){
+            rowModel.remove(0)
+        }
+        for (var i=0;i<cols-2;i++){
+            colModel.remove(0)
+        }
+        //rowModel.remove(0,rowModel.count-1)
+*/
         for (var r=0;r<rows;r++){
             rowModel.append({})
-            //colModel.clear()
-            //rowModel.remove(r)
         }
-
         for (var i=0;i<cols;i++){
             colModel.append({})
-
         }
     }
 
     function getText(rowi,coli){
         //console.log(rowi,coli)
-        //console.log(dataload.getMaxtrixValue(rowi+1,coli+1))
+        //console.log(datal                           oad.getMaxtrixValue(rowi+1,coli+1))
         if (rowi>=0 && coli>=0){
             return dataload.getMaxtrixValue(rowi,coli)
         }else{
@@ -117,68 +121,48 @@ ApplicationWindow{
 
     Rectangle{
         id:ftable
-        width: parent.width
-        height: parent.height/10*8
+        width: newprj.width
+        height: newprj.height/10*8
+        anchors.left: newprj.left
         //anchors.top: npc.bottom
 
-
         Rectangle{
-            id: butArea1
+            //first line of buttons
             anchors.top: ftable.top
             anchors.left: ftable.left
             anchors.topMargin: 20
             anchors.leftMargin: 10
 
+        Rectangle{
+            id: butArea1
+            //anchors.top: ftable.top
+            anchors.left: parent.left
+            //anchors.topMargin: 20
+            anchors.leftMargin: 10
             Button {
                 id: sp
                 anchors.left: butArea1.left
                 text: qsTr("Set Path")
                 onClicked: {
-                    fileDia.visible = true
+                    //fileDia.DontUseNativeDialog
+                    fileDia.open()
                 }
             }
 
             TextField{
+                id: spText
                 anchors.left: sp.right
                 width: 160
                 text: 'path'
             }
         }
 
-
-        Rectangle{
-            id:butArea2
-            anchors.top: ftable.top
-            anchors.left: ftable.left
-            anchors.topMargin: 20
-            anchors.leftMargin: 500
-
-            Button {
-                id:spn
-                anchors.left: butArea2.left
-                text: qsTr("Add parameter")
-
-                onClicked: {
-                    cols +=1
-                    addcols()
-                    //colModleDelegate(rows,cols)
-
-                }
-            }
-
-            TextField{
-                id:spnt
-                anchors.left: spn.right
-                width: 50
-                text: cols
-            }
-        }
-
         Rectangle{
             id:butArea3
-            anchors.top: ftable.top
-            anchors.left: ftable.left
-            anchors.topMargin: 20
+            anchors.left: butArea1.right
+            //anchors.top: ftable.top
+            //anchors.left: ftable.left
+            //anchors.topMargin: 20
             anchors.leftMargin: 300
 
             Button {
@@ -189,9 +173,6 @@ ApplicationWindow{
                 onClicked: {
                     rows+=1
                     addrow()
-                    //rowModleDelegate(rows)
-                    //colModleDelegate(rowi,cols)
-
                 }
             }
 
@@ -199,25 +180,127 @@ ApplicationWindow{
                 id: scnt
                 anchors.left: scn.right
                 width: 50
-                text: rows
+                text: rows-3 //number of cores
             }
         }
 
-
-        /*
         Rectangle{
-            anchors.fill:parent
-            anchors.topMargin: 100
-            Loader{
+            id:butArea2
+            //anchors.top: ftable.top
+            //anchors.left: ftable.left
+            anchors.left: butArea3.right
+            //anchors.topMargin: 20
+            anchors.leftMargin: 200
+
+            Button {
+                id:spn
+                anchors.left: butArea2.left
+                text: qsTr("Add parameter")
+
+                onClicked: {
+                    cols +=1
+                    addcols()
+                }
+            }
+            TextField{
+                id:spnt
+                anchors.left: spn.right
+                width: 50
+                text: cols-2 // number of parameters
+            }
+        }
+
+        Rectangle{
+            id:butArea4
+            //anchors.top: ftable.top
+            //anchors.left: ftable.left
+            anchors.left: butArea2.right
+            //anchors.topMargin: 20
+            anchors.leftMargin: 200
+
+            Button {
+                id:saveButton
+                //anchors.left: ftable.left
+                text: qsTr("save xtc file")
+
+                onClicked: {
+                    dataload.saveXTCproject(rows-3,cols-2)
+                }
+            }
+        }
+        Rectangle{
+            Loader {
                 id:loader
                 anchors.fill: parent
+                //source: "Introduction.qml"
                 focus: true
-                //sourceComponent: mycomp
+            }
+
+            id:openPlotWindow
+            anchors.left: butArea4.right
+            //anchors.topMargin: 20
+            anchors.leftMargin: 200
+            Button{
+                id:openPWbutton
+                text: qsTr("open plot")
+                onClicked: {
+                    console.log("open plot to "+filePath)
+                    ftable.visible = false
+                    newprj.fileName2Get(filePath)
+                    //loader.setSource("PlotPage.qml",{"fileName":filePath})
+                }
             }
         }
-        */
+        }
+
+        Rectangle{
+            visible: false
+            //second baseline
+            anchors.top: ftable.top
+            anchors.left: ftable.left
+            anchors.topMargin: 80
+            anchors.leftMargin: 10
+        Rectangle{
+            id:butFilter
+            anchors.left: parent.left
+            //anchors.topMargin: 20
+            anchors.leftMargin: 10
+            Button {
+                id: butFilterText
+                anchors.left: butFilter.left
+                text: qsTr("Set Filter")
+            }
+            TextField{
+                id: filterText
+                anchors.left: butFilterText.right
+                width: 50
+                text: "*.dat"
+            }
+        }
+        Rectangle{
+            id:openDataFile
+            anchors.left: butFilter.right
+            anchors.leftMargin: 200
+            Button{
+                id: dataPathButton
+                anchors.left: openDataFile.left
+                text: "open data"
+                onClicked: {
+                    datafileOpen.open()
+                }
+            }
+            TextField{
+                id: dataPathText
+                anchors.left: dataPathButton.right
+                width: 200
+            }
+        }
+        }
+
+
 
         FileDialog {
+
             id: fileDia
             title: "Please choose a file"
             //folder: shortcuts.home
@@ -228,15 +311,21 @@ ApplicationWindow{
             sidebarVisible: false
             selectExisting: false
             //selectFolder: true
-            visible: false
+            //visible: false
             nameFilters: ["(*.xtci)", "All files (*)"]
             onAccepted: {
                 fileDia.close()
+                //filePath = fileDia.fileUrls[0]+'.xtci'
                 filePath = fileDia.fileUrls[0]+'.xtci'
                 fileName = filePath.split('/')[filePath.split('/').length-1]
                 //intro.fileNameGet(fileDialog.fileUrls[0])
-                console.log(filePath)
+                //console.log(filePath)
+                spText.text = fileName
                 dataload.fileExist(filePath)
+                cols = dataload.getColNum();
+                rows = dataload.getRowNum();
+                console.log(cols,rows)
+                modelDel(rows,cols)
             }
             onRejected: {
                 console.log("Canceled")
@@ -245,27 +334,26 @@ ApplicationWindow{
         }
 
         FileDialog {
-            id: fileDia2
+            id: datafileOpen
             title: "Please choose a file"
             folder:"file:///home/jiabo/Documents/ps_XTC_practice"
             sidebarVisible: false
             selectExisting: true
             //selectFolder: true
-            visible: false
-
-            nameFilters: ["All files (*)"]
+            //visible: false
+            nameFilters: ["(*)","All files (*)"]
             onAccepted: {
-                fileDia2.close()
-                datafilePath = fileDia2.fileUrls[0]
-                //console.log(datafilePath)
-                //console.log(datafilePath.split('/')[datafilePath.split('/').length-1])
+                datafileOpen.close()
+                datafilePath = datafileOpen.fileUrls[0]
                 dataload.coreMaxtrix(rowi,coli,datafilePath.split('/')[datafilePath.split('/').length-1])
                 popupPathLable.text = datafilePath.split('/')[datafilePath.split('/').length-1]
-                //console.log(dataload.filePreview(datafilePath))
+                //dataPathText.text = datafilePath.split('/')[datafilePath.split('/').length-1]
                 popupPreviewText.text = dataload.filePreview(datafilePath)
+
             }
             onRejected: {
-                return
+                console.log("Canceled")
+                //return
             }
         }
 
@@ -322,7 +410,7 @@ ApplicationWindow{
                                rowi = rowindex
                                coli = colindex
                                //console.log(modelArray[rowindex].get(colindex).name)
-                               //popup.open()
+                               //popupWindow.open()
                                popOpenSwitch(rowi,coli)
 
                            }
@@ -332,39 +420,39 @@ ApplicationWindow{
             }
 
             Component.onCompleted: {
-                //colModel.append({para:"test1"})
-                //colModel.append({para:"test2"})
-                //colModel.append({para:"test3"})
-                //rowModel.append({})
-                //rowModel.append({})
-                //rowModel.append({})
-                //rowModel.append({})
-
+                //fileDia.open()
+                //rows,cols = dataload.rowcolNum()
+                //var t = dataload.rowcolNum()
+                cols = dataload.getColNum();
+                rows = dataload.getRowNum();
+                modelDel(rows,cols)
             }
         }
 
         Popup {
-            id:popup
-            parent: Overlay.overlay
-            x: Math.round((parent.width - width) / 2)
-            y: Math.round((parent.height - height) / 2)
+            anchors.centerIn: parent
+            id:popupWindow
+            //parent: Overlay.overlay
+            x: Math.round((newprj.width - 400) / 2)
+            y: Math.round((newprj.height - 400) / 2)
             width: 400
             height: 400
             focus: true
             closePolicy: Popup.CloseOnEscape
 
             Rectangle{
+            Rectangle{
                 id:popupPath
                 height: 40
-                width: popup.width-20
-                anchors.top: popup.Top
+                width: popupWindow.width-20
+                anchors.top: popupWindow.Top
                 Button {
                     id:popupPathButton
                     width: popupPath.width/4
                     height: popupPath.height
                     text: "open file"
                     onClicked: {
-                        fileDia2.visible = true
+                        datafileOpen.open()
                     }
                 }
                 Label {
@@ -388,21 +476,24 @@ ApplicationWindow{
             Rectangle{
                 id:popupLable
                 height: 50
-                width: popup.width-20
+                width: popupWindow.width-20
                 anchors.top: popupPath.bottom
                 anchors.topMargin: 20
                 Rectangle {
                     height: popupLable.height/2
                     width: popupLable.width
-                    anchors.top: popupPath.bottom
+                    //anchors.top: popupPath.bottom
                     RowLayout{
-                        width: popup.width
+                        width: popupWindow.width
                         ColumnLayout{
                             Label{
                                 text: "totalColumn"
                             }
                             TextInput{
+                                width: 20
+                                id:totalColums
                                 selectByMouse: true
+                                cursorVisible: true
                                 text: '2'
                             }
                         }
@@ -411,8 +502,11 @@ ApplicationWindow{
                                 text: "XColumn"
                             }
                             TextInput{
+                                width: 20
+                                id: xcolumn
                                 selectByMouse: true
-                                text: '2'
+                                cursorVisible: true
+                                text: '1'
                             }
                         }
                         ColumnLayout{
@@ -420,7 +514,10 @@ ApplicationWindow{
                                 text: "YColumn"
                             }
                             TextInput{
+                                width: 20
+                                id: ycolumn
                                 selectByMouse: true
+                                cursorVisible: true
                                 text: '2'
                             }
                         }
@@ -432,24 +529,42 @@ ApplicationWindow{
             Rectangle{
                 id:popupYN
                 height: 50
-                width: popup.width-20
+                width: popupWindow.width-20
                 anchors.top: popupLable.bottom
 
                 RowLayout{
-                    width: popup.width
+                    width: popupWindow.width
                     Button{
                         text: "yes"
                         onClicked: {
                             //console.log(dataload.getMaxtrixValue(rowi,coli))
                             //tableView.
+                            if (rowi<2){
+                                //reference rows
+                                if (totalColums>2){
+                                    fullText = "GR"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                }else{
+                                    fullText = "FR"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                }
+                            }
+                            else{
+                                //core rows
+                                if (totalColums>2){
+                                    fullText = "GR"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                }else{
+                                    fullText = "FR"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                }
+                            }
+
+                            dataload.coreMaxtrix(rowi,coli,fullText)
                             modelDel(rows,cols)
-                            popup.close()
+                            popupWindow.close()
                         }
                     }
                     Button{
                         text: "cancel"
                         onClicked: {
-                            popup.close()
+                            popupWindow.close()
                         }
                     }
                 }
@@ -457,11 +572,11 @@ ApplicationWindow{
 
             Rectangle {
                 height: 200
-                width: popup.width-20
+                width: popupWindow.width-20
                 anchors.top: popupYN.bottom
                 ScrollView{
                     clip: true
-                    width: popup.width
+                    width: popupWindow.width
                     height: 200
                     Text {
                         id: popupPreviewText
@@ -469,20 +584,23 @@ ApplicationWindow{
                     }
                 }
             }
+            }
         }
 
         Popup{
             id:popChangeName
-            parent: Overlay.overlay
-            x: Math.round((parent.width - width) / 2)
-            y: Math.round((parent.height - height) / 2)
+            //parent: Overlay.overlay
+            x: Math.round((newprj.width - 400) / 2)
+            y: Math.round((newprj.height - 400) / 2)
             width: 230
             height: 100
             focus: true
             closePolicy: Popup.CloseOnEscape
 
+            Rectangle{
+
             ColumnLayout{
-                anchors.fill: popChangeName
+                //anchors.fill: popChangeName
                 TextField {
                     id:popChangeNameText
                     height: 100
@@ -510,6 +628,7 @@ ApplicationWindow{
                         }
                     }
                 }
+            }
             }
         }
     }

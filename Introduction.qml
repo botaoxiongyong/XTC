@@ -16,6 +16,7 @@ Rectangle {
     //FontLoader { id: webFont; source: "./Starburst.ttf" }
     color: "grey"
     signal fileNameGet(string fileName)
+    signal creatProject()
 
     //signal prjName(string txt)
     //signal errorList(var errors)
@@ -123,9 +124,10 @@ Rectangle {
                 border.color: "black"
             }
             onClicked: {
-                var component = Qt.createComponent("Creatprj.qml")
-                var window = component.createObject("newprj")
-                window.show()
+                //var component = Qt.createComponent("Creatprj.qml")
+                //var window = component.createObject("newprj")
+                //window.show()
+                intro.creatProject()
             }
 
             //onClicked: introText.text = dataload.filePrj

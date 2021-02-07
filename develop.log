@@ -101,7 +101,11 @@ button in table not change text after click, in getMatrixValue!!
 #2021-2-1
 table name change finally works !!!
     git push 2021-2-1
-
+#2021-2-7
+table works well, can now can open plots from creatpjr
+    bug!! filedialog crashes two times, then stable ....
+    next
+        open creatprj from plot page menu.
 
 
 

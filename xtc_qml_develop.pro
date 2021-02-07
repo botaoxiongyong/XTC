@@ -39,4 +39,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     dataload.h \
     interp_func.h \
-    tablemodel.h

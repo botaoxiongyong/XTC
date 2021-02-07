@@ -65,9 +65,27 @@ ApplicationWindow {
                 //plot.contains(PlotPage)
                 //PlotPage.loadCompelte("true")
             }
+            onCreatProject:{
+                intro.visible = false
+                creatprjPage.visible = true
+            }
         }
     }
-
+    Rectangle{
+        anchors.fill: parent
+        id:creatprjPage
+        visible: false
+        Creatprj{
+            onFileName2Get: {
+                console.log("loader"+fileName2)
+                //plot_Page.recieveFileName(fileName)
+                loader.setSource("PlotPage.qml",{"fileName":fileName2})
+                //console.log(fileName)
+                intro.visible = false
+                creatprjPage.visible = false
+            }
+        }
+    }
 
     /*
 

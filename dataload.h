@@ -73,6 +73,9 @@ public slots:
     void coreMaxtrix(int row, int col, QString filePath);
     QString getMaxtrixValue(int row, int col);
     QString filePreview(QString filePath);
+    void saveXTCproject(int coreNs,int paramNs);
+    int getRowNum();
+    int getColNum();
 signals:
     void filePrjChanged();
     void error_listChanged();
@@ -87,5 +90,7 @@ private:
     QList<QVector<QPointF>> m_xy;
     int m_index;
     int m_coreIndex;
+    int m_rows=4;
+    int m_cols=3;
 };
 #endif // DATALOAD_H
