@@ -42,6 +42,8 @@ Rectangle {
     property var xLine
     property var delxPos
 
+    signal plotToEdit(string fileName3)
+
     property var colorList: ['#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b','#e6f598','#66c2a5','#3288bd','#5e4fa2','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a']
 
     DataLoad {
@@ -64,6 +66,21 @@ Rectangle {
                 //console.log(params)
             }
         }
+    }
+
+    function dataReload(fileNameb){
+        coreTextList.clear()
+        figmod.clear()
+        listc.clear()
+        fileName = fileNameb
+
+        dataload.filePrj = fileNameb
+
+        console.log(dataload.error_list)
+
+        corels = dataload.coreList
+        params = dataload.paramList
+        plot()
     }
 
     Rectangle {
@@ -158,16 +175,61 @@ Rectangle {
         color: "#deebf7"
 
         Rectangle{
-                id: optinButton
-                anchors.top: parent.top
-                anchors.left: parent.left
-                Button{
-                    text: "save"
-                    onClicked: {
-                        dataload.save()
+            id: optinButton
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.topMargin: 10
+            anchors.leftMargin: 40
+
+            ColumnLayout{
+                anchors.left: optinButton.left
+                anchors.top: optinButton.top
+                RowLayout{
+                    id: firstRowButtons
+                    spacing: 30
+                    Button{
+                        id:saveAgeButton
+                        background: Rectangle{
+                            width: 100
+                            height: 40
+                            color: "light grey"
+                            //border.color: "dark grey"
+                        }
+                        contentItem: Text {
+                            anchors.fill: saveAgeButton
+                            text: qsTr("save Ages")
+                            //font.pointSize:12
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        onClicked: {
+                            dataload.save()
+                        }
                     }
+
+                    Button{
+                        background: Rectangle{
+                            width: 100
+                            height: 40
+                            color: "light grey"
+                            //border.color: "dark grey"
+                        }
+                        contentItem: Text {
+                            text: qsTr("Edit xtc")
+                            //font.pointSize:12
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        onClicked: {
+                            console.log("to edit file "+fileName)
+                            plotToEdit(fileName)
+                            //console.log(fileName)
+                        }
+                    }
+
                 }
             }
+        }
 
         Button{
             id:menuHide

@@ -10,6 +10,8 @@ DataLoad::DataLoad(QObject *parent):
 QString DataLoad::filePrj()
 {
     //qDebug() << m_sLine;
+    m_coreList = QStringList();
+    m_paramList = QStringList();
     return m_filePrj;
 }
 

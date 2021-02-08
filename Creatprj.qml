@@ -42,6 +42,19 @@ Rectangle{
         }
     }
 
+    function dataReload(filenameb){
+        dataload.creatMatrix()
+
+        filePath = filenameb
+        fileName = filePath.split('/')[filePath.split('/').length-1]
+        spText.text = fileName
+        dataload.fileExist(filePath)
+        cols = dataload.getColNum();
+        rows = dataload.getRowNum();
+        //console.log(cols,rows)
+        modelDel(rows,cols)
+    }
+
     Loader {
         id:plotpage1
         anchors.fill: parent
