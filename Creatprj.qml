@@ -13,6 +13,7 @@ Rectangle{
     id:newprj
     width: 1000
     height: 800
+    color: "green"
     //title: qsTr("new XTC project")
 
     property int rows: 4
@@ -33,6 +34,7 @@ Rectangle{
     //property var colArray: []
     property var modelArray: []
     signal fileName2Get(string fileName2)
+    signal creatprjToMain()
 
     DataLoad {
         id: dataload
@@ -44,23 +46,30 @@ Rectangle{
 
     function dataReload(filenameb){
         dataload.creatMatrix()
+        console.log("filenameb: "+filenameb)
+        if (filenameb !== ""){
+            filePath = filenameb
+            fileName = filePath.split('/')[filePath.split('/').length-1]
+            spText.text = fileName
+            dataload.fileExist(filePath)
+            cols = dataload.getColNum();
+            rows = dataload.getRowNum();
+        }else{
+            cols = 3
+            rows = 4
+        }
 
-        filePath = filenameb
-        fileName = filePath.split('/')[filePath.split('/').length-1]
-        spText.text = fileName
-        dataload.fileExist(filePath)
-        cols = dataload.getColNum();
-        rows = dataload.getRowNum();
-        //console.log(cols,rows)
+        console.log(cols,rows)
         modelDel(rows,cols)
     }
-
+    /*can be delete!!
     Loader {
         id:plotpage1
         anchors.fill: parent
         //source: "Introduction.qml"
         focus: true
     }
+    */
 
 
     function addrow(){
@@ -141,6 +150,8 @@ Rectangle{
 
         Rectangle{
             //first line of buttons
+            width: ftable.width
+            height: 100
             anchors.top: ftable.top
             anchors.left: ftable.left
             anchors.topMargin: 20
@@ -177,7 +188,6 @@ Rectangle{
             //anchors.left: ftable.left
             //anchors.topMargin: 20
             anchors.leftMargin: 300
-
             Button {
                 id:scn
                 anchors.left: butArea3.left
@@ -188,7 +198,6 @@ Rectangle{
                     addrow()
                 }
             }
-
             TextField{
                 id: scnt
                 anchors.left: scn.right
@@ -242,28 +251,41 @@ Rectangle{
             }
         }
         Rectangle{
+            /*can be delete!!
             Loader {
                 id:loader
                 anchors.fill: parent
                 //source: "Introduction.qml"
                 focus: true
             }
-
+            */
             id:openPlotWindow
             anchors.left: butArea4.right
             //anchors.topMargin: 20
-            anchors.leftMargin: 200
+            anchors.leftMargin: 130
             Button{
                 id:openPWbutton
                 text: qsTr("open plot")
                 onClicked: {
                     console.log("open plot to "+filePath)
-                    ftable.visible = false
                     newprj.fileName2Get(filePath)
-                    //loader.setSource("PlotPage.qml",{"fileName":filePath})
                 }
             }
         }
+        Rectangle{
+            id:backToMain
+            anchors.left: openPlotWindow.right
+            anchors.leftMargin: 130
+            Button{
+                id:backToMainButton
+                text: qsTr("main page")
+                onClicked: {
+                    creatprjToMain()
+                }
+            }
+        }
+
+        //end of first line of buttons
         }
 
         Rectangle{
@@ -349,7 +371,8 @@ Rectangle{
         FileDialog {
             id: datafileOpen
             title: "Please choose a file"
-            folder:"file:///home/jiabo/Documents/ps_XTC_practice"
+            folder: shortcuts.home
+            //folder:"file:///home/jiabo/Documents/ps_XTC_practice"
             sidebarVisible: false
             selectExisting: true
             //selectFolder: true

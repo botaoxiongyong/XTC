@@ -26,6 +26,7 @@ Rectangle {
     //    id: dataload
     //}
 
+    /*can be delte!!
     Loader {
         id:plotpage1
         anchors.fill: parent
@@ -55,6 +56,7 @@ Rectangle {
         plotpage1.setSource("PlotPage.qml")
         introt.visible = false
     }
+    */
 
     Rectangle{
         id:introt
@@ -127,7 +129,7 @@ Rectangle {
                 //var component = Qt.createComponent("Creatprj.qml")
                 //var window = component.createObject("newprj")
                 //window.show()
-                intro.creatProject()
+                creatProject()
             }
 
             //onClicked: introText.text = dataload.filePrj

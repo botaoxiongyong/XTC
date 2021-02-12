@@ -35,13 +35,17 @@ ApplicationWindow {
                 plotpagecomp.dataReload(fileName)
                 //console.log(fileName)
                 intro.visible = false
+                creatprjPage.visible = false
                 plotPage.visible = true
                 //plot.contains(PlotPage)
                 //PlotPage.loadCompelte("true")
             }
             onCreatProject:{
+                console.log("creat project")
+                plotPage.visible = false
                 intro.visible = false
                 creatprjPage.visible = true
+                plotpagecomp.dataReload("")
             }
         }
     }
@@ -49,14 +53,22 @@ ApplicationWindow {
         anchors.fill: parent
         id:creatprjPage
         visible: false
+        color: "grey"
         Creatprj{
+            anchors.fill: parent
             id:creatprjcomp
             onFileName2Get: {
-                //loader.setSource("PlotPage.qml",{"fileName":fileName2})
+                //fileName2 from creatprj.qml
+                console.log("filename2"+fileName2)
                 plotPage.visible = true
                 intro.visible = false
                 creatprjPage.visible = false
                 plotpagecomp.dataReload(fileName2)
+            }
+            onCreatprjToMain: {
+                plotPage.visible = false
+                intro.visible = true
+                creatprjPage.visible = false
             }
         }
     }
