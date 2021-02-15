@@ -34,7 +34,7 @@ Rectangle{
     //property var colArray: []
     property var modelArray: []
     signal fileName2Get(string fileName2)
-    signal creatprjToMain()
+    signal creatprjToMain(string tempFile)
 
     DataLoad {
         id: dataload
@@ -196,6 +196,7 @@ Rectangle{
                 onClicked: {
                     rows+=1
                     addrow()
+                    dataload.saveTempXTCfile(rows-3,cols-2)
                 }
             }
             TextField{
@@ -222,6 +223,7 @@ Rectangle{
                 onClicked: {
                     cols +=1
                     addcols()
+                    dataload.saveTempXTCfile(rows-3,cols-2)
                 }
             }
             TextField{
@@ -280,7 +282,8 @@ Rectangle{
                 id:backToMainButton
                 text: qsTr("main page")
                 onClicked: {
-                    creatprjToMain()
+                    dataload.saveTempXTCfile(rows-3,cols-2)
+                    creatprjToMain(filePath.replace(".xtci",".xtci~"))
                 }
             }
         }
@@ -575,6 +578,7 @@ Rectangle{
                         onClicked: {
                             //console.log(dataload.getMaxtrixValue(rowi,coli))
                             //tableView.
+                            console.log(rowi)
                             if (rowi<2){
                                 //reference rows
                                 if (totalColums>2){
@@ -584,15 +588,20 @@ Rectangle{
                                 }
                             }
                             else{
-                                //core rows
-                                if (totalColums>2){
-                                    fullText = "GR"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                if (coli === 1){
+                                    fullText = "GC"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
                                 }else{
-                                    fullText = "FR"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                    //core rows
+                                    if (totalColums>2){
+                                        fullText = "GP"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                    }else{
+                                        fullText = "FP"+" "+popupPathLable.text+"   "+totalColums.text+"   "+xcolumn.text+"   "+ycolumn.text
+                                    }
                                 }
                             }
 
                             dataload.coreMaxtrix(rowi,coli,fullText)
+                            dataload.saveTempXTCfile(rows-3,cols-2)
                             modelDel(rows,cols)
                             popupWindow.close()
                         }
@@ -653,6 +662,7 @@ Rectangle{
                         onClicked: {
                             //console.log(rowi,coli)
                             dataload.coreMaxtrix(rowi,coli,popChangeNameText.text)
+                            dataload.saveTempXTCfile(rows-3,cols-2)
                             modelDel(rows,cols)
                             popChangeName.close()
                         }

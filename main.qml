@@ -29,6 +29,7 @@ ApplicationWindow {
         id:intro
         anchors.fill: parent
         Introduction{
+            id: introComp
             onFileNameGet: {
                 //plot_Page.recieveFileName(fileName)
                 //loader.setSource("PlotPage.qml",{"fileName":fileName})
@@ -45,7 +46,15 @@ ApplicationWindow {
                 plotPage.visible = false
                 intro.visible = false
                 creatprjPage.visible = true
-                plotpagecomp.dataReload("")
+                creatprjcomp.dataReload("")
+            }
+            onContinueProject: {
+                console.log("continue project")
+                console.log(tempFile)
+                plotPage.visible = false
+                intro.visible = false
+                creatprjPage.visible = true
+                creatprjcomp.dataReload(tempFile)
             }
         }
     }
@@ -66,7 +75,10 @@ ApplicationWindow {
                 plotpagecomp.dataReload(fileName2)
             }
             onCreatprjToMain: {
+                console.log("return to main")
+                console.log(tempFile)
                 plotPage.visible = false
+                introComp.continutButtonShow(tempFile)
                 intro.visible = true
                 creatprjPage.visible = false
             }

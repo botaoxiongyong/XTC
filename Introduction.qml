@@ -2,61 +2,22 @@ import QtQuick 2.9
 import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.1
 //import io.qt.examples.dataload 1.0
-
 Rectangle {
-
-    //property string fileName
-
     id: intro
     width: parent.width
     height: parent.height
-    //anchors.fill: parent
-    //anchors.leftMargin: 2000
-    //anchors.horizontalCenter: parent.horizontalCenter
-    //FontLoader { id: webFont; source: "./Starburst.ttf" }
     color: "grey"
+
+    property string tempFile:""
+
     signal fileNameGet(string fileName)
     signal creatProject()
+    signal continueProject(string tempFile)
 
-    //signal prjName(string txt)
-    //signal errorList(var errors)
-    //property string test
-
-    //DataLoad {
-    //    id: dataload
-    //}
-
-    /*can be delte!!
-    Loader {
-        id:plotpage1
-        anchors.fill: parent
-        //source: "Introduction.qml"
-        focus: true
+    function continutButtonShow(tempf){
+        continueProj.visible = true
+        tempFile = tempf
     }
-
-    function showErr(errList) {
-        if (errList.length > 0){
-            console.log("wrong file")
-
-        }
-        else {
-            //plotpage1.setSource("PlotPage.qml",{"fileName":dataload.filePrj})
-            plotpage1.setSource("PlotPage.qml",{"fileName":filePath})
-            //plotpage1.source = "PlotPage.qml"
-            introt.visible = false
-        }
-    }
-
-    function passFileName(fileName){
-        //dataload.filePrj = fileName
-        //showErr(dataload.error_list)
-
-        //cProgress.onStart()
-        //plotpage1.setSource("PlotPage.qml",{"fileName":fileName})
-        plotpage1.setSource("PlotPage.qml")
-        introt.visible = false
-    }
-    */
 
     Rectangle{
         id:introt
@@ -131,9 +92,24 @@ Rectangle {
                 //window.show()
                 creatProject()
             }
+        }
+        Button {
+            id: continueProj
+            width: 170
+            text: "continue  project"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 420
+            visible: false
 
-            //onClicked: introText.text = dataload.filePrj
-            //onClicked: test("pass")
+            background: Rectangle {
+                implicitHeight: 40
+                implicitWidth: 100
+                border.color: "black"
+            }
+            onClicked: {
+                continueProject(tempFile)
+            }
         }
 
 

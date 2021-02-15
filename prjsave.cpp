@@ -103,6 +103,16 @@ void DataLoad::fileExist(QString filePath){
     //set private value for save data to this filePath
     m_filePrj = filePath;
     //========================================
+
+/*#=========================================creat temp file
+    QFile file(filePath.replace("file://","").replace(".xtci",".xtci~"));
+    if (file.open(QIODevice::ReadWrite)) {
+            QTextStream stream(&file);
+            stream << "" << endl;
+        }
+    file.close();
+//#================================================*/
+
     //xtc .yrr file exist?
     QString fileYrr = filePath.replace(".xtci",".yrr");
     if(QFileInfo::exists(fileYrr)){
@@ -175,50 +185,66 @@ QString DataLoad::filePreview(QString filePath){
     }
 }
 
-void DataLoad::saveXTCproject(int coreNs,int paramNs){
-    qDebug() << QVariant(coreNs).toString();
-    qDebug() << paramNs;
-
-    QFile file(m_filePrj.replace("file://",""));
+void DataLoad::saveToFile(int coreNs,int paramNs,QString fileName){
+    QFile file(fileName);
+    qDebug() << fileName;
     if (file.open(QIODevice::ReadWrite)) {
             QTextStream stream(&file);
             stream << "NDS  "+QVariant(coreNs).toString()+" NPC  "+QVariant(paramNs).toString()<< endl;
-            stream << "####--------------------------------------------------------"<< endl;
-            stream << "#### "+QVariant(paramNs).toString()+" comments on reference data :"<< endl;
+            stream << "####--------------------------------------------------------"<< Qt::endl;
+            stream << "#### "+QVariant(paramNs).toString()+" comments on reference data :"<< Qt::endl;
             for(int i=0;i<paramNs;i++){
-                stream << "CR "+m_matrixCore[0][2+i]+" \\"<< endl;
+                stream << "CR "+m_matrixCore[0][2+i]+" \\"<< Qt::endl;
             }
-            stream << "####--------------------------------------------------------"<< endl;
+            stream << "####--------------------------------------------------------"<< Qt::endl;
             stream << "#### "+QVariant(paramNs).toString()+" comments on parameters to correlate :"<< endl;
             for(int i=0;i<paramNs;i++){
-                stream << "CP "+m_matrixCore[2][2+i]+" \\"<< endl;
+                stream << "CP "+m_matrixCore[2][2+i]+" \\"<< Qt::endl;
             }
-            stream << "############################################################"<< endl;
-            stream << "########  9 blocks with data files :"<< endl;
-            stream << "####--------------------------------------------------------"<< endl;
-            stream << "#### "+QVariant(paramNs).toString()+" file names for reference data :"<< endl;
+            stream << "############################################################"<< Qt::endl;
+            stream << "########  9 blocks with data files :"<< Qt::endl;
+            stream << "####--------------------------------------------------------"<< Qt::endl;
+            stream << "#### "+QVariant(paramNs).toString()+" file names for reference data :"<< Qt::endl;
             for(int i=0;i<paramNs;i++){
-                stream << m_matrixCore[1][2+i]<< endl;
+                if (m_matrixCore[1][2+i] != ""){
+                    stream << m_matrixCore[1][2+i]<< Qt::endl;
+                }else{
+                    stream << "FR No_Data"<< Qt::endl;
+                }
+                //stream << m_matrixCore[1][2+i]<< Qt::endl;
             }
             for(int i=0;i<coreNs;i++){
-                stream << "############################################################"<< endl;
-                stream << "#### data set "+QVariant(i+1).toString()+" for correlation :"<< endl;
-                stream << "####--------------------------------------------------------"<< endl;
-                stream << m_matrixCore[3+i][1]<< endl;
-                stream << "####--------------------------------------------------------"<< endl;
+                stream << "############################################################"<< Qt::endl;
+                stream << "#### data set "+QVariant(i+1).toString()+" for correlation :"<< Qt::endl;
+                stream << "####--------------------------------------------------------"<< Qt::endl;
+                stream << "GC"+m_matrixCore[3+i][1]<< Qt::endl;
+                stream << "####--------------------------------------------------------"<< Qt::endl;
                 for(int t=0;t<coreNs;t++){
-                        stream << m_matrixCore[3+i][2+t]<< endl;
+                    if (m_matrixCore[3+i][2+t] != ""){
+                        stream << m_matrixCore[3+i][2+t]<< Qt::endl;
+                    }else{
+                        stream << "FP No_Data"<< Qt::endl;
                     }
+                }
             }
 
-
-            stream << "############################################################"<< endl;
-            stream << "####    This file has been created using   xtc-qt    ####"<< endl;
-            stream << "############################################################"<< endl;
+            stream << "############################################################"<< Qt::endl;
+            stream << "####    This file has been created using   xtc-qt    ####"<< Qt::endl;
+            stream << "############################################################"<< Qt::endl;
             qDebug()<<m_matrixCore[1];
             qDebug()<<m_matrixCore[3];
         }
     file.close();
+}
+
+void DataLoad::saveXTCproject(int coreNs,int paramNs){
+    //qDebug() << QVariant(coreNs).toString();
+    //qDebug() << paramNs;
+    saveToFile(coreNs,paramNs,m_filePrj.replace("file://",""));
+}
+
+void DataLoad::saveTempXTCfile(int coreNs,int paramNs){
+    saveToFile(coreNs,paramNs,m_filePrj.replace("file://","").replace(".xtci",".xtci~"));
 }
 
 int DataLoad::getRowNum(){

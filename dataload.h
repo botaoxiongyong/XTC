@@ -76,6 +76,8 @@ public slots:
     void saveXTCproject(int coreNs,int paramNs);
     int getRowNum();
     int getColNum();
+    void saveToFile(int coreNs,int paramNs,QString fileName);
+    void saveTempXTCfile(int coreNs,int paramNs);
 signals:
     void filePrjChanged();
     void error_listChanged();
