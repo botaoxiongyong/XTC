@@ -282,8 +282,13 @@ Rectangle{
                 id:backToMainButton
                 text: qsTr("main page")
                 onClicked: {
+                    console.log("filepath : "+filePath)
                     dataload.saveTempXTCfile(rows-3,cols-2)
-                    creatprjToMain(filePath.replace(".xtci",".xtci~"))
+                    if (typeof filePath !== "undefined"){
+                        creatprjToMain(filePath.replace(".xtci",".xtci~"))
+                    }else{
+                        creatprjToMain("")
+                    }
                 }
             }
         }
