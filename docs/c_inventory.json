@@ -1,0 +1,1104 @@
+{
+  "source": "xtc143.c",
+  "function_count": 56,
+  "functions": [
+    {
+      "name": "main",
+      "line": 299,
+      "end_line": 889,
+      "calls": [
+        "ascii_frame",
+        "ascii_frame_clear",
+        "auto_scale",
+        "dump_gif_image_256_by_date_time",
+        "else_get_option",
+        "exit",
+        "gl_setwritemode",
+        "init_graphics_1280_1024_256",
+        "load_font_NRN",
+        "memset",
+        "message_box",
+        "nint",
+        "pmx_change_working_directory",
+        "pmx_help_listing",
+        "sleep",
+        "sprintf",
+        "tux_leaving",
+        "vga_clear",
+        "vga_getxdim",
+        "vga_getydim",
+        "vga_setcolor",
+        "vga_setmode",
+        "xtc_X_interval_scaling",
+        "xtc_Y_interval_scaling",
+        "xtc_define_plot_parameters",
+        "xtc_icc",
+        "xtc_icc_transfer_function",
+        "xtc_import_by_setup_file",
+        "xtc_load_Y_axes_ranges",
+        "xtc_load_correlation_models",
+        "xtc_menu_main",
+        "xtc_menu_main_large",
+        "xtc_plot_all_of_1_parameter",
+        "xtc_save_Y_axes_ranges",
+        "xtc_save_all_correlated_data",
+        "xtc_show_copyright",
+        "xtc_show_file_info",
+        "xtc_show_parameter_info",
+        "xtc_store_correlation_models",
+        "xtc_utilities",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc_menu",
+      "line": 899,
+      "end_line": 950,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "strlen",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc",
+      "line": 952,
+      "end_line": 1309,
+      "calls": [
+        "define_cursor_area",
+        "else_get_option",
+        "free",
+        "gl_getbox",
+        "gl_line",
+        "gl_putbox",
+        "ix_2_xx",
+        "malloc",
+        "sprintf",
+        "t_2_x",
+        "vga_clear",
+        "xtc_icc_delete_correlation_level",
+        "xtc_icc_insert_correlation_level",
+        "xtc_icc_menu",
+        "xtc_icc_resize_correlation_model",
+        "xtc_plot_all_of_1_parameter",
+        "xtc_show_copyright",
+        "xtc_show_parameter_info",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc_delete_menu",
+      "line": 1311,
+      "end_line": 1332,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc_delete_correlation_level",
+      "line": 1334,
+      "end_line": 1449,
+      "calls": [
+        "else_get_option",
+        "gl_getbox",
+        "gl_line",
+        "gl_putbox",
+        "malloc",
+        "message_box",
+        "xtc_icc_delete_menu",
+        "xx_2_ix"
+      ]
+    },
+    {
+      "name": "xtc_import_by_setup_file",
+      "line": 1452,
+      "end_line": 1943,
+      "calls": [
+        "ascii_frame",
+        "auto_scale",
+        "else_get_option",
+        "fgets",
+        "fopen",
+        "get_file_name",
+        "gl_fillbox",
+        "io_box_string",
+        "message_box",
+        "sprintf",
+        "sscanf",
+        "strlen",
+        "strncmp",
+        "strncpy",
+        "usleep",
+        "vga_clear",
+        "vga_getxdim",
+        "vga_getydim",
+        "x_2_t",
+        "xtc_load_correlated_data",
+        "xtc_load_correlation_models",
+        "xtc_load_master_data",
+        "xtc_load_turdis_data",
+        "xtc_show_copyright",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_save_Y_axes_ranges",
+      "line": 1945,
+      "end_line": 1976,
+      "calls": [
+        "fclose",
+        "fopen",
+        "fprintf",
+        "sprintf",
+        "sscanf",
+        "strcat"
+      ]
+    },
+    {
+      "name": "xtc_load_Y_axes_ranges",
+      "line": 1978,
+      "end_line": 2055,
+      "calls": [
+        "fclose",
+        "fgets",
+        "fopen",
+        "message_box",
+        "sleep",
+        "sprintf",
+        "sscanf",
+        "strcat",
+        "usleep"
+      ]
+    },
+    {
+      "name": "xtc_save_all_correlated_data",
+      "line": 2057,
+      "end_line": 2114,
+      "calls": [
+        "calloc",
+        "fclose",
+        "fopen",
+        "fprintf",
+        "free",
+        "message_box",
+        "sleep",
+        "sprintf",
+        "sscanf",
+        "strcat",
+        "strstr",
+        "usleep",
+        "xtc_convert_1_parameter_sz_2_mz"
+      ]
+    },
+    {
+      "name": "xtc_show_file_info",
+      "line": 2116,
+      "end_line": 2134,
+      "calls": [
+        "else_get_option",
+        "message_box",
+        "sprintf",
+        "strstr"
+      ]
+    },
+    {
+      "name": "xtc_show_parameter_info",
+      "line": 2136,
+      "end_line": 2170,
+      "calls": [
+        "else_get_option",
+        "message_box",
+        "sprintf",
+        "strncpy"
+      ]
+    },
+    {
+      "name": "xtc_menu_main",
+      "line": 2172,
+      "end_line": 2198,
+      "calls": [
+        "ascii_frame",
+        "strlen",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_menu_main_large",
+      "line": 2202,
+      "end_line": 2275,
+      "calls": [
+        "ascii_frame",
+        "gl_fillbox",
+        "sprintf",
+        "strlen",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_store_correlation_models",
+      "line": 2279,
+      "end_line": 2314,
+      "calls": [
+        "else_get_option",
+        "sscanf",
+        "xtc_list_current_correlation_models",
+        "xtc_store_1_correlation_model"
+      ]
+    },
+    {
+      "name": "xtc_store_1_correlation_model",
+      "line": 2316,
+      "end_line": 2340,
+      "calls": [
+        "fclose",
+        "fopen",
+        "fprintf",
+        "message_box",
+        "sprintf"
+      ]
+    },
+    {
+      "name": "xtc_list_current_correlation_models",
+      "line": 2342,
+      "end_line": 2369,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "sscanf",
+        "strlen",
+        "strncpy",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_load_correlation_models",
+      "line": 2372,
+      "end_line": 2401,
+      "calls": [
+        "sprintf",
+        "sscanf",
+        "usleep",
+        "xtc_load_1_correlation_model",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_load_1_correlation_model",
+      "line": 2403,
+      "end_line": 2456,
+      "calls": [
+        "calloc",
+        "else_get_option",
+        "fclose",
+        "fgets",
+        "fopen",
+        "free",
+        "message_box",
+        "rewind",
+        "sprintf",
+        "sscanf",
+        "xtc_data_2_array"
+      ]
+    },
+    {
+      "name": "xtc_load_turdis_data",
+      "line": 2458,
+      "end_line": 2515,
+      "calls": [
+        "calloc",
+        "else_get_option",
+        "fgets",
+        "fopen",
+        "message_box",
+        "rewind",
+        "sprintf",
+        "sscanf",
+        "usleep",
+        "xtc_data_2_array",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_load_master_data",
+      "line": 2517,
+      "end_line": 2550,
+      "calls": [
+        "sprintf",
+        "sscanf",
+        "usleep",
+        "xtc_load_1_data_file",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_load_correlated_data",
+      "line": 2552,
+      "end_line": 2647,
+      "calls": [
+        "gl_fillbox",
+        "sprintf",
+        "sscanf",
+        "strstr",
+        "usleep",
+        "vga_getxdim",
+        "vga_getydim",
+        "xtc_load_1_data_file",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_load_1_data_file",
+      "line": 2649,
+      "end_line": 2745,
+      "calls": [
+        "calloc",
+        "else_get_option",
+        "fclose",
+        "fgets",
+        "fopen",
+        "free",
+        "get_ex_ndim",
+        "message_box",
+        "rewind",
+        "sprintf",
+        "sscanf",
+        "xtc_data_2_array_variable",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_plot_all_of_1_parameter",
+      "line": 2747,
+      "end_line": 2949,
+      "calls": [
+        "calloc",
+        "free",
+        "gl_fillbox",
+        "linear_axis_grid_lines",
+        "linear_axis_nint",
+        "sprintf",
+        "strlen",
+        "strncpy",
+        "vga_getxdim",
+        "vga_setcolor",
+        "xtc_1_core_level_plot",
+        "xtc_convert_1_parameter_sz_2_mz",
+        "xtc_convert_depth_interval_2_time_interval",
+        "xtc_kurve_li_lg",
+        "xx_2_ix",
+        "xy_print",
+        "yy_2_iy"
+      ]
+    },
+    {
+      "name": "xtc_1_core_level_plot",
+      "line": 2951,
+      "end_line": 2983,
+      "calls": [
+        "color_line_xy",
+        "pow",
+        "vga_setcolor"
+      ]
+    },
+    {
+      "name": "xtc_convert_1_parameter_sz_2_mz",
+      "line": 2985,
+      "end_line": 3002,
+      "calls": [
+        "x_2_t"
+      ]
+    },
+    {
+      "name": "xtc_convert_depth_interval_2_time_interval",
+      "line": 3004,
+      "end_line": 3022,
+      "calls": [
+        "x_2_t"
+      ]
+    },
+    {
+      "name": "xtc_data_2_array_variable",
+      "line": 3024,
+      "end_line": 3070,
+      "calls": [
+        "fgets",
+        "free",
+        "line_to_floats"
+      ]
+    },
+    {
+      "name": "xtc_data_2_array",
+      "line": 3072,
+      "end_line": 3091,
+      "calls": [
+        "fgets",
+        "sscanf"
+      ]
+    },
+    {
+      "name": "xtc_get_new_axis_range",
+      "line": 3093,
+      "end_line": 3120,
+      "calls": [
+        "io_box_numbers",
+        "sprintf",
+        "sscanf"
+      ]
+    },
+    {
+      "name": "xtc_X_interval_scaling",
+      "line": 3122,
+      "end_line": 3176,
+      "calls": [
+        "ascii_frame",
+        "auto_scale",
+        "else_get_option",
+        "xtc_get_new_axis_range",
+        "xtc_list_current_X_ranges",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_list_current_X_ranges",
+      "line": 3178,
+      "end_line": 3192,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_Y_interval_scaling",
+      "line": 3194,
+      "end_line": 3332,
+      "calls": [
+        "ascii_frame",
+        "else_get_option",
+        "xtc_get_new_axis_range",
+        "xtc_list_current_Y_ranges",
+        "xtc_set_Y_axis_LIN_or_LOG_mode",
+        "xtc_set_Y_axis_direction",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_list_current_Y_ranges",
+      "line": 3334,
+      "end_line": 3395,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_set_Y_axis_direction",
+      "line": 3397,
+      "end_line": 3421,
+      "calls": []
+    },
+    {
+      "name": "xtc_set_Y_axis_LIN_or_LOG_mode",
+      "line": 3423,
+      "end_line": 3447,
+      "calls": []
+    },
+    {
+      "name": "xtc_define_plot_parameters",
+      "line": 3449,
+      "end_line": 3508,
+      "calls": []
+    },
+    {
+      "name": "xtc_kurve_li_lg",
+      "line": 3510,
+      "end_line": 3659,
+      "calls": [
+        "log10",
+        "mass_draw",
+        "mass_init",
+        "mass_line_xy",
+        "mass_symbol_xy",
+        "vga_setcolor"
+      ]
+    },
+    {
+      "name": "auto_scale_2",
+      "line": 3661,
+      "end_line": 3677,
+      "calls": [
+        "axis_division_short",
+        "nint"
+      ]
+    },
+    {
+      "name": "auto_scale",
+      "line": 3679,
+      "end_line": 3702,
+      "calls": [
+        "axis_division_short"
+      ]
+    },
+    {
+      "name": "x_2_t",
+      "line": 3704,
+      "end_line": 3735,
+      "calls": []
+    },
+    {
+      "name": "t_2_x",
+      "line": 3737,
+      "end_line": 3767,
+      "calls": []
+    },
+    {
+      "name": "xtc_show_copyright",
+      "line": 3769,
+      "end_line": 3814,
+      "calls": [
+        "ascii_frame",
+        "gl_fillbox",
+        "sprintf",
+        "xy_overprint",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc_insert_correlation_level",
+      "line": 3817,
+      "end_line": 3952,
+      "calls": []
+    },
+    {
+      "name": "xtc_icc_resize_correlation_model",
+      "line": 3954,
+      "end_line": 3967,
+      "calls": [
+        "realloc"
+      ]
+    },
+    {
+      "name": "xtc_icc_transfer_function_list",
+      "line": 3970,
+      "end_line": 3991,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_icc_transfer_function_menu",
+      "line": 3993,
+      "end_line": 4011,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc_transfer_function",
+      "line": 4013,
+      "end_line": 4071,
+      "calls": [
+        "else_get_option",
+        "vga_clear",
+        "xtc_icc_transfer_function_list",
+        "xtc_icc_transfer_function_menu",
+        "xtc_icc_transfer_function_plot"
+      ]
+    },
+    {
+      "name": "xtc_icc_transfer_function_plot",
+      "line": 4073,
+      "end_line": 4177,
+      "calls": [
+        "auto_scale",
+        "get_ex_ndim",
+        "linear_axis_grid_lines",
+        "linear_axis_nint",
+        "sprintf",
+        "strlen",
+        "t_2_x",
+        "vga_setcolor",
+        "xtc_icc_transfer_function_curve",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_icc_transfer_function_curve",
+      "line": 4179,
+      "end_line": 4225,
+      "calls": [
+        "mass_draw",
+        "mass_init",
+        "mass_line_xy",
+        "mass_symbol_xy",
+        "vga_setcolor"
+      ]
+    },
+    {
+      "name": "xtc_print_data",
+      "line": 4228,
+      "end_line": 4245,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_utilities",
+      "line": 4255,
+      "end_line": 4319,
+      "calls": [
+        "ascii_frame",
+        "ascii_frame_clear",
+        "else_get_option",
+        "message_box",
+        "pmx_help_listing",
+        "sleep",
+        "sprintf",
+        "strlen",
+        "vga_clear",
+        "xtc_U_ID_stack_to_pmx",
+        "xtc_U_IDs_to_single_VGP",
+        "xtc_U_parameter_stack",
+        "xtc_show_copyright",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_U_IDs_to_single_VGP",
+      "line": 4323,
+      "end_line": 4601,
+      "calls": [
+        "ascii_frame",
+        "ascii_frame_clear",
+        "calloc",
+        "else_get_option",
+        "fclose",
+        "fisher_statistics",
+        "fopen",
+        "fprintf",
+        "free",
+        "io_box_numbers",
+        "message_box",
+        "sprintf",
+        "sscanf",
+        "vga_clear",
+        "vgp",
+        "xtc_convert_1_parameter_sz_2_mz",
+        "xtc_get_site_coordinates",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_U_ID_stack_to_pmx",
+      "line": 4605,
+      "end_line": 5074,
+      "calls": [
+        "ascii_frame",
+        "ascii_frame_clear",
+        "calloc",
+        "clear_pmd_struct_Lx",
+        "color_line_xy",
+        "date_time_pmd_l_chge",
+        "date_time_pmd_l_mess",
+        "diamond_xy",
+        "else_get_option",
+        "fclose",
+        "fflush",
+        "fisher_pmd_Lx",
+        "fopen",
+        "fread",
+        "free",
+        "fseek",
+        "fwrite",
+        "io_box_numbers",
+        "io_box_string",
+        "jid_2_kar",
+        "message_box",
+        "nint",
+        "outtext_xy",
+        "outtext_xy_v",
+        "pclose",
+        "perror",
+        "popen",
+        "sprintf",
+        "sscanf",
+        "strcat",
+        "strncpy",
+        "vga_clear",
+        "vgp_pmd_Lx",
+        "wert_2_string",
+        "xtc_convert_1_parameter_sz_2_mz",
+        "xtc_get_site_coordinates",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_U_parameter_stack",
+      "line": 5078,
+      "end_line": 5508,
+      "calls": [
+        "ascii_frame",
+        "ascii_frame_clear",
+        "auto_scale",
+        "calloc",
+        "color_line_xy",
+        "diamond_xy",
+        "else_get_option",
+        "fclose",
+        "fopen",
+        "fprintf",
+        "free",
+        "get_ex_ndim",
+        "gl_fillbox",
+        "io_box_numbers",
+        "io_box_string",
+        "linear_axis_nint",
+        "malloc",
+        "message_box",
+        "nint",
+        "outtext_xy",
+        "outtext_xy_bgc",
+        "outtext_xy_v",
+        "sprintf",
+        "sqrt",
+        "sscanf",
+        "strlen",
+        "strncpy",
+        "vga_clear",
+        "vga_getxdim",
+        "vga_getydim",
+        "wert_2_string",
+        "xtc_convert_1_parameter_sz_2_mz",
+        "xy_print",
+        "xy_print_switch"
+      ]
+    },
+    {
+      "name": "xtc_get_site_coordinates",
+      "line": 5511,
+      "end_line": 5611,
+      "calls": [
+        "ascii_frame",
+        "else_get_option",
+        "gl_fillbox",
+        "io_box_numbers",
+        "message_box",
+        "sprintf",
+        "sscanf",
+        "toupper",
+        "vga_getch",
+        "xtc_get_sub_obtions",
+        "xy_print"
+      ]
+    },
+    {
+      "name": "xtc_get_sub_obtions",
+      "line": 5613,
+      "end_line": 5635,
+      "calls": [
+        "ascii_frame",
+        "sprintf",
+        "strcat",
+        "xy_print"
+      ]
+    }
+  ],
+  "declarations_without_definition": [
+    "xtc_help"
+  ],
+  "includes": [
+    "ctype.h",
+    "errno.h",
+    "fcntl.h",
+    "math.h",
+    "malloc.h",
+    "stdio.h",
+    "string.h",
+    "stdlib.h",
+    "sys/types.h",
+    "sys/stat.h",
+    "sys/ioctl.h",
+    "termios.h",
+    "time.h",
+    "unistd.h",
+    "vgagl.h",
+    "vga.h",
+    "vgakeyboard.h",
+    "pmp_included_headers.inc",
+    "specials.inc",
+    "vga_8x14.font.inc",
+    "vga_6x10.font.inc"
+  ],
+  "calls_not_defined_in_this_file": [
+    "ascii_frame",
+    "ascii_frame_clear",
+    "axis_division_short",
+    "calloc",
+    "clear_pmd_struct_Lx",
+    "color_line_xy",
+    "date_time_pmd_l_chge",
+    "date_time_pmd_l_mess",
+    "define_cursor_area",
+    "diamond_xy",
+    "dump_gif_image_256_by_date_time",
+    "else_get_option",
+    "exit",
+    "fclose",
+    "fflush",
+    "fgets",
+    "fisher_pmd_Lx",
+    "fisher_statistics",
+    "fopen",
+    "fprintf",
+    "fread",
+    "free",
+    "fseek",
+    "fwrite",
+    "get_ex_ndim",
+    "get_file_name",
+    "gl_fillbox",
+    "gl_getbox",
+    "gl_line",
+    "gl_putbox",
+    "gl_setwritemode",
+    "init_graphics_1280_1024_256",
+    "io_box_numbers",
+    "io_box_string",
+    "ix_2_xx",
+    "jid_2_kar",
+    "line_to_floats",
+    "linear_axis_grid_lines",
+    "linear_axis_nint",
+    "load_font_NRN",
+    "log10",
+    "malloc",
+    "mass_draw",
+    "mass_init",
+    "mass_line_xy",
+    "mass_symbol_xy",
+    "memset",
+    "message_box",
+    "nint",
+    "outtext_xy",
+    "outtext_xy_bgc",
+    "outtext_xy_v",
+    "pclose",
+    "perror",
+    "pmx_change_working_directory",
+    "pmx_help_listing",
+    "popen",
+    "pow",
+    "realloc",
+    "rewind",
+    "sleep",
+    "sprintf",
+    "sqrt",
+    "sscanf",
+    "strcat",
+    "strlen",
+    "strncmp",
+    "strncpy",
+    "strstr",
+    "toupper",
+    "tux_leaving",
+    "usleep",
+    "vga_clear",
+    "vga_getch",
+    "vga_getxdim",
+    "vga_getydim",
+    "vga_setcolor",
+    "vga_setmode",
+    "vgp",
+    "vgp_pmd_Lx",
+    "wert_2_string",
+    "xx_2_ix",
+    "xy_overprint",
+    "xy_print",
+    "xy_print_switch",
+    "yy_2_iy"
+  ],
+  "menu_strings": [
+    "#                                                                    : F",
+    "# %2i -- Reference data : s",
+    "# %2i -- correlated data : s",
+    "# : pick MASTER level",
+    "# of data set              ranges of Y-AXES         rescale :",
+    "*   space : toggle symbols on/off",
+    "+ - : zoom in / out X-axis window",
+    "+ : pick CORR.  level",
+    "/ : change working directory ...",
+    "0   : set vertical overlap back to 0\\%",
+    "0 : RESET all parameters/settings",
+    "1..9 : set curser increment",
+    "< : move left",
+    "<last update : 29.04.2009>",
+    "<last update: 13.07.2010>",
+    "<last update: 20.04.2010>",
+    "<last update: 22.04.2010>",
+    "> : move right",
+    "?   : HELP",
+    "? : HELP",
+    "A   : simply ABORT",
+    "A : Abort without storing",
+    "A : set AMPLITUDE filter ...",
+    "A : simply ABORT",
+    "Automatically save all correlated data ( name: data_file.xtc ) ? Y : yes",
+    "B   : BACK to main menu",
+    "B : BACK to icc in xtc",
+    "B : BACK to main menu",
+    "B : BACK to xtc main menu",
+    "B : BACK to xtc utility",
+    "C   : show CORRELATION model of 1 data set; after pressing F11 and choice with F10,F12",
+    "C : CALCULATE stack (average & standard deviation)",
+    "C : CREATE stack in the pmx file : collect directions & calculate a95, [VGPs]",
+    "C : collect directions & CALCULATE mean direction, a95, VGP, dpdm",
+    "CC : CENTER",
+    "CL : CENTER left",
+    "CR : CENTER right",
+    "Compiled data :",
+    "Correlation FILE NAME :                                       store OPTION",
+    "Creating PALEOMAGNETIC (I,D) stacks - Options :",
+    "D   : toggle DISPLAY of turbidites / disturbances on/off",
+    "D : DELETE",
+    "D : DELETE levels ...",
+    "D : decimal (def.)",
+    "D : delete",
+    "DISPLAY OF TRANSFER FUNCTIONS :",
+    "Declination :",
+    "End  : move to Xmax",
+    "Enter  START,END,INCREMENT,WIDTH  of time interval for stacking :",
+    "Enter START,END of time interval for VGP calculation :",
+    "Enter START,END,INCREMENT of time interval for stacking :",
+    "Enter amplitude  MINIMUM,MAXIMUM  for stacking :",
+    "Enter file specification for setup file :",
+    "Enter new minimum and maximum for %c-axis :",
+    "F   : FULL scale on/off",
+    "F   : open setup FILE ...",
+    "F : FULL scale & BACK",
+    "F : all axes FULL scale (linear,ascending) & BACK",
+    "F : change pmx FILE type",
+    "F : open setup FILE ...",
+    "F1  : full menu on",
+    "F1 : full menu on",
+    "F10 : NEXT core",
+    "F10 : NEXT data set (core) for highlighting",
+    "F11 : highlight a data set / omit others / show all again - to be used together with F10,F12",
+    "F11 : only selected core",
+    "F12 : PREVIOUS core",
+    "F12 : PREVIOUS data set (core) for highlighting",
+    "F12 : PREVIUOS core",
+    "F2  : automatically store all Y-axes settings to a file (setup_file_name.yrr)",
+    "F3  : load all Y-axes settings from a corresponding file (setup_file_name.yrr)",
+    "F4  : store all correlated data using current status of correlation models",
+    "F5  : more/less correlation lines (all / every 4th / 16th / 64th / 256th)",
+    "F6  : NEXT parameter",
+    "F6 : NEXT parameter",
+    "F7  : master record on/off",
+    "F8  : PREVIOUS parameter",
+    "F8 : PREVIUOS parameter",
+    "F9  : refine correlation(s); after pressing F11 and choice with F10,F12 ...",
+    "FILE NAME : %s",
+    "File # %2i with correlated data of set # %2i : %s",
+    "File names of correlated data :",
+    "G   : toggle GRID lines on/off",
+    "G   : toggle vertical GRID on/off",
+    "G : degrees, minutes",
+    "I   : temporarily list file names of currently displayed parameter",
+    "I : INVERT  M,C,A, or Fn .",
+    "I : specify xtc INDICES for Inclination and declination",
+    "Inclination :",
+    "L   : toggle correlation LINES on/off; after pressing F11 and choice with F10,F12",
+    "L : LIN / LOG display of  M,C,A, or Fn .",
+    "L : open a LOG file",
+    "LC : LEFT center",
+    "LL : outer LEFT",
+    "Lines in file : %3i -- lines successfully stored in array : %3i",
+    "List of correlation functions :",
+    "M:= MASTER record - C : all CORRELATED records - A : All records",
+    "Number of correlated cores + reference data : %2i",
+    "Number of parameters per correlation        : %2i",
+    "O   : stepwise increase vertical OVERLAP (0\\% to 90\\%)",
+    "OPTIONS :",
+    "P   : temporarily list all loaded parameters type; optionally select one DIRECTLY ! with F1 .. F12",
+    "P : collect PALEOMAGNETIC directions (I,D) ...",
+    "P : select PARAMETER",
+    "POS1 : move to Xmin",
+    "Parameter Stacking - Options :",
+    "Please choose two indices from the list i(INCL),i(DECL):",
+    "Please define kind of data :",
+    "Please select a core : F11 + F10 or F12",
+    "Please, enter file name :",
+    "Q   : QUIT & optionally save ( NOT YET ) all data files loaded to xtc ...",
+    "Q : QUIT & save data ...",
+    "Q : QUIT program",
+    "R   : RELOAD correlation models",
+    "R : RELOAD correlation models",
+    "R : RENAME output file ...",
+    "RC : RIGHT center",
+    "RR : outer RIGHT",
+    "Reading data :",
+    "Reading file names of correlated data :",
+    "S   : SAVE correlation models ...",
+    "S : SAVE correlation models ...",
+    "S : SAVE result to a file ( time  average  [ std dev  ndat ] ) ...",
+    "S : STACK currently selected parameter < %s > ...",
+    "S : enter SITE coordinates",
+    "Site coodinates : %8.4f N %9.4f E",
+    "T   : TOTALLY overlapping plots (centered to screen with 50\\% vertical height)",
+    "T : set TIME interval (ka) for processing & create pmx file ...",
+    "T : set TIME interval (ka) for processing (I,D) data",
+    "T : set TIME interval (ka) for stacking ...",
+    "U   : UTILITIES ...",
+    "UTILITIES :",
+    "V   : stepwise decrease vertical OVERLAP (90\\% to 0\\%)",
+    "V : VGP calculation of a single directional (I,D) cluster ...",
+    "VGP calculation of a single directional cluster - Options :",
+    "X   : rescale X-axis ...",
+    "X : define X-interval ...",
+    "X : exchange / enter",
+    "Y   : rescale Y-axes ...",
+    "Y : invert Y-axis :",
+    "Y : to confirm deletion - any other key to abort",
+    "a95 :",
+    "all CORRELATION files                                            : C",
+    "bin width :",
+    "correlation model :",
+    "disturbance data :",
+    "dm :",
+    "dp :",
+    "enter SLat(N),SLong(E) (decimal):",
+    "enter SLat(N),SLong(E) (g,m.mm',g,m.mm') :",
+    "increment :",
+    "l r : left / right shift of X-axis window",
+    "loaded Parameters :",
+    "n   :",
+    "ndat :",
+    "opened file : 'xtc_VGP_log.dat'",
+    "pointerindex : %2i",
+    "pole latitude  :",
+    "pole longitude :",
+    "ranges of X-AXES :",
+    "rescaling X-axis - OPTIONS :",
+    "rescaling Y-axes - OPTIONS :",
+    "stacking only between :",
+    "start :",
+    "stop  :",
+    "stop :"
+  ]
+}

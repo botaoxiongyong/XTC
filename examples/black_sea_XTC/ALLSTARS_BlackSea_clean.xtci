@@ -1,0 +1,468 @@
+NDS 19 NPC 16
+####--------------------------------------------------------
+#### 16 comments on reference data :
+CR NGRIP d18O \
+CR discrete MS \
+CR NGRIP d18O \
+CR NGRIP d18O \
+CR M72/5 slope-rPI stack \
+CR NGRIP d18O \
+CR NGRIP d18O \
+CR synth Greenland d18O \
+CR d18O NGRIP \
+CR d180 NGRIP \
+CR d18O NGRIP \
+CR d18o NGRIP \
+CR d18O Greenland \
+CR NGRIP d18O out of EPICA \
+CR NGRIP out of EPICA \
+CR d18O Greenland \
+####--------------------------------------------------------
+#### 16 comments on parameters to correlate :
+CP MS2E sus \
+CP MFK-1 sus \
+CP S-ratio \
+CP ARM/SIRM \
+CP rPI \
+CP ChRM inclination \
+CP ChRM declination \
+CP xrf Ca \
+CP xrf K/Ti \
+CP Zr \
+CP xrf Si \
+CP Zr/Si \
+CP simplified lithology \
+CP IRD normalized \
+CP SIRM/klf \
+CP kAMS-degree \
+############################################################
+######## 19 blocks with data files :
+####--------------------------------------------------------
+#### 16 file names for reference data :
+FR hybrid_NGRIP_d18O.dat
+FR M72-5_allstars_MS2E_20a_comp.sus
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR combo_rPI.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR hybrid_NGRIP_d18O.dat
+FR Greenland_synth_dO18.dat
+FR hybrid_NGRIP_d18O.dat
+############################################################
+#### data set #  1 for correlation :
+####--------------------------------------------------------
+GC GeoB7622.ages
+####--------------------------------------------------------
+FP GeoB7622-2_ms2e_5.sus
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+GP GeoB7622.xrf   6   1   3
+GP GeoB7622.xrf.ratios   5   1   2
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+############################################################
+#### data set #  2 for correlation :
+####--------------------------------------------------------
+GC M72-5-24GC3_MIS2.ages
+####--------------------------------------------------------
+FT M72-5-24GC3_tephras.txt
+####--------------------------------------------------------
+FD M72-5-24GC3_AMS14C_ages_XTC.dat
+####--------------------------------------------------------
+FP M72-5-24GC3_ms2e_3.sus
+GP M72-5-24GC3_ROCKMAG-raw.dat  12   1   2
+GP M72-5-24GC3_ROCKMAG-raw.dat  12   1   9
+GP M72-5-24GC3_ROCKMAG-raw.dat  12   1  12
+GP M72-5-24GC3_slope-PI_20-50mT_cropped.dat  10   2   4
+GP M72-5-24GC3_ID_2016-02-12.dat   4   2   3
+GP M72-5-24GC3_ID_2016-02-12.dat   4   2   4
+GP M72-5-24GC3_full.xrf   9   1   3
+GP M72-5-24GC3_full.xrf.ratios   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP M72-5-24GC3_simple.litho
+FP M72-5-24GC3_IRD_norm.dat
+GP M72-5-24GC3_ROCKMAG-raw.dat  12   1  11
+FP NO_DATA
+############################################################
+#### data set #  3 for correlation :
+####--------------------------------------------------------
+GC MSM33-55-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-55-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-55-1_ms2e_3.sus
+GP MSM33-55-1.ams  12   1   2
+GP MSM33-55-1_ROCKMAG.dat  10   1   7
+GP MSM33-55-1_ROCKMAG.dat  10   1  10
+GP MSM33-55-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-55-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-55-1_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-55-1_XRF-Ca.dat
+GP MSM33-55-1_full.xrf.ratios   5   1   3
+GP MSM33-55-1_full.xrf  14   1  13
+GP MSM33-55-1_full.xrf  14   1   4
+GP MSM33-55-1_full.xrf.ratios   5   1   5
+FP MSM33-55-1_simple.litho
+FP NO_DATA
+GP MSM33-55-1_ROCKMAG.dat  10   1   9
+GP MSM33-55-1_k_ds.dat   3   1   2
+############################################################
+#### data set #  4 for correlation :
+####--------------------------------------------------------
+GC MSM33-57-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-57-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-57-1_ms2e.sus
+GP MSM33-57-1_ROCKMAG.dat  11   2   3
+GP MSM33-57-1_ROCKMAG.dat  11   2   8
+GP MSM33-57-1_ROCKMAG.dat  11   2  11
+GP MSM33-57-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-57-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-57-1_ID_slope-rPI_clean.dat   5   2   4
+GP MSM33-57-1_full-b.xrf  16   1   9
+GP MSM33-57-1_full-b.xrf.ratios   5   1   3
+GP MSM33-57-1_full-b.xrf  16   1  15
+GP MSM33-57-1_full-b.xrf  16   1   4
+GP MSM33-57-1_full-b.xrf.ratios   5   1   5
+FP MSM33-57-1_simple.litho
+FP NO_DATA
+GP MSM33-57-1_ROCKMAG.dat  11   2  10
+GP MSM33-57-1.ams  12   1  12
+############################################################
+#### data set #  5 for correlation :
+####--------------------------------------------------------
+GC MSM33-54-3_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-54-3_tephras.txt
+####--------------------------------------------------------
+FP MSM33-54-3_ms2e_3.sus
+GP MSM33-54-3_ROCKMAG.dat  10   1   2
+GP MSM33-54-3_ROCKMAG.dat  10   1   7
+GP MSM33-54-3_ROCKMAG.dat  10   1  10
+GP MSM33-54-3_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-54-3_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-54-3_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-54-3_XRF-Ca.dat
+GP MSM33-54-3_full.xrf.ratios   5   1   3
+GP MSM33-54-3_full.xrf  14   1  13
+GP MSM33-54-3_full.xrf  14   1   4
+GP MSM33-54-3_full.xrf.ratios   5   1   5
+FP MSM33-54-3_simple.litho
+FP NO_DATA
+GP MSM33-54-3_ROCKMAG.dat  10   1   9
+GP MSM33-54-3_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set #  6 for correlation :
+####--------------------------------------------------------
+GC MSM33-53-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-53-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-53-1_ms2e_3.sus
+GP MSM33-53-1_ROCKMAG.dat  10   1   2
+GP MSM33-53-1_ROCKMAG.dat  10   1   7
+GP MSM33-53-1_ROCKMAG.dat  10   1  10
+GP MSM33-53-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-53-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-53-1_ID_slope-rPI_clean.dat   5   2   4
+GP MSM33-53-1_full.xrf  15   1   9
+GP MSM33-53-1_full.xrf.ratios   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP MSM33-53-1_simple.litho
+FP NO_DATA
+GP MSM33-53-1_PalRockMag_prel.dat   9   2   8
+FP NO_DATA
+############################################################
+#### data set #  7 for correlation :
+####--------------------------------------------------------
+GC MSM33-60-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-60-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-60-1_ms2e_3.sus
+GP MSM33-60-1_ROCKMAG.dat  10   1   2
+GP MSM33-60-1_ROCKMAG.dat  10   1   7
+GP MSM33-60-1_ROCKMAG.dat  10   1  10
+GP MSM33-60-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-60-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-60-1_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-60-1_XRF-Ca.dat
+GP MSM33-60-1_full.xrf.ratios   5   1   3
+GP MSM33-60-1_full.xrf  14   1  13
+GP MSM33-60-1_full.xrf  14   1   4
+GP MSM33-60-1_full.xrf.ratios   5   1   5
+FP MSM33-60-1_simple.litho
+FP MSM33-60-1_norm-IRD.dat
+GP MSM33-60-1_ROCKMAG.dat  10   1   9
+GP MSM33-60-1_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set #  9 for correlation :
+####--------------------------------------------------------
+GC MSM33-51-3_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-51-3_tephras.txt
+####--------------------------------------------------------
+FP MSM33-51-3_ms2e_3.sus
+GP MSM33-51-3_ROCKMAG.dat  10   1   2
+GP MSM33-51-3_ROCKMAG.dat  10   1   7
+GP MSM33-51-3_ROCKMAG.dat  10   1  10
+GP MSM33-51-3_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-51-3_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-51-3_ID_slope-rPI_clean.dat   5   2   4
+GP MSM33-51-3_full.xrf  14   1   2
+GP MSM33-51-3_full.xrf.ratios   5   1   3
+GP MSM33-51-3_full.xrf  14   1  13
+GP MSM33-51-3_full.xrf  14   1   4
+GP MSM33-51-3_full.xrf.ratios   5   1   5
+FP MSM33-51-3_simple.litho
+FP NO_DATA
+GP MSM33-51-3_ROCKMAG.dat  10   1   9
+GP MSM33-51-3_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set # 10 for correlation :
+####--------------------------------------------------------
+GC M72-5-25GC1_MIS2.ages
+####--------------------------------------------------------
+FT M72-5-25GC1_tephras.txt
+####--------------------------------------------------------
+FP M72-5-25GC1_ms2e_3.sus
+GP M72-5-25GC1_sorted_ROCKMAG.dat  10   1   2
+GP M72-5-25GC1_sorted_ROCKMAG.dat  10   1   7
+GP M72-5-25GC1_sorted_ROCKMAG.dat  10   1  10
+GP M72-5-25GC1_slope-PI_20-50mT_cropped.dat  10   2   4
+GP M72-5-25GC1_sorted_PALMAG.dat   4   1   2
+GP M72-5-25GC1_sorted_PALMAG.dat   4   1   3
+GP M72-5-25GC1_full.xrf   9   1   3
+GP M72-5-25GC1_full.xrf.ratios   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP M72-5-25GC1_simple.litho
+FP M72-5-25GC1_IRD_norm.dat
+GP M72-5-25GC1_sorted_ROCKMAG.dat  10   1   9
+FP NO_DATA
+############################################################
+#### data set # 11 for correlation :
+####--------------------------------------------------------
+GC MSM33-61-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-61-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-61-1_ms2e_3.sus
+GP MSM33-61-1_ROCKMAG.dat  10   1   2
+GP MSM33-61-1_ROCKMAG.dat  10   1   7
+GP MSM33-61-1_ROCKMAG.dat  10   1  10
+GP MSM33-61-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-61-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-61-1_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-61-1_XRF-Ca.dat
+GP MSM33-61-1_full.xrf.ratios   5   1   3
+GP MSM33-61-1_full.xrf  14   1  13
+GP MSM33-61-1_full.xrf  14   1   4
+GP MSM33-61-1_full.xrf.ratios   5   1   5
+FP MSM33-61-1_simple.litho
+FP NO_DATA
+GP MSM33-61-1_ROCKMAG.dat  10   1   9
+GP MSM33-61-1_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set # 12 for correlation :
+####--------------------------------------------------------
+GC MSM33-52-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-52-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-52-1_ms2e_3.sus
+FP MSM33-52-1_mfk1.sus
+GP MSM33-52-1_ROCKMAG.dat  10   1   7
+GP MSM33-52-1_ROCKMAG.dat  10   1  10
+GP MSM33-52-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-52-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-52-1_ID_slope-rPI_clean.dat   5   2   4
+GP MSM33-52-1_full-c.xrf  14   1   8
+GP MSM33-52-1_full-c.xrf.ratios   5   1   3
+FP NO_DATA
+FP NO_DATA
+GP MSM33-52-1_full-c.xrf.ratios   5   1   5
+FP MSM33-52-1_simple.litho
+FP NO_DATA
+GP MSM33-52-1_ROCKMAG.dat  10   1   9
+FP NO_DATA
+############################################################
+#### data set # 13 for correlation :
+####--------------------------------------------------------
+GC MSM33-64-1_MIS2.ages
+####--------------------------------------------------------
+FP MSM33-64-1_ms2e_3.sus
+GP MSM33-64-1_ROCKMAG.dat  10   1   2
+GP MSM33-64-1_ROCKMAG.dat  10   1   7
+GP MSM33-64-1_ROCKMAG.dat  10   1  10
+GP MSM33-64-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-64-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-64-1_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-64-1_XRF-Ca.dat
+GP MSM33-64-1_full.xrf.ratios   5   1   3
+GP MSM33-64-1_full.xrf  14   1  13
+GP MSM33-64-1_full.xrf  14   1   4
+GP MSM33-64-1_full.xrf.ratios   5   1   5
+FP MSM33-64-1_simple.litho
+FP NO_DATA
+GP MSM33-64-1_ROCKMAG.dat  10   1   9
+GP MSM33-64-1_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set # 14 for correlation :
+####--------------------------------------------------------
+GC MSM33-63-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-63-1_tephras.txt
+####--------------------------------------------------------
+FP MSM33-63-1_ms2e_3.sus
+FP MSM33-63-1_mfk1.sus
+GP MSM33-63-1_ROCKMAG.dat  10   1   7
+GP MSM33-63-1_ROCKMAG.dat  10   1  10
+GP MSM33-63-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-63-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-63-1_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-63-1_XRF-Ca.dat
+GP MSM33-63-1_full.xrf.ratios   5   1   3
+GP MSM33-63-1_full.xrf  14   1  13
+GP MSM33-63-1_full.xrf  14   1   4
+GP MSM33-63-1_full.xrf.ratios   5   1   5
+FP MSM33-63-1_simple.litho
+FP NO_DATA
+GP MSM33-63-1_ROCKMAG.dat  10   1   9
+GP MSM33-63-1_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set # 15 for correlation :
+####--------------------------------------------------------
+GC MSM33-62-1_MIS2.ages
+####--------------------------------------------------------
+FT MSM33-62-1_tephras.txt
+####--------------------------------------------------------
+FD MSM33-62-1.distu
+####--------------------------------------------------------
+FP MSM33-62-1_ms2e_3.sus
+GP MSM33-62-1_ROCKMAG.dat  10   1   2
+GP MSM33-62-1_ROCKMAG.dat  10   1   7
+GP MSM33-62-1_ROCKMAG.dat  10   1  10
+GP MSM33-62-1_ID_slope-rPI_clean.dat   5   2   5
+GP MSM33-62-1_ID_slope-rPI_clean.dat   5   2   3
+GP MSM33-62-1_ID_slope-rPI_clean.dat   5   2   4
+FP MSM33-62-1_XRF-Ca.dat
+GP MSM33-62-1_full.xrf.ratios   5   1   3
+GP MSM33-62-1_full.xrf  14   1  13
+GP MSM33-62-1_full.xrf  14   1   4
+GP MSM33-62-1_full.xrf.ratios   5   1   5
+FP MSM33-62-1_simple.litho
+FP NO_DATA
+GP MSM33-62-1_ROCKMAG.dat  10   1   9
+GP MSM33-62-1_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set # 16 for correlation :
+####--------------------------------------------------------
+GC M72-5-22GC3_MIS2.ages
+####--------------------------------------------------------
+FP M72-5-22GC3_ms2e_3.sus
+GP M72-5-22GC3_ROCKMAG.dat  10   1   2
+GP M72-5-22GC3_ROCKMAG.dat  10   1   7
+GP M72-5-22GC3_ROCKMAG.dat  10   1  10
+GP M72-5-22GC3_slope-PI_20-50mT_cropped.dat  10   2   4
+GP M72-5-22GC3_PALMAG.dat   4   1   2
+GP M72-5-22GC3_PALMAG.dat   4   1   3
+GP M72-5-22GC3_full.xrf   9   1   3
+GP M72-5-22GC3_full.xrf.ratios   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP M72-5-22gc3_simple.litho
+FP NO_DATA
+GP M72-5-22GC3_ROCKMAG.dat  10   1   9
+GP M72-5-22GC6_k_ds_IKmin.dat   4   1   2
+############################################################
+#### data set # 17 for correlation :
+####--------------------------------------------------------
+GC M72-5-22GC4_MIS2.ages
+####--------------------------------------------------------
+FP M72-5-22GC4_ms2e_3.sus
+GP M72-5-22GC4_ROCKMAG.dat  11   1   2
+GP M72-5-22GC4_ROCKMAG.dat  11   1   8
+GP M72-5-22GC4_ROCKMAG.dat  11   1  11
+GP M72-5-22GC4_slope-PI_20-50mT_cropped.dat  10   2   4
+GP M72-5-22GC4_PALMAG.dat   4   1   2
+GP M72-5-22GC4_PALMAG.dat   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+GP M72-5-22GC4_ROCKMAG.dat  11   1  10
+FP NO_DATA
+############################################################
+#### data set # 18 for correlation :
+####--------------------------------------------------------
+GC M72-5-22GC6_MIS2.ages
+####--------------------------------------------------------
+FP M72-5-22GC6_ms2e_3.sus
+GP M72-5-22GC6_ROCKMAG.dat  10   1   2
+GP M72-5-22GC6_ROCKMAG.dat  10   1   7
+GP M72-5-22GC6_ROCKMAG.dat  10   1  10
+GP M72-5-22GC6_slope-PI_20-50mT_cropped.dat  10   2   4
+GP M72-5-22GC6_PALMAG.dat   4   1   2
+GP M72-5-22GC6_PALMAG.dat   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP M72-5-22gc6_simple.litho
+FP NO_DATA
+GP M72-5-22GC6_ROCKMAG.dat  10   1   9
+FP NO_DATA
+############################################################
+#### data set # 19 for correlation :
+####--------------------------------------------------------
+GC M72-5-22GC8_MIS2.ages
+####--------------------------------------------------------
+FT M72-5-22GC8_tephras.txt
+####--------------------------------------------------------
+FP M72-5-22GC8_ms2e_3.sus
+GP M72-5-22GC8_ROCKMAG.dat  10   1   2
+GP M72-5-22GC8_ROCKMAG.dat  10   1   7
+GP M72-5-22GC8_ROCKMAG.dat  10   1  10
+GP M72-5-22GC8_slope-PI_20-50mT_cropped.dat  10   2   4
+GP M72-5-22GC8_PALMAG.dat   4   1   2
+GP M72-5-22GC8_PALMAG.dat   4   1   3
+GP M72-5-22GC8_full.xrf   9   1   3
+GP M72-5-22GC8_full.xrf.ratios   4   1   3
+FP NO_DATA
+FP NO_DATA
+FP NO_DATA
+FP M72-5-22gc8_simple.litho
+FP M72-5-22GC8_IRD_norm.dat
+GP M72-5-22GC8_ROCKMAG.dat  10   1   9
+FP NO_DATA
+############################################################
+####    This file has been created using   xtc-4.3.5    ####
+############################################################
