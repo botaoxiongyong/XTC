@@ -9,7 +9,7 @@ class LegacyProject:
     def __init__(self, path):
         self.path=Path(path).resolve(); self.root=self.path.parent
         self.parameters=[]; self.references=[]; self.reference_columns=[]; self.blocks=[]; self.reference_comments=[]
-        self.ancillary=[]; self.warnings=[]; self.cache={}; self.core_names={}
+        self.ancillary=[]; self.unassigned_ancillary=[]; self.warnings=[]; self.cache={}; self.core_names={}
         allowed={'NDS','CR','CP','FR','GR','FC','GC','FP','GP','FT','FD'}
         for number,line in enumerate(self.path.read_text().splitlines(),1):
             if line.startswith(CORE_NAME_COMMENT):
@@ -25,11 +25,19 @@ class LegacyProject:
             elif code in ('FR','GR'):
                 self.references.append(self.spec(parts))
                 self.reference_columns.append(self.column_count(parts))
-            elif code in ('FC','GC'): self.blocks.append({'model':parts[1],'data':[],'columns':[]})
+            elif code in ('FC','GC'):
+                self.blocks.append({'model':parts[1],'model_directive':code,'data':[],
+                                    'columns':[],'ancillary':[]})
             elif code in ('FP','GP'):
                 self.blocks[-1]['data'].append(self.spec(parts))
                 self.blocks[-1]['columns'].append(self.column_count(parts))
-            elif code in ('FT','FD'): self.ancillary.append({'directive':code,'file':parts[1]})
+            elif code in ('FT','FD'):
+                item = {'directive': code, 'file': parts[1]}
+                self.ancillary.append(item)
+                if self.blocks:
+                    self.blocks[-1]['ancillary'].append(item)
+                else:
+                    self.unassigned_ancillary.append(item)
         if len(self.parameters)!=self.npc or len(self.references)!=self.npc or len(self.blocks)!=self.nds-1 or any(len(b['data'])!=self.npc for b in self.blocks):
             raise ValueError('Project dimensions do not match NDS/NPC.')
 

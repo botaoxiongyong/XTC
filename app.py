@@ -315,9 +315,23 @@ class Window(QMainWindow):
         self.y_settings = {}
         self.undo_stack=[]; self.redo_stack=[]; self.resize(1380,850); self.setWindowTitle('XTC')
         file=self.menuBar().addMenu('&File'); edit=self.menuBar().addMenu('&Edit'); help_menu=self.menuBar().addMenu('&Help')
-        for menu,label,slot,key in [(file,'Create Project…',self.create_project,'Ctrl+N'),(file,'Open project…',self.open_project,'Ctrl+O'),(file,'Save Project',self.save,'Ctrl+S'),(file,'Export selected correlated data…',self.export_data,None),(edit,'Undo',self.undo,'Ctrl+Z'),(edit,'Redo',self.redo,'Ctrl+Shift+Z'),(edit,'Fit all curves',lambda:self.plot.reset(),'Ctrl+0'),(help_menu,'Project load report',self.show_report,None)]:
+        actions = [
+            (file, 'Create Project…', self.create_project, 'Ctrl+N'),
+            (file, 'Open project…', self.open_project, 'Ctrl+O'),
+            (file, 'Edit Project…', self.edit_project, None),
+            (file, 'Save Project', self.save, 'Ctrl+S'),
+            (file, 'Export selected correlated data…', self.export_data, None),
+            (edit, 'Undo', self.undo, 'Ctrl+Z'),
+            (edit, 'Redo', self.redo, 'Ctrl+Shift+Z'),
+            (edit, 'Fit all curves', lambda: self.plot.reset(), 'Ctrl+0'),
+            (help_menu, 'Project load report', self.show_report, None),
+        ]
+        for menu,label,slot,key in actions:
             action=QAction(label,self); action.triggered.connect(lambda checked=False,f=slot:f())
             if key: action.setShortcut(QKeySequence(key))
+            if slot == self.edit_project:
+                self.edit_project_action = action
+                action.setEnabled(False)
             menu.addAction(action)
         split=QSplitter(); self.setCentralWidget(split)
         split.setHandleWidth(4)
@@ -561,6 +575,7 @@ class Window(QMainWindow):
     def load_path(self,path):
         document=Workspace.load(path)
         self.document=document; self.y_settings=document.style_settings; self.undo_stack=[]; self.redo_stack=[]; self.dirty=False
+        self.edit_project_action.setEnabled(True)
         self.parameters.blockSignals(True); self.parameters.clear(); self.parameters.addItems(document.parameters); self.parameters.blockSignals(False)
         self.records.blockSignals(True); self.records.clear()
         for name in ['Refer Data']+document.core_names:
@@ -575,9 +590,27 @@ class Window(QMainWindow):
         dialog = ProjectDialog(self, directory)
         if dialog.exec():
             try:
-                self.load_path(dialog.created_path)
+                self.load_path(dialog.saved_path)
             except (OSError, ValueError) as exc:
                 self.error(exc)
+
+    def edit_project(self):
+        if self.document is None or not self.confirm_discard():
+            return
+        parameter, row = self.parameter_index(), self.records.currentRow()
+        visibility = [self.records.item(i).checkState() for i in range(self.records.count())]
+        dialog = ProjectDialog(self, workspace=self.document)
+        if dialog.exec():
+            try:
+                self.load_path(dialog.saved_path)
+            except (OSError, ValueError) as exc:
+                self.error(exc)
+                return
+            self.parameters.setCurrentIndex(parameter)
+            self.records.setCurrentRow(row)
+            for i, state in enumerate(visibility):
+                self.records.item(i).setCheckState(state)
+            self.statusBar().showMessage(f'Saved project settings to {self.document.path.name}.', 5000)
 
     def open_project(self):
         if not self.confirm_discard(): return

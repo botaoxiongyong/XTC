@@ -66,4 +66,8 @@ Click **Switch to View Mode** to return to browsing. To save a separate data fil
 4. In **Core settings**, choose each core’s age file. If a core has no age file yet, choose **Create initial age model** and enter two known depth–age pairs.
 5. Click **Create Project** to open the new project. XTC writes the project file and its companion `.yrr`.
 
+To make changes to the open project, choose **File → Edit Project**. The same
+table opens with the current cores, parameters and file assignments filled in.
+Click **Save** to apply your changes and reopen the project.
+
 Original scientific XTC by Dr. Norbert R. Nowaczyk, GFZ Potsdam. [GPL v3 license](LICENSE).

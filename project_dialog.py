@@ -1,4 +1,4 @@
-"""Mouse-driven editor for a new XTC core/parameter matrix."""
+"""Mouse-driven editor for an XTC core/parameter matrix."""
 from dataclasses import replace
 from pathlib import Path
 
@@ -10,7 +10,10 @@ from PySide6.QtWidgets import (
 )
 
 from core import validate_ties
-from project_builder import Core, CurveFile, Parameter, create_project, detect_columns
+from project_builder import (
+    Core, CurveFile, Parameter, create_project, detect_columns,
+    load_project_draft, save_project_definition,
+)
 
 
 def button(label, callback):
@@ -194,15 +197,21 @@ class CoreDialog(QDialog):
 
 
 class ProjectDialog(QDialog):
-    def __init__(self, parent=None, directory=None):
+    def __init__(self, parent=None, directory=None, workspace=None):
         super().__init__(parent)
-        self.setWindowTitle('Create XTC Project')
+        self.workspace = workspace
+        self.setWindowTitle('Edit XTC Project' if workspace is not None else 'Create XTC Project')
         self.resize(930, 590)
-        self.directory = Path(directory) if directory else Path.cwd()
-        self.parameters = [Parameter('Parameter 1')]
-        self.cores = [Core('Core 1')]
-        self.path = None
-        self.created_path = None
+        if workspace is None:
+            self.directory = Path(directory) if directory else Path.cwd()
+            self.parameters = [Parameter('Parameter 1')]
+            self.cores = [Core('Core 1')]
+            self.path = None
+        else:
+            self.path = workspace.path
+            self.directory = self.path.parent
+            self.parameters, self.cores = load_project_draft(workspace)
+        self.saved_path = None
         self.copied_columns = None
 
         layout = QVBoxLayout(self)
@@ -211,9 +220,14 @@ class ProjectDialog(QDialog):
         overview.setWordWrap(True)
         layout.addWidget(overview)
         form = QFormLayout()
-        destination, self.destination_field = path_field(None, self.choose_destination)
-        self.destination_field.setPlaceholderText('Choose where to create the .xtci and .yrr')
-        form.addRow('Project file', destination)
+        if workspace is None:
+            destination, self.destination_field = path_field(None, self.choose_destination)
+            self.destination_field.setPlaceholderText('Choose where to create the .xtci and .yrr')
+            form.addRow('Project file', destination)
+        else:
+            project_path = QLineEdit(str(self.path))
+            project_path.setReadOnly(True)
+            form.addRow('Project file', project_path)
         layout.addLayout(form)
 
         structure = QHBoxLayout()
@@ -251,8 +265,9 @@ class ProjectDialog(QDialog):
         layout.addWidget(self.status)
         controls = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel)
         controls.rejected.connect(self.reject)
-        create = controls.addButton('Create Project', QDialogButtonBox.ButtonRole.AcceptRole)
-        create.clicked.connect(self.submit)
+        save_label = 'Save' if workspace is not None else 'Create Project'
+        save_button = controls.addButton(save_label, QDialogButtonBox.ButtonRole.AcceptRole)
+        save_button.clicked.connect(self.submit)
         layout.addWidget(controls)
         self.refresh_table(0, 0)
 
@@ -390,8 +405,11 @@ class ProjectDialog(QDialog):
         if self.path is None:
             return
         try:
-            self.created_path = create_project(self.path, self.parameters, self.cores)
+            if self.workspace is None:
+                self.saved_path = create_project(self.path, self.parameters, self.cores)
+            else:
+                self.saved_path = save_project_definition(self.workspace, self.parameters, self.cores)
         except (OSError, ValueError) as exc:
-            QMessageBox.warning(self, 'Could not create project', str(exc))
+            QMessageBox.warning(self, 'Could not save project', str(exc))
             return
         self.accept()

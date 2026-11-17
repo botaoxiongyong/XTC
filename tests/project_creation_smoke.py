@@ -16,6 +16,7 @@ from app import Window
 from project_builder import CurveFile, create_project
 from project_dialog import CoreDialog, CurveDialog, ProjectDialog
 from workspace import Workspace
+from yrr import YRange
 
 
 def click(dialog, label):
@@ -155,4 +156,60 @@ with TemporaryDirectory() as folder:
         raise AssertionError('Invalid column selection accepted')
     assert not invalid.exists() and not invalid.with_suffix('.xtci.yrr').exists()
 
-print('Create Project menu, matrix, column assignments, initial age model, legacy files and reopen passed.')
+    axis = YRange(2.0, 22.0, logarithmic=True, inverted=True)
+    window.document.save_axis(0, 1, axis)
+    window.parameters.setCurrentIndex(1)
+    window.records.setCurrentRow(2)
+    edited_age = root / 'third.ages'
+
+    def edit():
+        try:
+            dialog = QApplication.activeModalWidget()
+            assert isinstance(dialog, ProjectDialog)
+            assert dialog.windowTitle() == 'Edit XTC Project'
+            assert dialog.path == project
+            assert dialog.table.rowCount() == 3 and dialog.table.columnCount() == 2
+            assert dialog.curve(1, 0) == CurveFile(data, 3, 3, 2)
+            assert dialog.cores[0].tephra == tephra
+            with patch.object(QInputDialog, 'getText', return_value=('Magnetic susceptibility', True)):
+                click(dialog, 'Rename parameter…')
+            with patch.object(QInputDialog, 'getText', return_value=('Grain size', True)):
+                click(dialog, 'Add parameter')
+            dialog.set_curve(0, 2, CurveFile(reference, 3, 1, 3))
+
+            def add_core(core_dialog):
+                core_dialog.name.setText('Mid-shelf')
+                core_dialog.core.age_file = edited_age
+                core_dialog.core.initial_ties = [[0, 0, 0], [20, 10, 0]]
+                core_dialog.submit()
+                return 1
+
+            with patch.object(CoreDialog, 'exec', add_core):
+                click(dialog, 'Add core')
+            dialog.set_curve(3, 2, CurveFile(data, 3, 3, 1))
+            assert not edited_age.exists()
+            click(dialog, 'Save')
+        except Exception as exc:
+            seen['error'] = exc
+            active = QApplication.activeModalWidget()
+            if active:
+                active.reject()
+
+    assert window.edit_project_action.isEnabled()
+    QTimer.singleShot(0, edit)
+    with patch.object(QMessageBox, 'warning', unexpected_warning):
+        window.edit_project_action.trigger()
+    if 'error' in seen:
+        raise seen['error']
+    assert window.document.path == project
+    assert window.parameters.currentIndex() == 1 and window.records.currentRow() == 2
+    assert window.document.parameters == ['Magnetic susceptibility', 'Density', 'Grain size']
+    assert window.document.core_names == ['Landward', 'Seaward', 'Mid-shelf']
+    assert window.document.style_settings[0, 1] == axis
+    assert len(window.document.style_settings) == 12
+    assert window.document.models[:2] == loaded.models
+    assert window.document.curves[2][2].points == [[0, 100], [20, 200]]
+    assert edited_age.is_file()
+    assert all(path.read_bytes() == contents for path, contents in original.items())
+
+print('Create and Edit Project menu workflows, YRR preservation, age files and reopen passed.')
